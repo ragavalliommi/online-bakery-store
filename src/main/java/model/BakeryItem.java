@@ -29,7 +29,6 @@ public class BakeryItem {
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -57,6 +56,5 @@ public class BakeryItem {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	
 	
 }
