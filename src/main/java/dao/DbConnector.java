@@ -10,7 +10,7 @@ import model.User;
 public class DbConnector {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
 	private String jdbcUsername = "root";
-	private String jdbcPassword = "@#$sxsxfx";
+	private String jdbcPassword = "onlineBakeryStore";
 	private Connection conn = null; // single instance of Connection
 	private static DbConnector userDao = new DbConnector();
 	private static final String INSERT_USER =
