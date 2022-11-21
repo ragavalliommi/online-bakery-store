@@ -3,6 +3,8 @@
 -- Host: online-bakery-store.czlf6to6cefj.us-east-1.rds.amazonaws.com    Database: obs
 -- ------------------------------------------------------
 -- Server version	8.0.28
+CREATE SCHEMA IF NOT EXISTS obs;
+USE obs; 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,14 +33,14 @@ DROP TABLE IF EXISTS Carts;
 CREATE TABLE Carts (
   EntryId int NOT NULL AUTO_INCREMENT,
   UserID int NOT NULL,
-  ProductID int NOT NULL,
-  ProductQuantity int NOT NULL,
-  ProductAmount decimal(10,3) DEFAULT NULL,
-  `Status` char(10) NOT NULL,
+  BakeryItemID int NOT NULL,
+  ItemQuantity int NOT NULL,
+  ItemAmount decimal(10,3),
+  Status char(10) NOT NULL,
   PRIMARY KEY (EntryId),
   KEY FKCartsUser (UserID),
-  KEY FKCartsProduct (ProductID),
-  CONSTRAINT FKCartsProduct FOREIGN KEY (ProductID) REFERENCES Products (ProductID),
+  KEY FKCartsBakeryItem (BakeryItemID),
+  CONSTRAINT FKCartsBakeryItem FOREIGN KEY (BakeryItemID) REFERENCES BakeryItems (BakeryItemID),
   CONSTRAINT FKCartsUser FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -51,21 +53,21 @@ DROP TABLE IF EXISTS Orders;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE Orders (
-  EntryId int NOT NULL AUTO_INCREMENT,
+  EntryID int NOT NULL AUTO_INCREMENT,
   OrderID varchar(50) NOT NULL,
   UserID int NOT NULL,
-  ProductID int NOT NULL,
+  BakeryItemID int NOT NULL,
   PaymentID int NOT NULL,
   Quantity int NOT NULL,
   Amount decimal(10,3) NOT NULL,
   OrderDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   DeliveryMode char(5) NOT NULL,
   PRIMARY KEY (EntryId),
-  KEY OrdersProduct (ProductID),
+  KEY OrdersProduct (BakeryItemID),
   KEY OrdersPayment_idx (PaymentID),
   KEY OrdersUser (UserID),
   CONSTRAINT OrdersPayment FOREIGN KEY (PaymentID) REFERENCES Payments (PaymentID),
-  CONSTRAINT OrdersProduct FOREIGN KEY (ProductID) REFERENCES Products (ProductID),
+  CONSTRAINT OrdersProduct FOREIGN KEY (BakeryItemID) REFERENCES BakeryItems (BakeryItemID),
   CONSTRAINT OrdersUser FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -85,18 +87,20 @@ CREATE TABLE Payments (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `Products`
+-- Table structure for table `BakeryItems`
 --
 
-DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS BakeryItems;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE Products (
-  ProductID int NOT NULL AUTO_INCREMENT,
-  `Name` varchar(100) NOT NULL,
+CREATE TABLE BakeryItems (
+  BakeryItemID int NOT NULL AUTO_INCREMENT,
+  ItemName varchar(100) NOT NULL,
+  ItemSize varchar(100) NOT NULL,
   Price decimal(10,3) NOT NULL,
-  `Description` varchar(50) NOT NULL,
-  PRIMARY KEY (ProductID)
+  Description varchar(100) NOT NULL,
+  ImageURL varchar(1000) NOT NULL,
+  PRIMARY KEY (BakeryItemID)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -109,12 +113,12 @@ DROP TABLE IF EXISTS Users;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE Users (
   UserID int NOT NULL AUTO_INCREMENT,
-  UserName varchar(100) NOT NULL,
+  UserName varchar(100) NOT NULL UNIQUE,
   Email varchar(100) NOT NULL,
-  `Password` varchar(50) NOT NULL,
+  Phone varchar(100) NOT NULL,
+  Password varchar(50) NOT NULL,
   DateJoined datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ModifiedDate datetime DEFAULT CURRENT_TIMESTAMP,
-  UserType char(1) NOT NULL DEFAULT 'U',
   DeliveryAddress varchar(100) NOT NULL,
   PRIMARY KEY (UserID)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
