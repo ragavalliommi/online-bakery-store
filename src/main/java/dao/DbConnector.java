@@ -1,9 +1,13 @@
 package dao;
 
 import java.sql.Connection;
+import model.BakeryItem;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.User;
 
@@ -11,10 +15,12 @@ public class DbConnector {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
 	private String jdbcUsername = "root";
 	private String jdbcPassword = "onlineBakeryStore";
-	private Connection conn = null; // single instance of Connection
+	private Connection connection = null; // single instance of Connection
 	private static DbConnector userDao = new DbConnector();
 	private static final String INSERT_USER =
 			"INSERT INTO `Users`(`UserName`, `Email`,`Phone`, `Password`,`DeliveryAddress`) VALUES (? ,? ,?, ?, ?);";
+	private static final String SEARCH_ITEMS = 
+			"SELECT * FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	public DbConnector() {
 		establishDatabaseConnection();
     }
@@ -26,7 +32,7 @@ public class DbConnector {
 	private void establishDatabaseConnection() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(jdbcURl, jdbcUsername, jdbcPassword);
+			connection = DriverManager.getConnection(jdbcURl, jdbcUsername, jdbcPassword);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -60,5 +66,29 @@ public class DbConnector {
             return false;
 		}
 		return true;
+	}
+	
+	public List<BakeryItem> getItems(String searchString) throws Exception{
+		List<BakeryItem> items = new ArrayList<>();
+		
+		try(PreparedStatement ps = connection.prepareStatement(SEARCH_ITEMS)){
+			ps.setString(1, "%"+searchString+"%");
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int itemId = Integer.parseInt(rs.getString("BakeryItemId"));
+				String description = rs.getString("Description");
+				String imageURL = rs.getString("ImageURL");
+				String itemName = rs.getString("ItemName");
+				String itemSize = rs.getString("ItemSize");
+				float price = Float.parseFloat(rs.getString("price"));
+				
+				items.add(new BakeryItem(itemId, description, imageURL,itemName, itemSize, price));
+			}
+			
+		}catch(Exception E) {
+			throw new Exception(E);
+		}
+		return items;
 	}
 }
