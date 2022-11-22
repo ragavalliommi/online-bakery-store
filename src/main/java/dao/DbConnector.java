@@ -20,7 +20,12 @@ public class DbConnector {
 	private static final String INSERT_USER =
 			"INSERT INTO `Users`(`UserName`, `Email`,`Phone`, `Password`,`DeliveryAddress`) VALUES (? ,? ,?, ?, ?);";
 	private static final String SEARCH_ITEMS = 
-			"SELECT * FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
+			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
+	private static final String GET_ALL_ITEMS = 
+			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
+	private static final String VIEW_ITEM = 
+			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
+	
 	public DbConnector() {
 		establishDatabaseConnection();
     }
@@ -76,19 +81,72 @@ public class DbConnector {
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				int itemId = Integer.parseInt(rs.getString("BakeryItemId"));
-				String description = rs.getString("Description");
+				int itemId = Integer.parseInt(rs.getString("BakeryItemID"));
 				String imageURL = rs.getString("ImageURL");
 				String itemName = rs.getString("ItemName");
 				String itemSize = rs.getString("ItemSize");
 				float price = Float.parseFloat(rs.getString("price"));
 				
-				items.add(new BakeryItem(itemId, description, imageURL,itemName, itemSize, price));
+				items.add(new BakeryItem(itemId, imageURL,itemName, itemSize, price));
 			}
 			
 		}catch(Exception E) {
+			E.printStackTrace();
 			throw new Exception(E);
 		}
 		return items;
 	}
+	
+	public List<BakeryItem> getAllItems() throws Exception{
+		List<BakeryItem> items = new ArrayList<>();
+		
+		try(PreparedStatement ps = connection.prepareStatement(GET_ALL_ITEMS)){
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int itemId = Integer.parseInt(rs.getString("BakeryItemID"));
+				String imageURL = rs.getString("ImageURL");
+				String itemName = rs.getString("ItemName");
+				String itemSize = rs.getString("ItemSize");
+				float price = Float.parseFloat(rs.getString("price"));
+				
+				items.add(new BakeryItem(itemId, imageURL,itemName, itemSize, price));
+			}
+			
+		}catch(Exception E) {
+			E.printStackTrace();
+			throw new Exception(E);
+		}
+		return items;
+	}
+	
+	public BakeryItem getItem(int bakeryItemID) throws Exception{
+		BakeryItem bakeryItem = new BakeryItem(bakeryItemID);
+		
+		try(PreparedStatement ps = connection.prepareStatement(VIEW_ITEM)){
+			ps.setInt(1, bakeryItemID);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String imageURL = rs.getString("ImageURL");
+				String description = rs.getString("Description");
+				String itemName = rs.getString("ItemName");
+				String itemSize = rs.getString("ItemSize");
+				float price = Float.parseFloat(rs.getString("price"));
+				
+				bakeryItem.setDescription(description);
+				bakeryItem.setImageURL(imageURL);
+				bakeryItem.setItemName(itemName);
+				bakeryItem.setItemSize(itemSize);
+				bakeryItem.setPrice(price);
+			}
+			
+		}catch(Exception E) {
+			E.printStackTrace();
+			throw new Exception(E);
+		}
+		return bakeryItem;
+	}
+	
+	
 }
