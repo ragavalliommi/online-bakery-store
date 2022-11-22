@@ -1,4 +1,4 @@
-package controller;
+package com.obs.controller;
 
 import java.io.IOException;
 
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.DbConnector;
-import model.User;
+import com.obs.dao.DbConnector;
+import com.obs.model.User;
 
 /**
  * Servlet implementation class InsertUser
