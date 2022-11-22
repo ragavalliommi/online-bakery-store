@@ -1,7 +1,6 @@
-package dao;
+package com.obs.dao;
 
 import java.sql.Connection;
-import model.BakeryItem;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.User;
+import com.obs.model.BakeryItem;
+import com.obs.model.User;
 
 public class DbConnector {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
