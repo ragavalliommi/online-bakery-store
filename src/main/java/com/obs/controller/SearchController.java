@@ -1,12 +1,12 @@
-package controller;
+package com.obs.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 
-import dao.DbConnector;
-import model.BakeryItem;
+import com.obs.dao.DbConnector;
+import com.obs.model.BakeryItem;
 
 public class SearchController extends HttpServlet{
 	

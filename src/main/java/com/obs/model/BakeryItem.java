@@ -1,4 +1,4 @@
-package model;
+package com.obs.model;
 
 public class BakeryItem {
 	
