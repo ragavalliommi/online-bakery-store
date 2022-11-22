@@ -1,6 +1,39 @@
 package model;
 
 public class BakeryItem {
+	
+	private int bakeryItemId;
+	private String description;
+	private String imageURL;
+	private String itemName;
+	private String itemSize;
+	private float price;
+	
+	public BakeryItem(int bakeryItemId, String description, String imageURL, String itemName, String itemSize,
+			float price) {
+		super();
+		this.bakeryItemId = bakeryItemId;
+		this.description = description;
+		this.imageURL = imageURL;
+		this.itemName = itemName;
+		this.itemSize = itemSize;
+		this.price = price;
+	}
+	
+	public BakeryItem(int bakeryItemId, String imageURL, String itemName, String itemSize, float price) {
+		super();
+		this.bakeryItemId = bakeryItemId;
+		this.imageURL = imageURL;
+		this.itemName = itemName;
+		this.itemSize = itemSize;
+		this.price = price;
+	}
+	
+	public BakeryItem(int bakeryItemId) {
+		super();
+		this.bakeryItemId = bakeryItemId;
+	}
+
 	public int getBakeryItemId() {
 		return bakeryItemId;
 	}
@@ -37,13 +70,5 @@ public class BakeryItem {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	private int bakeryItemId;
-	private String description;
-	private String imageURL;
-	private String itemName;
-	private String itemSize;
-	private float price;
-	
-	
 	
 }
