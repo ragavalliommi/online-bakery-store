@@ -3,3 +3,4 @@
 .settings/
 src/main/webapp/
 /bin
+.classpath

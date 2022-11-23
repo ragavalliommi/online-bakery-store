@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="src/main/resources/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/mysql-connector-java-8.0.13.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
