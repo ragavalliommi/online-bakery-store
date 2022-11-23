@@ -10,21 +10,28 @@ import java.util.List;
 
 import com.obs.model.BakeryItem;
 import com.obs.model.User;
+import com.obs.model.Cart;
 
 public class DbConnector {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
 	private String jdbcUsername = "root";
-	private String jdbcPassword = "onlineBakeryStore";
+	private String jdbcPassword = "Seabreeze14303";
 	private Connection connection = null; // single instance of Connection
 	private static DbConnector userDao = new DbConnector();
 	private static final String INSERT_USER =
 			"INSERT INTO `Users`(`UserName`, `Email`,`Phone`, `Password`,`DeliveryAddress`) VALUES (? ,? ,?, ?, ?);";
+	private static final String GET_USER = 
+			"SELECT `UserID`,`UserName`,`Password` FROM `Users` WHERE `Email`=? AND `Password` =? LIMIT 1";
 	private static final String SEARCH_ITEMS = 
 			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	private static final String GET_ALL_ITEMS = 
 			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	private static final String VIEW_ITEM = 
 			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
+	private static final String SELECT_ALL_ITEMS =
+			"SELECT `BakeryItemId`,`Description`,`ImageURL`,`ItemName`, `ItemSize`, `Price` FROM BakeryItems";
+	private static final String ADD_CART = 
+			"INSERT INTO `Carts`(`UserID`, `BakeryItemID`, `ItemQuantity`, `ItemAmount`, `Status`) values (?, ?, ?, ?, 'P')";
 	
 	public DbConnector() {
 		establishDatabaseConnection();
@@ -66,11 +73,39 @@ public class DbConnector {
 			
 			
 		} catch (SQLException e) {
-			// process sql exception
 			System.out.println(e);
             return false;
 		}
 		return true;
+	}
+	
+	public User getUser(String email, String pwd) throws SQLException {
+		User existingUser = new User(email);
+		try (PreparedStatement ps = connection.prepareStatement(GET_USER);) {
+            ps.setString(1, existingUser.getEmail());
+            ps.setString(2, pwd);
+            //ps.setString(0, pwd);
+            System.out.println(ps);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                String userId = rs.getString("UserID");
+                String password = rs.getString("Password");
+                String userName = rs.getString("UserName");
+                existingUser.setPassword(password);   
+                if(userId != null && password != null) {
+                	if(existingUser.verify(pwd)) {
+                		System.out.println("verified");
+                		existingUser.setUserID(userId);
+                		existingUser.setUserName(userName);
+                	}
+                }
+            }
+        } catch(SQLException e) {
+           e.printStackTrace();
+           throw new SQLException(e);
+        }
+		
+		return existingUser;
 	}
 	
 	public List<BakeryItem> getItems(String searchString) throws Exception{
@@ -85,7 +120,8 @@ public class DbConnector {
 				String imageURL = rs.getString("ImageURL");
 				String itemName = rs.getString("ItemName");
 				String itemSize = rs.getString("ItemSize");
-				float price = Float.parseFloat(rs.getString("price"));
+				float price = Float.parseFloat(rs.getString("Price"));
+
 				
 				items.add(new BakeryItem(itemId, imageURL,itemName, itemSize, price));
 			}
@@ -108,7 +144,8 @@ public class DbConnector {
 				String imageURL = rs.getString("ImageURL");
 				String itemName = rs.getString("ItemName");
 				String itemSize = rs.getString("ItemSize");
-				float price = Float.parseFloat(rs.getString("price"));
+				float price = Float.parseFloat(rs.getString("Price"));
+
 				
 				items.add(new BakeryItem(itemId, imageURL,itemName, itemSize, price));
 			}
@@ -132,7 +169,8 @@ public class DbConnector {
 				String description = rs.getString("Description");
 				String itemName = rs.getString("ItemName");
 				String itemSize = rs.getString("ItemSize");
-				float price = Float.parseFloat(rs.getString("price"));
+				float price = Float.parseFloat(rs.getString("Price"));
+
 				
 				bakeryItem.setDescription(description);
 				bakeryItem.setImageURL(imageURL);
@@ -146,6 +184,54 @@ public class DbConnector {
 			throw new Exception(E);
 		}
 		return bakeryItem;
+	}
+	
+	public boolean addToCart(Integer userID, Cart cart) throws Exception{
+		    boolean isAdded = false;
+
+			try(PreparedStatement ps = connection.prepareStatement(ADD_CART)){
+				for (BakeryItem b: cart.getItemList()) {
+					ps.setInt(1, userID);
+					ps.setInt(2, b.getBakeryItemId());
+					ps.setInt(3, cart.getItemQty());
+					ps.setFloat(4, b.getPrice());
+					ps.executeUpdate();
+				}
+				isAdded = true;
+			} catch (SQLException e) {
+				isAdded = false;
+				throw new SQLException(e);
+		}
+		return isAdded;
+	}
+	
+	public List<BakeryItem> getAllBakeryData() throws SQLException {
+		
+		List<BakeryItem> itemsData = new ArrayList<BakeryItem>();
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ITEMS); ) {
+			
+			ResultSet executeQuery = preparedStatement.executeQuery();
+			
+			while(executeQuery.next()) {
+				int bakeryItemId = executeQuery.getInt("BakeryItemID");
+				String description = executeQuery.getString("Description");
+				String imageURL = executeQuery.getString("ImageURL");
+				String itemName = executeQuery.getString("ItemName");
+				String itemSize = executeQuery.getString("ItemSize");
+				
+				
+				float price = executeQuery.getFloat("Price");
+				BakeryItem bakeryItem = new BakeryItem(bakeryItemId, description, imageURL, itemName, itemSize, price);
+				itemsData.add(bakeryItem);
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+				
+		return itemsData;
 	}
 	
 	

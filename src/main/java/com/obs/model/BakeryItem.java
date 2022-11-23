@@ -19,6 +19,7 @@ public class BakeryItem {
 		this.itemSize = itemSize;
 		this.price = price;
 	}
+
 	
 	public BakeryItem(int bakeryItemId, String imageURL, String itemName, String itemSize, float price) {
 		super();
@@ -26,6 +27,12 @@ public class BakeryItem {
 		this.imageURL = imageURL;
 		this.itemName = itemName;
 		this.itemSize = itemSize;
+		this.price = price;
+	}
+	
+	public BakeryItem(int bakeryItemId, float price) {
+		super();
+		this.bakeryItemId = bakeryItemId;
 		this.price = price;
 	}
 	

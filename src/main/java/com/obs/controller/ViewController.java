@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.obs.dao.DbConnector;
 import com.obs.model.BakeryItem;
 
-@WebServlet("/item")
+@WebServlet("/viewItem")
 public class ViewController extends HttpServlet{
 
 	/**
@@ -47,9 +47,10 @@ public class ViewController extends HttpServlet{
 				request.setAttribute("userName", null);
 			}
 			
-			int bakeryItemID = Integer.parseInt(request.getParameter("bakeryItemID"));
-			BakeryItem item = getItemDetails(bakeryItemID);
-			request.setAttribute("bakeryItem", item);
+			String bakeryItemID = request.getParameter("bakeryItemID");
+			BakeryItem item = getItemDetails(Integer.parseInt(bakeryItemID));
+			request.setAttribute("item", item);
+			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/ViewItemDetails.jsp");
 			requestDispatcher.forward(request,response);
 		}
