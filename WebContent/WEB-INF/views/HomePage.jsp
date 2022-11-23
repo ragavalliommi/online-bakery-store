@@ -29,9 +29,9 @@
 						class="navbar-brand p-1 border rounded bg-white"> <i
 						class="bi bi-person-circle"></i> <c:out value="${userName}" />
 					</a> <a id="collection" class="btn btn-dark"
-						href="http://localhost:8080/obs/collection?userID=${_userID}&userName=${userName}"> <i class="bi bi-collection-fill"></i>
+						href="http://localhost:8080/obs/collection?userID=${userID}&userName=${userName}"> <i class="bi bi-collection-fill"></i>
 					</a> <a id="cart" class="btn btn-dark"
-						href="http://localhost:8080/obs/cart?userID=${_userID}&userName=${userName}">
+						href="http://localhost:8080/obs/cart?userID=${userID}&userName=${userName}">
 						<i class="bi bi-cart4"></i>
 					</a>
 					<button id="logout" class="btn btn-dark">
