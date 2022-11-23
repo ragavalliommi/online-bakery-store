@@ -25,7 +25,7 @@ public class LoginController extends HttpServlet {
 		System.out.println("API endpoint is:" + endpoint);
 		try {
 			switch (endpoint) {
-			case "/login":
+			case "/":
 				renderLoginGUI(request, response);
 				break;
 			}
@@ -42,7 +42,7 @@ public class LoginController extends HttpServlet {
 		String endpoint = request.getServletPath();
 		try {
 			switch (endpoint) {
-			case "/login":
+			case "/":
 				//add validation here as well
 				String email = request.getParameter("email");
 		        String password = request.getParameter("password");
