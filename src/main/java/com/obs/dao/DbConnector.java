@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.obs.model.BakeryItem;
 import com.obs.model.User;
+import com.obs.model.Cart;
 
 public class DbConnector {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
@@ -25,6 +26,8 @@ public class DbConnector {
 			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	private static final String VIEW_ITEM = 
 			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
+	private static final String ADD_CART = 
+			"INSERT INTO `Carts`(`UserID`, `BakeryItemID`, `ItemQuantity`, `ItemAmount`, `Status`) values (?, ?, ?, ?, 'P')";
 	
 	public DbConnector() {
 		establishDatabaseConnection();
@@ -151,5 +154,23 @@ public class DbConnector {
 		return bakeryItem;
 	}
 	
+	public boolean addToCart(Integer userID, Cart cart) throws Exception{
+		    boolean isAdded = false;
+
+			try(PreparedStatement ps = connection.prepareStatement(ADD_CART)){
+				for (BakeryItem b: cart.getItemList()) {
+					ps.setInt(1, userID);
+					ps.setInt(2, b.getBakeryItemId());
+					ps.setInt(3, cart.getItemQty());
+					ps.setFloat(4, b.getPrice());
+					ps.executeUpdate();
+				}
+				isAdded = true;
+			} catch (SQLException e) {
+				isAdded = false;
+				throw new SQLException(e);
+		}
+		return isAdded;
+	}
 	
 }
