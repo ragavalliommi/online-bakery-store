@@ -20,6 +20,8 @@ public class DbConnector {
 	private static DbConnector userDao = new DbConnector();
 	private static final String INSERT_USER =
 			"INSERT INTO `Users`(`UserName`, `Email`,`Phone`, `Password`,`DeliveryAddress`) VALUES (? ,? ,?, ?, ?);";
+	private static final String GET_USER = 
+			"SELECT `userid`,`full_name`,`password` FROM `Users` WHERE `email`=? LIMIT 1";
 	private static final String SEARCH_ITEMS = 
 			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	private static final String GET_ALL_ITEMS = 
@@ -69,11 +71,37 @@ public class DbConnector {
 			
 			
 		} catch (SQLException e) {
-			// process sql exception
 			System.out.println(e);
             return false;
 		}
 		return true;
+	}
+	
+	public User getUser(String email, String pwd) throws SQLException {
+		User existingUser = new User(email);
+		try (PreparedStatement ps = connection.prepareStatement(GET_USER);) {
+            ps.setString(1, existingUser.getEmail());
+            System.out.println(ps);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                String userId = rs.getString("userID");
+                String password = rs.getString("password");
+                String userName = rs.getString("userName");
+                existingUser.setPassword(password);   
+                if(userId != null && password != null) {
+                	if(existingUser.verify(pwd)) {
+                		System.out.println("verified");
+                		existingUser.setUserID(userId);
+                		existingUser.setUserName(userName);
+                	}
+                }
+            }
+        } catch(SQLException e) {
+           e.printStackTrace();
+           throw new SQLException(e);
+        }
+		
+		return existingUser;
 	}
 	
 	public List<BakeryItem> getItems(String searchString) throws Exception{
