@@ -1,15 +1,15 @@
 package com.obs.model;
 
-import java.util.UUID;
 
 public class Payment {
 
 	private String paymentId = null;
-	private String paymentMethod = null;
+	private String paymentMode = null;
 	
-	public Payment() {
-		this.paymentId = UUID.randomUUID().toString();
-		this.paymentMethod = "Credit";
+	public Payment(String paymentId, String paymentMode) {
+		super();
+		this.paymentId = paymentId;
+		this.paymentMode = paymentMode;
 	}
 
 	public String getPaymentId() {
@@ -20,12 +20,12 @@ public class Payment {
 		this.paymentId = paymentId;
 	}
 
-	public String getPaymentMethod() {
-		return paymentMethod;
+	public String getPaymentMode() {
+		return paymentMode;
 	}
 
-	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
 	}
 	
 	
