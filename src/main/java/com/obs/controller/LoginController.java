@@ -45,11 +45,12 @@ public class LoginController extends HttpServlet {
 			case "/":
 				//add validation here as well
 				String email = request.getParameter("email");
+				System.out.println("In doPost, value of email is: " + email);
 		        String password = request.getParameter("password");
 				User user = validateUser(email, password);
 				if(user.getUserID() != null) {
 					System.out.println("No error!");
-					response.sendRedirect(request.getContextPath() + "/home?_userid="+user.getUserID()+"&_name="+user.getUserName());
+					response.sendRedirect(request.getContextPath() + "/home?userID="+user.getUserID()+"&userName="+user.getUserName());
 					System.out.println("Completed doGet");
 				} else {
 					System.out.println("error in doPost!");
@@ -78,10 +79,10 @@ public class LoginController extends HttpServlet {
 	}
 
 	private User validateUser(String email, String password) throws Exception {
-		DbConnector dbManagerInstance = DbConnector.getInstance();
+		DbConnector db = DbConnector.getInstance();
 		User user;
 		try {
-			user = dbManagerInstance.getUser(email, password);
+			user = db.getUser(email, password);
 		} catch (Exception e) {
 			throw new Exception(e);
 		}

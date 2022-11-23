@@ -16,7 +16,7 @@
 			<div class="card w-50 mt-3 mb-3 mr-auto ml-auto">
 				<div class="card-body">
 					<div class="h1">Login</div>
-					<form action="<%= request.getContextPath() %>/login" method="POST">
+					<form action="<%= request.getContextPath() %>/" method="POST">
 						<div class="form-group">
 							<label for="email">Email address:</label> <input type="email"
 								class="form-control" name="email" id="email">
@@ -28,7 +28,7 @@
 						<button type="submit" class="btn btn-primary">Login</button>
 					</form>
 					<a class="btn btn-link mt-2"
-						href="http://localhost:8080/ibdb/register">Create New Account</a>
+						href="<%= request.getContextPath() %>/register">Create New Account</a>
 				</div>
 			</div>
 		</div>
