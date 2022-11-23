@@ -1,5 +1,5 @@
 /build/
 .DS_Store
 .settings/
-.classpath
 src/main/webapp/
+/bin
