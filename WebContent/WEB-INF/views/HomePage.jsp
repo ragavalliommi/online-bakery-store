@@ -17,21 +17,21 @@
 	<header>
 		<nav class="navbar navbar-light bg-light justify-content-between">
 			<a class="navbar-brand">OBS</a>
-			<form class="form-inline" action="http://localhost:5120/obs/search"
+			<form class="form-inline" action="http://localhost:8080/obs/search"
 				method="POST">
 				<input class="form-control mr-sm-2" type="text" name="search"
 					id="search" placeholder="Search" aria-label="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
-			<c:if test="${_userid!=null&&_name!=null}">
+			<c:if test="${userID!=null&&userName!=null}">
 				<div>
-					<a id="name" data-name="${_name}"
+					<a id="name" data-name="${userName}"
 						class="navbar-brand p-1 border rounded bg-white"> <i
-						class="bi bi-person-circle"></i> <c:out value="${_name}" />
+						class="bi bi-person-circle"></i> <c:out value="${userName}" />
 					</a> <a id="collection" class="btn btn-dark"
-						href="http://localhost:5120/obs/collection?_userid=${_userid}&_name=${_name}"> <i class="bi bi-collection-fill"></i>
+						href="http://localhost:8080/obs/collection?userID=${_userID}&userName=${userName}"> <i class="bi bi-collection-fill"></i>
 					</a> <a id="cart" class="btn btn-dark"
-						href="http://localhost:5120/obs/cart?_userid=${_userid}&_name=${_name}">
+						href="http://localhost:8080/obs/cart?userID=${_userID}&userName=${userName}">
 						<i class="bi bi-cart4"></i>
 					</a>
 					<button id="logout" class="btn btn-dark">
@@ -49,37 +49,44 @@
 				<div class="card-body">
 					<h3 class="text-center">Available Bakery Items</h3>
 						<c:forEach var="item" items="${_items_data}">
-							<div class="card">
-							  <a href="www.test.com"> 
-							  	<img src= "${item.getImageURL()}" alt="Card image cap", style="width: 18rem; height: 20rem;">
-							  </a>
-  							  <p class="price">$ ${item.getPrice()}</p>							  
-							  <a href="#" class="card-link">${item.getItemName()}</a>
-							  <p>${item.getDescription()}</p>
-<!-- 							  <p><button>Add to Cart</button></p>
- -->							</div>
+						
+						<div class="card-deck">
+						  <div class="card">
+						  <a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />">
+						    <img class="card-img-top" src="${item.getImageURL()}" alt="Card image cap" style="width: 18rem; height: 20rem;"> 
+						    </a>
+						    <div class="card-body">
+    							<p class="price">$ ${item.getPrice()}</p>							  
+						     	 <h5 class="card-title">
+     	 						  <a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />" class="card-link">						     	 
+						     	 	${item.getItemName()}  
+						     	 </a>
+						     	 </h5>
+						    </div>
+						  </div>
+						  </div>
 						</c:forEach>
 					</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="userid" hidden=true data-userid="${_userid}"></div>
+	<div id="userID" hidden=true data-userID="${userID}"></div>
 
 	<script>
-		var _userid = document.getElementById("userid").getAttribute(
-				"data-userid");
-		//console.log(_userid);
+		var userID = document.getElementById("userID").getAttribute(
+				"data-userID");
+		//console.log(userID);
 
-		if (_userid) {
-			localStorage.setItem("_userid", _userid);
+		if (userID) {
+			localStorage.setItem("userID", userID);
 
 			var _logoutBtn = document.getElementById("logout");
 
 			_logoutBtn.addEventListener('click', function(event) {
-				if (localStorage.getItem("_userid")) {
+				if (localStorage.getItem("userID")) {
 					console.log("User was logged in");
-					localStorage.removeItem("_userid");
+					localStorage.removeItem("userID");
 					window.location.replace("/obs/");
 				} else {
 					window.location.replace("/obs/");

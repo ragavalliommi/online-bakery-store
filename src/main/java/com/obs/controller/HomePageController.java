@@ -33,6 +33,23 @@ public class HomePageController extends HttpServlet {
 			throw new ServletException(e);
 		}
 		
+		// set credentials
+		if (request.getParameter("userID") != null) {
+			
+			request.setAttribute("userID", request.getAttribute("userID"));
+		}else {
+			request.setAttribute("userID", null);
+			
+		}
+		
+		if (request.getParameter("userName") != null) {
+			
+			request.setAttribute("userName", request.getAttribute("userName"));
+		}else {
+			request.setAttribute("userName", null);
+			
+		}
+		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/HomePage.jsp");
 		requestDispatcher.forward(request, response);
 	}
