@@ -16,7 +16,7 @@
 			<div class="card w-50 mb-3 mt-3 mr-auto ml-auto">
 				<div class="card-body">
 					<div class="h1">Create New Account</div>
-					<form action="<%= request.getContextPath() %>/" method="POST">
+					<form action="<%= request.getContextPath() %>/register" method="POST">
 						<div class="form-group">
 							<label for="name">User Name:</label> <input type="text"
 								class="form-control" name="userName">

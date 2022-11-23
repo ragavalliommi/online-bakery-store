@@ -15,13 +15,13 @@ import com.obs.model.Cart;
 public class DbConnector {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
 	private String jdbcUsername = "root";
-	private String jdbcPassword = "onlineBakeryStore";
+	private String jdbcPassword = "Seabreeze14303";
 	private Connection connection = null; // single instance of Connection
 	private static DbConnector userDao = new DbConnector();
 	private static final String INSERT_USER =
 			"INSERT INTO `Users`(`UserName`, `Email`,`Phone`, `Password`,`DeliveryAddress`) VALUES (? ,? ,?, ?, ?);";
 	private static final String GET_USER = 
-			"SELECT `UserID`,`UserName`,`Password` FROM `Users` WHERE `Email`=? LIMIT 1";
+			"SELECT `UserID`,`UserName`,`Password` FROM `Users` WHERE `Email`=? AND `Password` =? LIMIT 1";
 	private static final String SEARCH_ITEMS = 
 			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	private static final String GET_ALL_ITEMS = 
@@ -81,6 +81,8 @@ public class DbConnector {
 		User existingUser = new User(email);
 		try (PreparedStatement ps = connection.prepareStatement(GET_USER);) {
             ps.setString(1, existingUser.getEmail());
+            ps.setString(2, pwd);
+            //ps.setString(0, pwd);
             System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
