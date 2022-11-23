@@ -1,4 +1,5 @@
 package com.obs.model;
+import java.util.UUID;
 
 public class User {
 	
@@ -9,6 +10,21 @@ public class User {
 	private String password;
 	private String deliveryAddress;
 	
+	public User(String userName, String phone, String email, String password) {
+		this.userID = UUID.randomUUID().toString();
+		this.userName = userName;
+		this.phone = phone;
+		this.email = email;
+		this.password = password; // we are not hashing the password
+	}
+	
+	public User(String email) {
+		this.userID = null;
+		this.userName = null;
+		this.phone = null;
+		this.email = email;
+		this.password = null; // we are not hashing the password
+	}
 	
 
 	public String getUserID() {
@@ -59,7 +75,9 @@ public class User {
 		this.phone = phone;
 	}
 	
-	
-	
+	public boolean verify(String password) {
+		return password.equals(this.password);
+	}
+		
 	
 }
