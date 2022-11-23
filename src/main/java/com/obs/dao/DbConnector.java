@@ -25,6 +25,8 @@ public class DbConnector {
 			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	private static final String VIEW_ITEM = 
 			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
+	private static final String SELECT_ALL_ITEMS =
+			"SELECT `BakeryItemId`,`Description`,`ImageURL`,`ItemName`, `ItemSize`, `Price` FROM BakeryItems";
 	
 	public DbConnector() {
 		establishDatabaseConnection();
@@ -146,6 +148,36 @@ public class DbConnector {
 			throw new Exception(E);
 		}
 		return bakeryItem;
+	}
+	
+	
+	public List<BakeryItem> getAllBakeryData() throws SQLException {
+		
+		List<BakeryItem> itemsData = new ArrayList<BakeryItem>();
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ITEMS); ) {
+			
+			ResultSet executeQuery = preparedStatement.executeQuery();
+			
+			while(executeQuery.next()) {
+				int bakeryItemId = executeQuery.getInt("BakeryItemID");
+				String description = executeQuery.getString("Description");
+				String imageURL = executeQuery.getString("ImageURL");
+				String itemName = executeQuery.getString("ItemName");
+				String itemSize = executeQuery.getString("ItemSize");
+				
+				
+				float price = executeQuery.getFloat("Price");
+				BakeryItem bakeryItem = new BakeryItem(bakeryItemId, description, imageURL, itemName, itemSize, price);
+				itemsData.add(bakeryItem);
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+				
+		return itemsData;
 	}
 	
 	
