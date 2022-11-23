@@ -15,7 +15,7 @@ import com.obs.model.Cart;
 public class DbConnector {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
 	private String jdbcUsername = "root";
-	private String jdbcPassword = "Seabreeze14303";
+	private String jdbcPassword = "onlineBakeryStore";
 	private Connection connection = null; // single instance of Connection
 	private static DbConnector userDao = new DbConnector();
 	private static final String INSERT_USER =
