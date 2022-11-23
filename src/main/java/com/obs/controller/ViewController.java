@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.obs.dao.DbConnector;
 import com.obs.model.BakeryItem;
 
-@WebServlet("/item")
+@WebServlet("/viewItem")
 public class ViewController extends HttpServlet{
 
 	/**
