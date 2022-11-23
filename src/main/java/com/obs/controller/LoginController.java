@@ -14,7 +14,7 @@ import com.obs.dao.DbConnector;
 import com.obs.model.User;
 
 
-@WebServlet("/login")
+@WebServlet("/")
 public class LoginController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
