@@ -15,7 +15,7 @@ import com.obs.model.User;
 /**
  * Servlet implementation class InsertUser
  */
-@WebServlet("/")
+@WebServlet("/register")
 public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
