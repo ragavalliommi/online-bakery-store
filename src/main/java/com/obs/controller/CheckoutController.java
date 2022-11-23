@@ -17,11 +17,12 @@ public class CheckoutController extends HttpServlet {
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		//checkout button - check out page render
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//place order button - order save - payment page render
 		
 	}
 
