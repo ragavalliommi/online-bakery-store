@@ -88,7 +88,8 @@ public class DbConnector {
 				String imageURL = rs.getString("ImageURL");
 				String itemName = rs.getString("ItemName");
 				String itemSize = rs.getString("ItemSize");
-				float price = Float.parseFloat(rs.getString("price"));
+				float price = Float.parseFloat(rs.getString("Price"));
+
 				
 				items.add(new BakeryItem(itemId, imageURL,itemName, itemSize, price));
 			}
@@ -111,7 +112,8 @@ public class DbConnector {
 				String imageURL = rs.getString("ImageURL");
 				String itemName = rs.getString("ItemName");
 				String itemSize = rs.getString("ItemSize");
-				float price = Float.parseFloat(rs.getString("price"));
+				float price = Float.parseFloat(rs.getString("Price"));
+
 				
 				items.add(new BakeryItem(itemId, imageURL,itemName, itemSize, price));
 			}
@@ -135,7 +137,8 @@ public class DbConnector {
 				String description = rs.getString("Description");
 				String itemName = rs.getString("ItemName");
 				String itemSize = rs.getString("ItemSize");
-				float price = Float.parseFloat(rs.getString("price"));
+				float price = Float.parseFloat(rs.getString("Price"));
+
 				
 				bakeryItem.setDescription(description);
 				bakeryItem.setImageURL(imageURL);
