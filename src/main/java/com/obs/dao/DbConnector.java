@@ -21,7 +21,7 @@ public class DbConnector {
 	private static final String INSERT_USER =
 			"INSERT INTO `Users`(`UserName`, `Email`,`Phone`, `Password`,`DeliveryAddress`) VALUES (? ,? ,?, ?, ?);";
 	private static final String GET_USER = 
-			"SELECT `userid`,`full_name`,`password` FROM `Users` WHERE `email`=? LIMIT 1";
+			"SELECT `userID`,`userName`,`password` FROM `Users` WHERE `email`=? LIMIT 1";
 	private static final String SEARCH_ITEMS = 
 			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	private static final String GET_ALL_ITEMS = 
