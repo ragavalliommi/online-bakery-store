@@ -17,10 +17,10 @@
 	<header>
 		<nav class="navbar navbar-light bg-light justify-content-between">
 			<a class="navbar-brand">OBS</a>
-			<form class="form-inline" action="http://localhost:8080/obs/search"
+			<form id="searchForm" class="form-inline" action=""
 				method="POST">
-				<input class="form-control mr-sm-2" type="text" name="search"
-					id="search" placeholder="Search" aria-label="Search">
+				<input class="form-control mr-sm-2" type="text" name="searchString"
+					id="searchString" placeholder="Search" aria-label="searchString">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
 			<c:if test="${userID!=null&&userName!=null}">
@@ -91,6 +91,13 @@
 				} else {
 					window.location.replace("/obs/");
 				}
+			});
+			
+			document.getElementById('searchString').addEventListener('change', function(event){
+				var searchString = document.getElementById("searchString").value;
+				console.log(window.location.search);
+				const urlParams = new URLSearchParams(window.location.search);
+				document.getElementById("searchForm").action="http://localhost:8080/obs/search?userID="+urlParams.get('userID')+"&userName="+urlParams.get('userName')+"&searchString="+searchString;
 			});
 		}
 	</script>
