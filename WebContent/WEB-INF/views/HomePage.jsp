@@ -58,7 +58,7 @@
 						    <div class="card-body">
     							<p class="price">$ ${item.getPrice()}</p>							  
 						     	 <h5 class="card-title">
-     	 						  <a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}&quantity=1" />" class="card-link">						     	 
+     	 						  <a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />" class="card-link">						     	 
 						     	 	${item.getItemName()}  
 						     	 </a>
 						     	 </h5>
