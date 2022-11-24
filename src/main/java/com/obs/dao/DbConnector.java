@@ -30,8 +30,14 @@ public class DbConnector {
 			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
 	private static final String SELECT_ALL_ITEMS =
 			"SELECT `BakeryItemId`,`Description`,`ImageURL`,`ItemName`, `ItemSize`, `Price` FROM BakeryItems";
+	
+	// cart queries
+	private static final String CHECK_CART = 
+				"SELECT `BakeryItemID`,`ItemQuantity` FROM `Carts` WHERE `UserID`=?";
 	private static final String ADD_CART = 
-			"INSERT INTO `Carts`(`UserID`, `BakeryItemID`, `ItemQuantity`, `ItemAmount`, `Status`) values (?, ?, ?, ?, 'P')";
+			"INSERT INTO `Carts`(`UserID`, `BakeryItemID`, `ItemQuantity`, `ItemAmount`) values (?, ?, ?, ?)";
+	private static final String DELETE_CART = 
+			"DELETE FROM `Carts` WHERE `UserID`=?";
 	
 	public DbConnector() {
 		establishDatabaseConnection();
@@ -186,6 +192,29 @@ public class DbConnector {
 		return bakeryItem;
 	}
 	
+	/* Check Cart */
+	public Cart getCart(String userID) throws Exception {
+		Cart cart = new Cart();
+		try (PreparedStatement ps = connection.prepareStatement(CHECK_CART);) {
+            ps.setString(1, userID);
+            System.out.println(ps);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+            	Integer itemId = rs.getInt("BakeryItemID");
+            	Integer itemQuantity = rs.getInt("ItemQuantity");
+            	BakeryItem item = getItem(itemId);
+            	cart.addItem(item);
+            	cart.setItemQty(itemQuantity);
+            }
+        } catch(SQLException e) {
+           e.printStackTrace();
+           throw new SQLException(e);
+        }
+		
+		return cart;
+	}
+	
+	/* Save to Cart */
 	public boolean addToCart(Integer userID, Cart cart) throws Exception{
 		    boolean isAdded = false;
 
@@ -203,6 +232,21 @@ public class DbConnector {
 				throw new SQLException(e);
 		}
 		return isAdded;
+	}
+	
+	/* Clear User Cart */
+	public boolean clearUserCart(Integer userID) throws Exception{
+		boolean isDeleted = false;
+		try(PreparedStatement ps = connection.prepareStatement(DELETE_CART)){
+			ps.setInt(1, userID);
+			ps.executeUpdate();
+			isDeleted = true;	
+		}
+		catch (SQLException e) {
+			isDeleted = false;
+			throw new SQLException(e);
+		}
+		return isDeleted;
 	}
 	
 	public List<BakeryItem> getAllBakeryData() throws SQLException {
