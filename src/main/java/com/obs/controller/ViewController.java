@@ -46,7 +46,13 @@ public class ViewController extends HttpServlet{
 			else {
 				request.setAttribute("userName", null);
 			}
-			
+			if(request.getParameter("bakeryItemID")!=null) {
+				request.setAttribute("bakeryItemID", request.getParameter("bakeryItemID"));
+			}
+			else {
+				request.setAttribute("bakeryItemID", null);
+			}
+			request.setAttribute("quantity",1);
 			String bakeryItemID = request.getParameter("bakeryItemID");
 			BakeryItem item = getItemDetails(Integer.parseInt(bakeryItemID));
 			request.setAttribute("item", item);

@@ -40,7 +40,7 @@
 						<button type="submit" class="btn btn-primary">Register</button>
 					</form>
 					<a class="btn btn-link mt-2"
-						href="<%= request.getContextPath() %>/login">Have an Account? Login</a>
+						href="<%= request.getContextPath() %>/">Have an Account? Login</a>
 				</div>
 			</div>
 		</div>
