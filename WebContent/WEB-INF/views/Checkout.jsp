@@ -15,8 +15,61 @@
 </head>
 <body>
 	<header>
-		Place order page
-		<a href="Payment.jsp">Place order button</a>
+		Checkout Payment page
 	</header>
+	<div class="row mt-3 mb-3">
+		<div class="container">
+			<div class="list-group">
+				<div>Cart Value: "${value}"</div>
+				<hr>
+				<form class="w-25" action="http://localhost:8080/obs/checkout"
+					method="POST">
+					<div class="form-group">
+						<label for="card_name">Name on Card</label> <input type="text"
+							class="form-control" name="card_name" id="card_name"
+							placeholder="John Doe">
+					</div>
+					<div class="form-group">
+						<label for="card_no">Card Number</label> <input type="text"
+							class="form-control" name="card_no" id="card_no">
+					</div>
+					<div class="form-group">
+						<label for="card_expiry">Expiry</label> <input type="text"
+							class="form-control" name="card_expiry" placeholder="MM/YY"
+							id="card_expiry"> <label for="card_cvv">CVV</label> <input
+							type="text" class="form-control" name="card_cvv" id="card_cvv">
+					</div>
+					<input hidden type="text" name="cartid" value="${cartid}">
+					<input hidden type="text" name="_userid" value="${_userid}">
+					<input hidden type="text" name="_name" value="${_name}">
+					<button type="submit" class="btn btn-primary">Make Payment</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="userid" hidden=true data-userid="${_userid}"></div>
+
+	<script>
+		var _userid = document.getElementById("userid").getAttribute(
+				"data-userid");
+		//console.log(_userid);
+
+		if (_userid) {
+			localStorage.setItem("_userid", _userid);
+
+			var _logoutBtn = document.getElementById("logout");
+
+			_logoutBtn.addEventListener('click', function(event) {
+				if (localStorage.getItem("_userid")) {
+					console.log("User was logged in");
+					localStorage.removeItem("_userid");
+					window.location.replace("/ibdb/");
+				} else {
+					window.location.replace("/ibdb/");
+				}
+			});
+		}
+	</script>
 </body>
 </html>
