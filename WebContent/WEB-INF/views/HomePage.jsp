@@ -17,10 +17,10 @@
 	<header>
 		<nav class="navbar navbar-light bg-light justify-content-between">
 			<a class="navbar-brand">OBS</a>
-			<form class="form-inline" action="http://localhost:8080/obs/search"
+			<form id="searchForm" class="form-inline" action=""
 				method="POST">
-				<input class="form-control mr-sm-2" type="text" name="search"
-					id="search" placeholder="Search" aria-label="Search">
+				<input class="form-control mr-sm-2" type="text" name="searchString"
+					id="searchString" placeholder="Search" aria-label="searchString">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
 			<c:if test="${userID!=null&&userName!=null}">
@@ -29,9 +29,9 @@
 						class="navbar-brand p-1 border rounded bg-white"> <i
 						class="bi bi-person-circle"></i> <c:out value="${userName}" />
 					</a> <a id="collection" class="btn btn-dark"
-						href="http://localhost:8080/obs/collection?userID=${_userID}&userName=${userName}"> <i class="bi bi-collection-fill"></i>
+						href="http://localhost:8080/obs/collection?userID=${userID}&userName=${userName}"> <i class="bi bi-collection-fill"></i>
 					</a> <a id="cart" class="btn btn-dark"
-						href="http://localhost:8080/obs/cart?userID=${_userID}&userName=${userName}">
+						href="http://localhost:8080/obs/cart?userID=${userID}&userName=${userName}">
 						<i class="bi bi-cart4"></i>
 					</a>
 					<button id="logout" class="btn btn-dark">
@@ -91,6 +91,13 @@
 				} else {
 					window.location.replace("/obs/");
 				}
+			});
+			
+			document.getElementById('searchString').addEventListener('change', function(event){
+				var searchString = document.getElementById("searchString").value;
+				console.log(window.location.search);
+				const urlParams = new URLSearchParams(window.location.search);
+				document.getElementById("searchForm").action="http://localhost:8080/obs/search?userID="+urlParams.get('userID')+"&userName="+urlParams.get('userName')+"&searchString="+searchString;
 			});
 		}
 	</script>
