@@ -65,7 +65,7 @@
 						  </select>
 						<button class="btn btn-outline-danger my-2 my-sm-0 mr-2" type="submit">Add
 							to Cart</button>
-							<a class="btn btn-success my-2 my-sm-0" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">Back to All Products</a>
+							<a class="btn btn-success my-2 my-sm-0" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}"><i class="bi bi-arrow-left"></i> Back to All Products</a>
 					</form>
 				</div>
 			</div>
