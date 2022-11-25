@@ -16,7 +16,7 @@
 <body>
 	<header>
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
-			<a class="navbar-brand text-white">OBS</a>
+			<a class="navbar-brand text-white" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">OBS</a>
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
 					<a id="name" data-name="${userName}"
@@ -61,8 +61,10 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<a class="btn btn-primary" href="http://localhost:8080/obs/order?userid=${userid}&cartdata=${cart_data}&value=${cart_value}">
+					<a class="btn btn-primary mb-3" href="http://localhost:8080/obs/order?userid=${userid}&cartdata=${cart_data}&value=${cart_value}">
 					Checkout : $ ${cart_value} </a>
+					<a class="btn btn-success" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">
+					Keep Shopping </a>
 				</div>
 			</div>
 		</div>

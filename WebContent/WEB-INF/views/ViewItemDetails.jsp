@@ -13,7 +13,7 @@
 <body class="bg-secondary">
 <header>
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
-			<a class="navbar-brand text-white">OBS</a>
+			<a class="navbar-brand text-white" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">OBS</a>
 			
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
@@ -50,7 +50,7 @@
 					<form id="form" class="form-inline" action=""
 						 method="POST" >
 						<input hidden class="form-control mr-sm-2" type="text"
-							name="bookid" value="${item.getBakeryItemId()}" aria-label="bakeryItemId">
+							name="bakeryItemId" value="${item.getBakeryItemId()}" aria-label="bakeryItemId">
 						<input hidden class="form-control mr-sm-2" type="text"
 							name="userID" value="${userID}" aria-label="userID"> <input
 							hidden class="form-control mr-sm-2" type="text" name="userName"
