@@ -21,7 +21,7 @@
 				method="POST">
 				<input class="form-control mr-sm-2" type="text" name="searchString"
 					id="searchString" placeholder="Search" aria-label="searchString">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
 			</form>
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
