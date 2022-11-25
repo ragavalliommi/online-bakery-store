@@ -18,22 +18,9 @@ public class CartController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String endpoint = request.getServletPath();
-		System.out.println(endpoint);
-		System.out.println("Teesttt");
 		try {
 			switch (endpoint) {
 			case "/cart":
-				if(request.getParameter("userID") != null) {
-					request.setAttribute("userID", request.getParameter("userID"));	
-				} else {
-					request.setAttribute("userID", null);
-				}
-				if(request.getParameter("userName")!=null) {
-					request.setAttribute("userName", request.getParameter("userName"));
-				}
-				else {
-					request.setAttribute("userName", null);
-				}
 				String userID = request.getParameter("userID");
 				Cart cart = getShoppingCart(userID);
 				request.setAttribute("cart_data", cart.getCartItems());
@@ -70,26 +57,15 @@ public class CartController extends HttpServlet {
 				String userID = request.getParameter("userID");
 				String bakeryItemID = request.getParameter("bakeryItemID");
 				String quantity = request.getParameter("quantity");
-				if(request.getParameter("userID")!=null) {
-					request.setAttribute("userID", request.getParameter("userID"));
-				}
-				else {
-					request.setAttribute("userID", null);
-				}
-				if(request.getParameter("userName")!=null) {
-					request.setAttribute("userName", request.getParameter("userName"));
-				}
-				else {
-					request.setAttribute("userName", null);
-				}
-				boolean isAddedToCart = addToCart(userID, bakeryItemID, quantity);
-				System.out.println(request.getAttribute("userName"));
-				Cart cart = getShoppingCart(userID);
-				request.setAttribute("cart_data", cart.getCartItems());
-				request.setAttribute("cart_value", cart.getCartValue());
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/Cart.jsp");
-				requestDispatcher.forward(request, response);
 				
+				boolean isAddedToCart = addToCart(userID, bakeryItemID, quantity);
+				if (isAddedToCart) {
+					Cart cart = getShoppingCart(userID);
+					request.setAttribute("cart_data", cart.getCartItems());
+					request.setAttribute("cart_value", cart.getCartValue());
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/Cart.jsp");
+					requestDispatcher.forward(request, response);
+				}
 			}
 		} catch (Exception e) {
 			throw new ServletException(e);

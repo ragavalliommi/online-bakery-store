@@ -44,22 +44,24 @@
 					<table class = "table">
 						<thead>
 							<tr style="border: 1px solid black;"> 
-								<th > Item </th>
-							 	<th > Quantity </th>
-							 	<th > Price </th>
+								<th> Name </th>
+								<th></th>
+							 	<th> Quantity </th>
+							 	<th> Price </th>
 							 </tr>
 						</thead>
 						<tbody>
 							<c:forEach var="item" items="${cart_data}">
 								<tr style="border: 1px solid black;">
 									<td><c:out value="${item.getBakeryItem().getItemName()}" /></td>
+									<td><img class="img-fluid img-thumbnail mb-3" style="max-height: 75px;" src="${item.getBakeryItem().getImageURL() }"></img></td>
 									<td><c:out value="${item.getItemQty()}" /></td>
 									<td>$ <c:out value="${item.getBakeryItem().getPrice() * item.getItemQty()}" /></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-					<a class="btn btn-primary" href="http://localhost:8080/obs/order?userid=${userid}&value=${cart_value}">
+					<a class="btn btn-primary" href="http://localhost:8080/obs/order?userid=${userid}&cartdata=${cart_data}&value=${cart_value}">
 					Checkout : $ ${cart_value} </a>
 				</div>
 			</div>
