@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.internal.JUnitSystem;
+
 import com.obs.dao.DbConnector;
 import com.obs.model.BakeryItem;
 
@@ -35,8 +37,7 @@ public class HomePageController extends HttpServlet {
 		
 		// set credentials
 		if (request.getParameter("userID") != null) {
-			
-			request.setAttribute("userID", request.getAttribute("userID"));
+			request.setAttribute("userID", request.getParameter("userID"));
 		}else {
 			request.setAttribute("userID", null);
 			
@@ -44,7 +45,7 @@ public class HomePageController extends HttpServlet {
 		
 		if (request.getParameter("userName") != null) {
 			
-			request.setAttribute("userName", request.getAttribute("userName"));
+			request.setAttribute("userName", request.getParameter("userName"));
 		}else {
 			request.setAttribute("userName", null);
 			

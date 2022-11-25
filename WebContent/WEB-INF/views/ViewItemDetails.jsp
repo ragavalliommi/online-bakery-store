@@ -47,8 +47,8 @@
 					<p class="card-text">Price: $${item.getPrice()}</p>
 					<p class="card-text">Description: ${item.getDescription()}</p>
 					<img class="img-fluid img-thumbnail mb-3" style="max-height: 250px;" src="${item.getImageURL() }"></img>
-					<form class="form-inline" action="http://localhost:8080/obs/cart"
-						method="POST">
+					<form id="form" class="form-inline" action=""
+						 method="POST" >
 						<input hidden class="form-control mr-sm-2" type="text"
 							name="bookid" value="${item.getBakeryItemId()}" aria-label="bakeryItemId">
 						<input hidden class="form-control mr-sm-2" type="text"
@@ -76,13 +76,17 @@
 	<script>
 		var userID = document.getElementById("userid").getAttribute(
 				"data-userid");
-
+		
+		var quantity;
+		
 		if (userID) {
 			localStorage.setItem("userID", userID);
-
-			var _logoutBtn = document.getElementById("logout");
-
-			_logoutBtn.addEventListener('click', function(event) {
+			
+			const urlParams = new URLSearchParams(window.location.search);
+			document.getElementById("form").action="http://localhost:8080/obs/cart?userID="+urlParams.get('userID')+"&userName="+urlParams.get('userName')+"&bakeryItemID="+urlParams.get('bakeryItemID')+"&quantity="+1;
+			
+			var logOut = document.getElementById("logout");
+			logOut.addEventListener('click', function(event) {
 				if (localStorage.getItem("userID")) {
 					localStorage.removeItem("userID");
 					window.location.replace("/obs/");
@@ -93,6 +97,13 @@
 			
 			
 		}
+		document.getElementById('quantity').addEventListener('change', function(event){
+			quantity = document.getElementById("quantity").value;
+			const urlParams = new URLSearchParams(window.location.search);
+			document.getElementById("form").action="http://localhost:8080/obs/cart?userID="+urlParams.get('userID')+"&userName="+urlParams.get('userName')+"&bakeryItemID="+urlParams.get('bakeryItemID')+"&quantity="+quantity;
+		});
+
+		
 	</script>
 </body>
 </html>

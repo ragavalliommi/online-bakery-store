@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> OBS : Home</title>
+<title> OBS : Cart</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -17,12 +17,6 @@
 	<header>
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
 			<a class="navbar-brand text-white">OBS</a>
-			<form id="searchForm" class="form-inline" action=""
-				method="POST">
-				<input class="form-control mr-sm-2" type="text" name="searchString"
-					id="searchString" placeholder="Search" aria-label="searchString">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
 					<a id="name" data-name="${userName}"
@@ -42,35 +36,38 @@
 			</c:if>
 		</nav>
 	</header>
-
-	<div class="row">
-		<div class="container">
-			<div class="card mt-3 mb-3">
-				<div class="card-body">
-					<h3 class="text-center">Available Bakery Items</h3>
-						<c:forEach var="item" items="${_items_data}">
-						
-						<div class="card-deck">
-						  <div class="card">
-						  <a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />">
-						    <img class="card-img-top" src="${item.getImageURL()}" alt="Card image cap" style="width: 18rem; height: 20rem;"> 
-						    </a>
-						    <div class="card-body">
-    							<p class="price">$ ${item.getPrice()}</p>							  
-						     	 <h5 class="card-title">
-     	 						  <a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />" class="card-link">						     	 
-						     	 	${item.getItemName()}  
-						     	 </a>
-						     	 </h5>
-						    </div>
-						  </div>
-						  </div>
-						</c:forEach>
-					</div>
+	
+	<div class = "container">
+		<div class = "row">
+			<div class= "row mt-3 mb-3">
+				<div class="list-group">
+					<table class = "table">
+						<thead>
+							<tr style="border: 1px solid black;"> 
+								<th> Name </th>
+								<th></th>
+							 	<th> Quantity </th>
+							 	<th> Price </th>
+							 </tr>
+						</thead>
+						<tbody>
+							<c:forEach var="item" items="${cart_data}">
+								<tr style="border: 1px solid black;">
+									<td><c:out value="${item.getBakeryItem().getItemName()}" /></td>
+									<td><img class="img-fluid img-thumbnail mb-3" style="max-height: 75px;" src="${item.getBakeryItem().getImageURL() }"></img></td>
+									<td><c:out value="${item.getItemQty()}" /></td>
+									<td>$ <c:out value="${item.getBakeryItem().getPrice() * item.getItemQty()}" /></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<a class="btn btn-primary" href="http://localhost:8080/obs/order?userid=${userid}&cartdata=${cart_data}&value=${cart_value}">
+					Checkout : $ ${cart_value} </a>
+				</div>
 			</div>
 		</div>
 	</div>
-
+	
 	<div id="userID" hidden=true data-userID="${userID}"></div>
 
 	<script>
@@ -92,14 +89,8 @@
 					window.location.replace("/obs/");
 				}
 			});
-			
-			document.getElementById('searchString').addEventListener('change', function(event){
-				var searchString = document.getElementById("searchString").value;
-				console.log(window.location.search);
-				const urlParams = new URLSearchParams(window.location.search);
-				document.getElementById("searchForm").action="http://localhost:8080/obs/search?userID="+urlParams.get('userID')+"&userName="+urlParams.get('userName')+"&searchString="+searchString;
-			});
 		}
 	</script>
+
 </body>
 </html>
