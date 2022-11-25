@@ -15,8 +15,8 @@
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-light bg-light justify-content-between">
-			<a class="navbar-brand">OBS</a>
+		<nav class="navbar navbar-dark bg-dark justify-content-between">
+			<a class="navbar-brand text-white">OBS</a>
 			<form id="searchForm" class="form-inline" action=""
 				method="POST">
 				<input class="form-control mr-sm-2" type="text" name="searchString"
@@ -26,10 +26,10 @@
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
 					<a id="name" data-name="${userName}"
-						class="navbar-brand p-1 border rounded bg-white"> <i
+						class="navbar-brand text-white rounded bg-dark"> <i
 						class="bi bi-person-circle"></i> <c:out value="${userName}" />
-					</a> <a id="collection" class="btn btn-dark"
-						href="http://localhost:8080/obs/collection?userID=${userID}&userName=${userName}"> <i class="bi bi-collection-fill"></i>
+					</a> <a id="collection" class="btn btn-dark" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}"> <i
+						class="bi bi-collection-fill"></i>
 					</a> <a id="cart" class="btn btn-dark"
 						href="http://localhost:8080/obs/cart?userID=${userID}&userName=${userName}">
 						<i class="bi bi-cart4"></i>

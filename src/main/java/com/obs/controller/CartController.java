@@ -21,6 +21,18 @@ public class CartController extends HttpServlet {
 		try {
 			switch (endpoint) {
 			case "/cart":
+				if(request.getParameter("userID")!=null) {
+					request.setAttribute("userID", request.getParameter("userID"));
+				}
+				else {
+					request.setAttribute("userID", null);
+				}
+				if(request.getParameter("userName")!=null) {
+					request.setAttribute("userName", request.getParameter("userName"));
+				}
+				else {
+					request.setAttribute("userName", null);
+				}
 				String userID = request.getParameter("userID");
 				Cart cart = getShoppingCart(userID);
 				request.setAttribute("cart_data", cart.getCartItems());
@@ -54,6 +66,18 @@ public class CartController extends HttpServlet {
 		try {
 			switch (endpoint) {
 			case "/cart":
+				if(request.getParameter("userID")!=null) {
+					request.setAttribute("userID", request.getParameter("userID"));
+				}
+				else {
+					request.setAttribute("userID", null);
+				}
+				if(request.getParameter("userName")!=null) {
+					request.setAttribute("userName", request.getParameter("userName"));
+				}
+				else {
+					request.setAttribute("userName", null);
+				}
 				String userID = request.getParameter("userID");
 				String bakeryItemID = request.getParameter("bakeryItemID");
 				String quantity = request.getParameter("quantity");
