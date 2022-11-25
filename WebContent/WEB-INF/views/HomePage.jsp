@@ -82,7 +82,12 @@
 			localStorage.setItem("userID", userID);
 
 			var _logoutBtn = document.getElementById("logout");
-
+			
+			const urlParams = new URLSearchParams(window.location.search);
+			document.getElementById("searchString").value="";
+			var searchString = document.getElementById("searchString").value;
+			document.getElementById("searchForm").action="http://localhost:8080/obs/search?userID="+urlParams.get('userID')+"&userName="+urlParams.get('userName')+"&searchString="+searchString;
+			
 			_logoutBtn.addEventListener('click', function(event) {
 				if (localStorage.getItem("userID")) {
 					console.log("User was logged in");
@@ -92,6 +97,9 @@
 					window.location.replace("/obs/");
 				}
 			});
+			
+			
+			
 			
 			document.getElementById('searchString').addEventListener('change', function(event){
 				var searchString = document.getElementById("searchString").value;
