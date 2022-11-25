@@ -81,10 +81,12 @@
 		
 		if (userID) {
 			localStorage.setItem("userID", userID);
-
-			var _logoutBtn = document.getElementById("logout");
-
-			_logoutBtn.addEventListener('click', function(event) {
+			
+			const urlParams = new URLSearchParams(window.location.search);
+			document.getElementById("form").action="http://localhost:8080/obs/cart?userID="+urlParams.get('userID')+"&userName="+urlParams.get('userName')+"&bakeryItemID="+urlParams.get('bakeryItemID')+"&quantity="+1;
+			
+			var logOut = document.getElementById("logout");
+			logOut.addEventListener('click', function(event) {
 				if (localStorage.getItem("userID")) {
 					localStorage.removeItem("userID");
 					window.location.replace("/obs/");
