@@ -13,7 +13,7 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 </head>
-<body>
+<body class="bg-secondary">
 	<header>
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
 			<a class="navbar-brand text-white" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">OBS</a>
@@ -41,22 +41,23 @@
 		<div class = "row">
 			<div class= "row mt-3 mb-3">
 				<div class="list-group">
-					<table class = "table">
-						<thead>
+					<table class = "table table-light table-striped table-bordered table-hover">
+						<thead class="thead-dark">
 							<tr style="border: 1px solid black;"> 
 								<th> Name </th>
-								<th></th>
-							 	<th> Quantity </th>
+								<th> Quantity </th>
 							 	<th> Price </th>
+								<th>Image</th>
+							 	
 							 </tr>
 						</thead>
 						<tbody>
 							<c:forEach var="item" items="${cart_data}">
 								<tr style="border: 1px solid black;">
 									<td><c:out value="${item.getBakeryItem().getItemName()}" /></td>
-									<td><img class="img-fluid img-thumbnail mb-3" style="max-height: 75px;" src="${item.getBakeryItem().getImageURL() }"></img></td>
 									<td><c:out value="${item.getItemQty()}" /></td>
 									<td>$ <c:out value="${item.getBakeryItem().getPrice() * item.getItemQty()}" /></td>
+									<td><img class="img-fluid img-thumbnail mb-3" style="max-height: 75px;" src="${item.getBakeryItem().getImageURL() }"></img></td>
 								</tr>
 							</c:forEach>
 						</tbody>

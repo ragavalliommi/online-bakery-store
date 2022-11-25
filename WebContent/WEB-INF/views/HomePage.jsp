@@ -13,10 +13,10 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 </head>
-<body>
+<body class="bg-secondary">
 	<header>
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
-			<a class="navbar-brand text-white">OBS</a>
+			<a class="navbar-brand text-white" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">OBS</a>
 			<form id="searchForm" class="form-inline" action=""
 				method="POST">
 				<input class="form-control mr-sm-2" type="text" name="searchString"
@@ -46,7 +46,7 @@
 	<div class="row">
 		<div class="container">
 			<div class="card mt-3 mb-3">
-				<div class="card-body">
+				<div class="card-body bg-light">
 					<h3 class="text-center">Available Bakery Items</h3>
 						<c:forEach var="item" items="${_items_data}">
 						

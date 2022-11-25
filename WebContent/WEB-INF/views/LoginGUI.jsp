@@ -10,8 +10,13 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 </head>
-<body>
-	<div class="row w-100">
+<body class=bg-secondary>
+<header>
+<nav class="navbar navbar-dark bg-dark justify-content-between">
+			<a href="http://localhost:8080/obs" class="navbar-brand text-white">OBS</a>
+		</nav>
+</header>
+	<div class="row w-100 bg-secondary">
 		<div class="container w-100">
 			<div class="card w-50 mt-3 mb-3 mr-auto ml-auto">
 				<div class="card-body">

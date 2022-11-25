@@ -63,8 +63,9 @@
 						    <option value=4>4</option>
 						    <option value=5>5</option>
 						  </select>
-						<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Add
+						<button class="btn btn-outline-danger my-2 my-sm-0 mr-2" type="submit">Add
 							to Cart</button>
+							<a class="btn btn-success my-2 my-sm-0" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">Back to All Products</a>
 					</form>
 				</div>
 			</div>
