@@ -19,36 +19,32 @@ public class CartController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String endpoint = request.getServletPath();
 		System.out.println(endpoint);
+		System.out.println("Teesttt");
 		try {
 			switch (endpoint) {
 			case "/cart":
-				request.setAttribute("userId", request.getParameter("userId") != null ? request.getParameter("userId") : null);
 				if(request.getParameter("userID") != null) {
 					request.setAttribute("userID", request.getParameter("userID"));	
 				} else {
 					request.setAttribute("userID", null);
 				}
-				if(request.getParameter("bakeryItemID") != null) {
-					request.setAttribute("bakeryItemID", request.getParameter("bakeryItemID"));	
-				} else {
-					request.setAttribute("bakeryItemID", null);
+				if(request.getParameter("userName")!=null) {
+					request.setAttribute("userName", request.getParameter("userName"));
 				}
-				if(request.getParameter("quantity") != null) {
-					request.setAttribute("quantity", request.getParameter("quantity"));	
-				} else {
-					request.setAttribute("quantity", null);
+				else {
+					request.setAttribute("userName", null);
 				}
 				String userID = request.getParameter("userID");
 				Cart cart = getShoppingCart(userID);
-				request.setAttribute("cart", cart);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("Cart.jsp");
+				request.setAttribute("cart_data", cart.getCartItems());
+				request.setAttribute("cart_value", cart.getCartValue());
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/Cart.jsp");
 				dispatcher.forward(request, response);
 				break;
 			}
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
-
 	}
 	
 	
@@ -74,9 +70,26 @@ public class CartController extends HttpServlet {
 				String userID = request.getParameter("userID");
 				String bakeryItemID = request.getParameter("bakeryItemID");
 				String quantity = request.getParameter("quantity");
+				if(request.getParameter("userID")!=null) {
+					request.setAttribute("userID", request.getParameter("userID"));
+				}
+				else {
+					request.setAttribute("userID", null);
+				}
+				if(request.getParameter("userName")!=null) {
+					request.setAttribute("userName", request.getParameter("userName"));
+				}
+				else {
+					request.setAttribute("userName", null);
+				}
 				boolean isAddedToCart = addToCart(userID, bakeryItemID, quantity);
-				response.sendRedirect(request.getContextPath() + "/obs/viewItemDetails?userID="+userID+"&userName="+userName+"&bakeryItemID="+bakeryItemID+"&quantity="+quantity);
-				break;  
+				System.out.println(request.getAttribute("userName"));
+				Cart cart = getShoppingCart(userID);
+				request.setAttribute("cart_data", cart.getCartItems());
+				request.setAttribute("cart_value", cart.getCartValue());
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/Cart.jsp");
+				requestDispatcher.forward(request, response);
+				
 			}
 		} catch (Exception e) {
 			throw new ServletException(e);
@@ -84,10 +97,13 @@ public class CartController extends HttpServlet {
 	}
 
 
-	private boolean addToCart(String userID, String bakeryItemID, String quantity) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	
+	private boolean addToCart(String userID, String bakeryItemID, String quantity) throws Exception {
+		DbConnector dbManagerInstance = DbConnector.getInstance();
+		try {
+			 return dbManagerInstance.addToCart(userID, bakeryItemID, quantity);
+		}
+		catch (Exception e) {
+			throw new Exception(e);
+		}
+	}	
 }

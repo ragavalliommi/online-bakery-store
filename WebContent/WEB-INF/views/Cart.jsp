@@ -43,22 +43,24 @@
 				<div class="list-group">
 					<table class = "table">
 						<thead>
-							<tr> <th> Item </th>
-							 <th> Quantity </th>
-							 <th> Price </th></tr>
+							<tr style="border: 1px solid black;"> 
+								<th > Item </th>
+							 	<th > Quantity </th>
+							 	<th > Price </th>
+							 </tr>
 						</thead>
 						<tbody>
-							<i:forEach var="item" items="${cart.getItemList()}">
-							<tr>
-								<td><i:out value="${item.getItemName()}" /></td>
-								<td><i:out value="${}" /></td>
-								<td>$ <i:out value="${item.getPrice()}" /></td>
-							</tr>
-							</i:forEach>
+							<c:forEach var="item" items="${cart_data}">
+								<tr style="border: 1px solid black;">
+									<td><c:out value="${item.getBakeryItem().getItemName()}" /></td>
+									<td><c:out value="${item.getItemQty()}" /></td>
+									<td>$ <c:out value="${item.getBakeryItem().getPrice() * item.getItemQty()}" /></td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
-					<a class="btn btn-primary" href="http://localhost:8080/obs/order?userid=${userid}&value=${cart.getCartValue()}">
-					Checkout : "${cart.getCartValue()}" </a>
+					<a class="btn btn-primary" href="http://localhost:8080/obs/order?userid=${userid}&value=${cart_value}">
+					Checkout : $ ${cart_value} </a>
 				</div>
 			</div>
 		</div>

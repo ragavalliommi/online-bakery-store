@@ -11,6 +11,7 @@ import java.util.List;
 import com.obs.model.BakeryItem;
 import com.obs.model.User;
 import com.obs.model.Cart;
+import com.obs.model.CartItem;
 
 public class DbConnector {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
@@ -32,10 +33,14 @@ public class DbConnector {
 			"SELECT `BakeryItemId`,`Description`,`ImageURL`,`ItemName`, `ItemSize`, `Price` FROM BakeryItems";
 	
 	// cart queries
-	private static final String CHECK_CART = 
-				"SELECT `BakeryItemID`,`ItemQuantity` FROM `Carts` WHERE `UserID`=?";
+	private static final String GET_CART = 
+			"SELECT `BakeryItemID`,`ItemQuantity` FROM `Carts` WHERE `UserID`=?";
 	private static final String ADD_CART = 
 			"INSERT INTO `Carts`(`UserID`, `BakeryItemID`, `ItemQuantity`, `ItemAmount`) values (?, ?, ?, ?)";
+	private static final String UPDATE_CART = 
+			"UPDATE `Carts` SET `ItemQuantity` =?, `ItemAmount`=? where `UserID`=? And `BakeryItemID`=?";
+	private static final String GET_BAKERYITEM_BY_USERID = 
+			"SELECT `ItemQuantity` FROM `Carts` WHERE `UserID`=? AND `BakeryItemID`=?";
 	private static final String DELETE_CART = 
 			"DELETE FROM `Carts` WHERE `UserID`=?";
 	
@@ -192,47 +197,75 @@ public class DbConnector {
 		return bakeryItem;
 	}
 	
-	/* Check Cart */
+	/* Get Cart */
 	public Cart getCart(String userID) throws Exception {
 		Cart cart = new Cart();
-		try (PreparedStatement ps = connection.prepareStatement(CHECK_CART);) {
-            ps.setString(1, userID);
+		try (PreparedStatement ps = connection.prepareStatement(GET_CART);) {
+            ps.setInt(1, Integer.parseInt(userID));
             System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
             	Integer itemId = rs.getInt("BakeryItemID");
             	Integer itemQuantity = rs.getInt("ItemQuantity");
-            	BakeryItem item = getItem(itemId);
-            	cart.addItem(item);
-            	cart.setItemQty(itemQuantity);
+            	BakeryItem bakeryItem = getItem(itemId);
+            	CartItem cartItem = new CartItem(bakeryItem, itemQuantity);
+            	cart.addItem(cartItem);
+            }
+        } catch(SQLException e) {
+           e.printStackTrace();
+           throw new SQLException(e);
+        }
+		return cart;
+	}
+	
+	
+	// Add To Cart
+	public boolean addToCart(String userID, String bakeryItemID, String quantity) throws Exception{
+		boolean isAdded = false;
+		BakeryItem bakeryItem = getItem(Integer.parseInt(bakeryItemID));
+		Integer itemQuantity = 0;
+		
+		try (PreparedStatement ps = connection.prepareStatement(GET_BAKERYITEM_BY_USERID);) {
+            ps.setInt(1, Integer.parseInt(userID));
+            ps.setInt(2, Integer.parseInt(bakeryItemID));
+            System.out.println(ps);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+            	itemQuantity = rs.getInt("ItemQuantity");
             }
         } catch(SQLException e) {
            e.printStackTrace();
            throw new SQLException(e);
         }
 		
-		return cart;
-	}
-	
-	/* Save to Cart */
-	public boolean addToCart(Integer userID, Cart cart) throws Exception{
-		    boolean isAdded = false;
-
-			try(PreparedStatement ps = connection.prepareStatement(ADD_CART)){
-				for (BakeryItem b: cart.getItemList()) {
-					ps.setInt(1, userID);
-					ps.setInt(2, b.getBakeryItemId());
-					ps.setInt(3, cart.getItemQty());
-					ps.setFloat(4, b.getPrice());
-					ps.executeUpdate();
-				}
+		if(itemQuantity > 0) {
+			try(PreparedStatement ps = connection.prepareStatement(UPDATE_CART)){
+				ps.setInt(1, itemQuantity + Integer.parseInt(quantity));
+				ps.setFloat(2, (itemQuantity + Integer.parseInt(quantity)) * bakeryItem.getPrice());
+				ps.setInt(3, Integer.parseInt(userID));
+				ps.setInt(4, Integer.parseInt(bakeryItemID));
+				ps.executeUpdate();
 				isAdded = true;
 			} catch (SQLException e) {
 				isAdded = false;
 				throw new SQLException(e);
+			}
+		} else {
+			try(PreparedStatement ps = connection.prepareStatement(ADD_CART)){
+				ps.setInt(1, Integer.parseInt(userID));
+				ps.setInt(2, Integer.parseInt(bakeryItemID));
+				ps.setInt(3, Integer.parseInt(quantity));
+				ps.setFloat(4, bakeryItem.getPrice() * Integer.parseInt(quantity));
+				ps.executeUpdate();
+				isAdded = true;
+			} catch (SQLException e) {
+				isAdded = false;
+				throw new SQLException(e);
+			}
 		}
 		return isAdded;
 	}
+	
 	
 	/* Clear User Cart */
 	public boolean clearUserCart(Integer userID) throws Exception{
