@@ -4,6 +4,9 @@
 -- ------------------------------------------------------
 -- Server version	8.0.25
 
+CREATE SCHEMA IF NOT EXISTS obs;
+USE obs; 
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -18,9 +21,6 @@
 --
 -- Table structure for table `BakeryItems`
 --
-CREATE SCHEMA IF NOT EXISTS obs;
-USE obs; 
-
 
 DROP TABLE IF EXISTS `BakeryItems`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -59,13 +59,12 @@ CREATE TABLE `Carts` (
   `BakeryItemID` int NOT NULL,
   `ItemQuantity` int NOT NULL,
   `ItemAmount` decimal(10,3) DEFAULT NULL,
-  `Status` char(10) NOT NULL,
   PRIMARY KEY (`EntryId`),
   KEY `FKCartsUser` (`UserID`),
   KEY `FKCartsBakeryItem` (`BakeryItemID`),
   CONSTRAINT `FKCartsBakeryItem` FOREIGN KEY (`BakeryItemID`) REFERENCES `BakeryItems` (`BakeryItemID`),
   CONSTRAINT `FKCartsUser` FOREIGN KEY (`UserID`) REFERENCES `Users` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,6 +73,7 @@ CREATE TABLE `Carts` (
 
 LOCK TABLES `Carts` WRITE;
 /*!40000 ALTER TABLE `Carts` DISABLE KEYS */;
+INSERT INTO `Carts` VALUES (4,2,12,1,16.000);
 /*!40000 ALTER TABLE `Carts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,8 +85,7 @@ DROP TABLE IF EXISTS `Orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Orders` (
-  `EntryID` int NOT NULL AUTO_INCREMENT,
-  `OrderID` varchar(50) NOT NULL,
+  `OrderID` int NOT NULL AUTO_INCREMENT,
   `UserID` int NOT NULL,
   `BakeryItemID` int NOT NULL,
   `PaymentID` int NOT NULL,
@@ -94,14 +93,14 @@ CREATE TABLE `Orders` (
   `Amount` decimal(10,3) NOT NULL,
   `OrderDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `DeliveryMode` char(5) NOT NULL,
-  PRIMARY KEY (`EntryID`),
+  PRIMARY KEY (`OrderID`),
   KEY `OrdersProduct` (`BakeryItemID`),
   KEY `OrdersPayment_idx` (`PaymentID`),
   KEY `OrdersUser` (`UserID`),
   CONSTRAINT `OrdersPayment` FOREIGN KEY (`PaymentID`) REFERENCES `Payments` (`PaymentID`),
   CONSTRAINT `OrdersProduct` FOREIGN KEY (`BakeryItemID`) REFERENCES `BakeryItems` (`BakeryItemID`),
   CONSTRAINT `OrdersUser` FOREIGN KEY (`UserID`) REFERENCES `Users` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,4 +175,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-24 19:14:12
+-- Dump completed on 2022-11-24 19:42:12
