@@ -50,7 +50,7 @@
 					<form id="form" class="form-inline" action=""
 						 method="POST" >
 						<input hidden class="form-control mr-sm-2" type="text"
-							name="bookid" value="${item.getBakeryItemId()}" aria-label="bakeryItemId">
+							name="bakeryItemId" value="${item.getBakeryItemId()}" aria-label="bakeryItemId">
 						<input hidden class="form-control mr-sm-2" type="text"
 							name="userID" value="${userID}" aria-label="userID"> <input
 							hidden class="form-control mr-sm-2" type="text" name="userName"
