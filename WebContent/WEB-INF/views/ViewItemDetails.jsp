@@ -13,7 +13,7 @@
 <body class="bg-secondary">
 <header>
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
-			<a class="navbar-brand text-white">OBS</a>
+			<a class="navbar-brand text-white" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">OBS</a>
 			
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
