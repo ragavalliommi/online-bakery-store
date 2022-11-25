@@ -15,8 +15,8 @@
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-light bg-light justify-content-between">
-			<a class="navbar-brand">OBS</a>
+		<nav class="navbar navbar-dark bg-dark justify-content-between">
+			<a class="navbar-brand text-white">OBS</a>
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
 					<a id="name" data-name="${userName}"
