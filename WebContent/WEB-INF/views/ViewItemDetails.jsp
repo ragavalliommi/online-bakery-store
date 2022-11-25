@@ -18,7 +18,7 @@
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
 					<a id="name" data-name="${userName}"
-						class="navbar-brand text-white rounded bg-dark"> <i
+						class="navbar-brand text-white rounded p-2"> <i
 						class="bi bi-person-circle"></i> <c:out value="${userName}" />
 					</a> <a id="collection" class="btn btn-dark" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}"> <i
 						class="bi bi-collection-fill"></i>
