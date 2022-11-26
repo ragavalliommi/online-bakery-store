@@ -10,6 +10,7 @@ public class User {
 	private String password;
 	private String deliveryAddress;
 	
+
 	public User(String userName, String phone, String email, String password) {
 		this.userID = UUID.randomUUID().toString();
 		this.userName = userName;
@@ -26,6 +27,15 @@ public class User {
 		this.password = null; // we are not hashing the password
 	}
 	
+	
+	public User(String userID, String userName, String phone, String email, String deliveryAddress) {
+		super();
+		this.userID = userID;
+		this.userName = userName;
+		this.phone = phone;
+		this.email = email;
+		this.deliveryAddress = deliveryAddress;
+	}
 
 	public String getUserID() {
 		return userID;
