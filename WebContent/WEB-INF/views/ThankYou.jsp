@@ -15,17 +15,28 @@
 </head>
 <body>
 <header>
-		Thank you page
+		<nav class="navbar navbar-dark bg-dark justify-content-between">
+			<a class="navbar-brand text-white" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">OBS</a>
+			<c:if test="${userID!=null&&userName!=null}">
+				<div>
+					<a id="name" data-name="${userName}"
+						class="navbar-brand text-white rounded p-2"> <i
+						class="bi bi-person-circle"></i> <c:out value="${userName}" />
+					</a> <a id="collection" class="btn btn-dark" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}"> <i
+						class="bi bi-collection-fill"></i>
+					</a> <a id="cart" class="btn btn-dark"
+						href="http://localhost:8080/obs/cart?userID=${userID}&userName=${userName}">
+						<i class="bi bi-cart4"></i>
+					</a>
+					<button id="logout" class="btn btn-dark">
+						<i class="bi bi-box-arrow-right"></i>
+					</button>
+				</div>
+
+			</c:if>
+		</nav>
 	</header>
 	
-    <div class="bg-light py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong
-                        class="text-black">Thank you</strong></div>
-            </div>
-        </div>
-    </div>
 
     <div class="site-section">
         <div class="container">
@@ -33,8 +44,8 @@
                 <div class="col-md-12 text-center">
                     <span class="icon-check_circle display-3 text-success"></span>
                     <h2 class="display-3 text-black">Thank you!</h2>
-                    <p class="lead mb-5">You order was successfuly completed.</p>
-                    <p><a href="shop" class="btn btn-sm btn-primary">Back to shop</a></p>
+                    <p class="lead mb-5">You order is successfully placed.</p>
+                    <p><a href="shop" class="btn btn-sm btn-primary">Continue shopping</a></p>
                 </div>
             </div>
         </div>
