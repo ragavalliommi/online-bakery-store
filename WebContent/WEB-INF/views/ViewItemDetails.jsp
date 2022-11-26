@@ -13,12 +13,12 @@
 <body class="bg-secondary">
 <header>
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
-			<a class="navbar-brand text-white">OBS</a>
+			<a class="navbar-brand text-white" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">OBS</a>
 			
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
 					<a id="name" data-name="${userName}"
-						class="navbar-brand text-white rounded bg-dark"> <i
+						class="navbar-brand text-white rounded p-2"> <i
 						class="bi bi-person-circle"></i> <c:out value="${userName}" />
 					</a> <a id="collection" class="btn btn-dark" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}"> <i
 						class="bi bi-collection-fill"></i>
@@ -50,7 +50,7 @@
 					<form id="form" class="form-inline" action=""
 						 method="POST" >
 						<input hidden class="form-control mr-sm-2" type="text"
-							name="bookid" value="${item.getBakeryItemId()}" aria-label="bakeryItemId">
+							name="bakeryItemId" value="${item.getBakeryItemId()}" aria-label="bakeryItemId">
 						<input hidden class="form-control mr-sm-2" type="text"
 							name="userID" value="${userID}" aria-label="userID"> <input
 							hidden class="form-control mr-sm-2" type="text" name="userName"
@@ -63,8 +63,9 @@
 						    <option value=4>4</option>
 						    <option value=5>5</option>
 						  </select>
-						<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Add
+						<button class="btn btn-outline-danger my-2 my-sm-0 mr-2" type="submit">Add
 							to Cart</button>
+							<a class="btn btn-success my-2 my-sm-0" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}"><i class="bi bi-arrow-left"></i> Back to All Products</a>
 					</form>
 				</div>
 			</div>
