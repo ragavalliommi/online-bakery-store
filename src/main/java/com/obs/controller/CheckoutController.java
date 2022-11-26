@@ -44,6 +44,23 @@ public class CheckoutController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//place order button - order save - payment page render
+		
+		// set credentials
+		if (request.getParameter("userID") != null) {
+			request.setAttribute("userID", request.getParameter("userID"));
+		}else {
+			request.setAttribute("userID", null);
+			
+		}
+		
+		if (request.getParameter("userName") != null) {
+			
+			request.setAttribute("userName", request.getParameter("userName"));
+		}else {
+			request.setAttribute("userName", null);
+			
+		}
+		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/ThankYou.jsp");
         requestDispatcher.forward(request, response);
 		

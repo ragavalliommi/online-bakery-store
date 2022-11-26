@@ -39,7 +39,7 @@
 
 	<div class="site-section">
         <div class="container">
-            <form class="row" method="post" action="checkout">
+            <form class="row" method="post" action="http://localhost:8080/obs/order?userID=${userID}&userName=${userName}">
                 <div class="col-md-6 mb-5 mb-md-0">
                     <h2 class="h3 mb-3 text-black">Billing Details</h2>
 
