@@ -44,6 +44,16 @@ public class DbConnector {
 	private static final String DELETE_CART = 
 			"DELETE FROM `Carts` WHERE `UserID`=?";
 	
+	//order queries
+	//save/insert order
+	
+	private static final String ADD_ORDER = 
+			"INSERT INTO `Orders`(`UserID`, `BakeryItemID`, `PaymentID`, `ItemQuantity`, `ItemAmount`, `DeliveryMode`) values (?, ?, ?, ?, ?, ?)";
+	
+	//get/read all orders
+	
+	//get/read one order
+	
 	public DbConnector() {
 		establishDatabaseConnection();
     }
@@ -309,6 +319,35 @@ public class DbConnector {
 		}
 				
 		return itemsData;
+	}
+	
+	
+	public boolean placeOrder(User user) throws Exception{
+		Class.forName("com.mysql.jdbc.Driver");
+
+			Connection connection = DriverManager
+		
+				.getConnection(jdbcURl, jdbcUsername, jdbcPassword);
+
+				// Step 2:Create a statement using connection object
+			try(PreparedStatement preparedStatement = connection
+						.prepareStatement(ADD_ORDER);) {
+			preparedStatement.setString(1, user.getUserName());
+			preparedStatement.setString(2, user.getEmail());
+			preparedStatement.setString(3, user.getPhone());
+			preparedStatement.setString(4, user.getPassword());
+			preparedStatement.setString(5, user.getDeliveryAddress());
+			preparedStatement.setString(6, user.getDeliveryAddress());
+			
+			System.out.println(preparedStatement);
+			preparedStatement.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			System.out.println(e);
+            return false;
+		}
+		return true;
 	}
 	
 	

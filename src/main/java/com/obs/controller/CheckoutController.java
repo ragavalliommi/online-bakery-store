@@ -13,13 +13,30 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ChcekoutController
  */
-@WebServlet("/checkout")
+@WebServlet("/order")
 public class CheckoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//checkout button - check out page render
+		
+		// set credentials
+				if (request.getParameter("userID") != null) {
+					request.setAttribute("userID", request.getParameter("userID"));
+				}else {
+					request.setAttribute("userID", null);
+					
+				}
+				
+				if (request.getParameter("userName") != null) {
+					
+					request.setAttribute("userName", request.getParameter("userName"));
+				}else {
+					request.setAttribute("userName", null);
+					
+				}
+		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/Checkout.jsp");
 		requestDispatcher.forward(request, response);
 	}
