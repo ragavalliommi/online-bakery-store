@@ -32,6 +32,9 @@ public class DbConnector {
 	private static final String SELECT_ALL_ITEMS =
 			"SELECT `BakeryItemId`,`Description`,`ImageURL`,`ItemName`, `ItemSize`, `Price` FROM BakeryItems";
 	
+	private static final String GET_USER_BY_ID = 
+			"SELECT * FROM `Users` WHERE `UserID`=? LIMIT 1";
+	
 	// cart queries
 	private static final String GET_CART = 
 			"SELECT `BakeryItemID`,`ItemQuantity` FROM `Carts` WHERE `UserID`=?";
@@ -44,15 +47,6 @@ public class DbConnector {
 	private static final String DELETE_CART = 
 			"DELETE FROM `Carts` WHERE `UserID`=?";
 	
-	//order queries
-	//save/insert order
-	
-	private static final String ADD_ORDER = 
-			"INSERT INTO `Orders`(`UserID`, `BakeryItemID`, `PaymentID`, `ItemQuantity`, `ItemAmount`, `DeliveryMode`) values (?, ?, ?, ?, ?, ?)";
-	
-	//get/read all orders
-	
-	//get/read one order
 	
 	public DbConnector() {
 		establishDatabaseConnection();
@@ -128,6 +122,28 @@ public class DbConnector {
 		
 		return existingUser;
 	}
+	
+	public User getUserByID(String userID) throws SQLException {
+		User user = null;
+		try (PreparedStatement ps = connection.prepareStatement(GET_USER_BY_ID);) {
+            ps.setString(1, userID);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+            	String userName = rs.getString("UserName");
+            	String phone = rs.getString("Phone");
+                String email = rs.getString("Email");
+                String deliveryAddress = rs.getString("DeliveryAddress");
+                user = new User(userID, userName, phone, email, deliveryAddress);
+            }
+        } catch(SQLException e) {
+           e.printStackTrace();
+           throw new SQLException(e);
+        }
+		
+		return user;
+	}
+
 	
 	public List<BakeryItem> getItems(String searchString) throws Exception{
 		List<BakeryItem> items = new ArrayList<>();
@@ -322,33 +338,82 @@ public class DbConnector {
 	}
 	
 	
-	public boolean placeOrder(User user) throws Exception{
-		Class.forName("com.mysql.jdbc.Driver");
-
-			Connection connection = DriverManager
+	
+	//order queries
+		//save/insert order
+		//fix DB for order
+		//incorporate payment into order table
 		
-				.getConnection(jdbcURl, jdbcUsername, jdbcPassword);
+		private static final String ADD_ORDER = 
+				"INSERT INTO `Orders` (userID, order_total) VALUES (?, ?);";
+		
+		private static final String ADD_ORDER_DETAIL = 
+				"INSERT INTO `order_detail` (orderID, bakeryItemID, quantity, price) VALUES (?, ?, ?, ?);";
+		
+		private static final String GET_ORDER = 
+				"SELECT order_id FROM `order` ORDER BY order_id DESC LIMIT 1";
+		//get/read all orders
+		
+		//get/read one order
+		
+		// Method to insert order information to database.
+	    public void createOrder(int userID, double totalPrice, List<CartItem> cartItems) {
 
-				// Step 2:Create a statement using connection object
-			try(PreparedStatement preparedStatement = connection
-						.prepareStatement(ADD_ORDER);) {
-			preparedStatement.setString(1, user.getUserName());
-			preparedStatement.setString(2, user.getEmail());
-			preparedStatement.setString(3, user.getPhone());
-			preparedStatement.setString(4, user.getPassword());
-			preparedStatement.setString(5, user.getDeliveryAddress());
-			preparedStatement.setString(6, user.getDeliveryAddress());
-			
-			System.out.println(preparedStatement);
-			preparedStatement.executeUpdate();
-			
-			
-		} catch (SQLException e) {
-			System.out.println(e);
-            return false;
-		}
-		return true;
-	}
-	
-	
+	   
+	        try(PreparedStatement preparedStatement = connection.prepareStatement(ADD_ORDER);) {
+	            
+	            
+	            preparedStatement.setInt(1, userID);
+	            preparedStatement.setDouble(2, totalPrice);
+	            preparedStatement.executeUpdate();
+
+	        } catch (Exception e) {
+	            System.out.println("Create order catch:");
+	            System.out.println(e.getMessage());
+	        }
+
+	        // Call create order detail method.
+	        createOrderDetail(cartItems);
+	    }
+	    
+	 // Method to get last order id in database.
+	    public int getLastOrderId() {
+	       
+	        int orderId = 0;
+	        try(PreparedStatement preparedStatement = connection.prepareStatement(GET_ORDER);) {
+	            
+	            ResultSet resultSet = preparedStatement.executeQuery();
+	            if (resultSet.next()) {
+	                orderId = resultSet.getInt(1);
+	            }
+	        } catch (Exception e) {
+	            System.out.println(e.getMessage());
+	        }
+	        return orderId;
+	    }
+	    
+		// Method to insert order detail information.
+	    private void createOrderDetail(List<CartItem> cartItems) {
+	     
+	        // Get latest orderId to insert list of cartProduct to order.
+	        int orderId = getLastOrderId();
+	        
+	        for (CartItem cartItem : cartItems) {
+	           
+	            try (PreparedStatement preparedStatement = connection.prepareStatement(ADD_ORDER_DETAIL);){
+	                
+	                preparedStatement.setInt(1, orderId);
+	                preparedStatement.setInt(2, cartItem.getBakeryItem().getBakeryItemId());
+	                preparedStatement.setInt(3, cartItem.getItemQty());
+	                preparedStatement.setDouble(4, cartItem.getBakeryItem().getPrice());
+	                preparedStatement.executeUpdate();
+	            } catch (Exception e) {
+	                System.out.println("Create order_detail catch:");
+	                System.out.println(e.getMessage());
+	            }
+	        }
+	    }
 }
+
+	    
+	

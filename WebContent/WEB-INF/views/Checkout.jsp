@@ -36,6 +36,10 @@
 			</c:if>
 		</nav>
 	</header>
+	
+	<div class="container">
+	<p></p>
+	</div>
 
 	<div class="site-section">
         <div class="container">
@@ -43,24 +47,15 @@
                 <div class="col-md-6 mb-5 mb-md-0">
                     <h2 class="h3 mb-3 text-black">Billing Details</h2>
 
-                    <div class="p-3 p-lg-5 border">
+                    <div class="p-2 p-lg-4 border">
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="first-name" class="text-black">
-                                    First Name <span class="text-danger">*</span>
+                                <label for="name" class="text-black">
+                                    Name <span class="text-danger">*</span>
                                 </label>
 
-                                <input type="text" class="form-control" id="first-name" name="first-name"
-                                       value="${account.firstName}" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="last-name" class="text-black">
-                                    Last Name <span class="text-danger">*</span>
-                                </label>
-
-                                <input type="text" class="form-control" id="last-name" name="last-name"
-                                       value="${account.lastName}" required>
+                                <input type="text" class="form-control" id="name" name="name"
+                                       value="${userName}" required>
                             </div>
                         </div>
 
@@ -71,7 +66,7 @@
                                 </label>
 
                                 <input type="text" class="form-control" id="address" name="address"
-                                       value="${account.address}" required>
+                                       value="${user.getDeliveryAddress()}" required>
                             </div>
                         </div>
 
@@ -82,7 +77,7 @@
                                 </label>
 
                                 <input type="text" class="form-control" id="email" name="email"
-                                       value="${account.email}" required>
+                                       value="${user.getEmail()}" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="phone" class="text-black">
@@ -90,51 +85,53 @@
                                 </label>
 
                                 <input type="text" class="form-control" id="phone" name="phone"
-                                       value="${account.phone}" required>
+                                       value="${user.getPhone()}" required>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                
+               
                 <div class="col-md-6">
                     <div class="row mb-5">
                         <div class="col-md-12">
                             <h2 class="h3 mb-3 text-black">Your Order</h2>
 
-                            <div class="p-3 p-lg-5 border">
-                                <table class="table site-block-order-table mb-5">
+                            <div class="p-2 p-lg-3 border">
+                                <table class="table site-block-order-table mb-6">
                                     <thead>
                                     <tr>
-                                        <th style="text-align: center">Product</th>
-                                        <th style="text-align: center">Price</th>
+                                        <th style="text-align: center">Name</th>
                                         <th style="text-align: center">Quantity</th>
-                                        <th style="text-align: center">Total</th>
+                                        <th style="text-align: center">Price</th>
+                                        <th style="text-align: center">Image</th>
                                     </tr>
                                     </thead>
 
                                     <tbody>
-                                    <c:forEach items="${order.cartProducts}" var="o">
+                                    <c:forEach items="${cart_data}" var="item">
                                         <tr>
                                             <td>
-                                                <input name="product-name" class="form-control-plaintext h5 text-black"
-                                                       value="${o.product.name}" style="text-align: center" readonly>
+                                                <input name="product-name" class="form-control-plaintext h6 text-black"
+                                                       value="${item.getBakeryItem().getItemName()}" style="text-align: center" readonly>
                                             </td>
 
-                                            <td>
-                                                <input name="product-price" class="form-control-plaintext h5 text-black"
-                                                       value="${o.price}" style="text-align: center" readonly>
-                                            </td>
 
                                             <td>
                                                 <input name="product-quantity"
-                                                       class="form-control-plaintext h5 text-black"
-                                                       value="${o.quantity}" style="text-align: center" readonly>
+                                                       class="form-control-plaintext h6 text-black"
+                                                       value="${item.getItemQty()}" style="text-align: center" readonly>
                                             </td>
+                                           
 
                                             <td>
-                                                <input name="product-total" class="form-control-plaintext h5 text-black"
-                                                       value="${o.price * o.quantity}" style="text-align: center"
+                                                <input name="product-total" class="form-control-plaintext h6 text-black"
+                                                       value=$${item.getBakeryItem().getPrice() * item.getItemQty()} style="text-align: center"
                                                        readonly>
+                                            </td>
+                                            
+                                             <td>
+                                                <img class="img-fluid mx-auto img-thumbnail mb-2" style="max-height: 75px;" src="${item.getBakeryItem().getImageURL() }"></img>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -145,14 +142,14 @@
                                         <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
                                         <td class="text-black font-weight-bold">
                                             <input name="order-total-price" class="form-control-plaintext h5 text-black"
-                                                   value="${total_price}" style="text-align: center" readonly>
+                                                   value=$${cart_value} style="text-align: center" readonly>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">
+                                    <button type="submit" class="btn btn-primary btn-lg py-2 btn-block">
                                         Place Order
                                     </button>
                                 </div>
@@ -163,7 +160,8 @@
             </form>
         </div>
     </div>
-
+    
+        
 	<div id="userid" hidden=true data-userid="${_userid}"></div>
 
 	<script>
