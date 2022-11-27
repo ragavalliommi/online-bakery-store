@@ -1,6 +1,7 @@
 package com.obs.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.obs.dao.DbConnector;
+
+import com.obs.model.Order;
+
+
 /**
  * Servlet implementation class OrderHistoryController
  */
@@ -16,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class OrderHistoryController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	private DbConnector orderHistoryDao = DbConnector.getInstance();
     
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,6 +47,16 @@ public class OrderHistoryController extends HttpServlet {
 					
 				}
 				
+				String userID = request.getParameter("userID");
+				
+				try {
+					List<Order> ordersList =  orderHistoryDao.getOrderHistory(userID);
+					request.setAttribute("order_history", ordersList);	
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/OrderHistory.jsp");
 		requestDispatcher.forward(request, response);
 	}
@@ -51,5 +68,6 @@ public class OrderHistoryController extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
 
 }

@@ -37,21 +37,16 @@
 		</nav>
 	</header>
 	
+	<div class="container">
+	<p></p>
+	</div>
+	
 	<div class="site-wrap">
-
-    <div class="bg-light py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong
-                        class="text-black">Order history</strong></div>
-            </div>
-        </div>
-    </div>
-
     <div class="site-section" data-aos="fade-in">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Order History</h2>
                     <div class="site-blocks-table">
                         <table class="table table-bordered">
                             <thead>
@@ -59,20 +54,23 @@
                                 <th>ID</th>
                                 <th>Total</th>
                                 <th>Date</th>
+                                <th>Delivery Mode</th>
                                 <th style="min-width: 195px">Detail</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${order_list}" var="o">
+                            <c:forEach items="${order_history}" var="o">
                                 <tr>
-                                    <td>${o.id}</td>
+                                    <td>${o.getOrderId()}</td>
 
-                                    <td>$${o.total}</td>
+                                    <td>$${o.getAmount()}</td>
 
-                                    <td>${o.date}</td>
+                                    <td>${o.getOrderDate()}</td>
+                                    
+                                    <td>${o.getDeliveryMode()}</td>
 
                                     <td>
-                                        <a href="order-detail?order-id=${o.id}" class="btn btn-primary btn-sm"
+                                        <a href="http://localhost:8080/obs/orderDetail?userID=${userID}&userName=${userName}&orderid=${o.getOrderId()}" class="btn btn-primary btn-md"
                                            style="background-color: green ; border-color: green">
                                             <span class="icon icon-arrow-right"></span>
                                         </a>
@@ -83,7 +81,8 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            
+        </div>
         </div>
     </div>
 </div>

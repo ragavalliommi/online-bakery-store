@@ -10,12 +10,24 @@ public class Order {
 	private int quantity;
 	private float amount;
 	private String deliveryMode;
-	
+	private String orderDate;
 
 	public Order() {
 		super();
 	}
 	
+	
+
+	public Order(int orderId, float amount, String orderDate, String deliveryMode) {
+		super();
+		this.orderId = orderId;
+		this.amount = amount;
+		this.orderDate = orderDate;
+		this.deliveryMode = deliveryMode;
+	}
+
+
+
 
 	public int getOrderId() {
 		return orderId;
@@ -86,5 +98,14 @@ public class Order {
 		this.deliveryMode = deliveryMode;
 	}
 	
+	public String getOrderDate() {
+		return orderDate;
+	}
 
+
+
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
+	
 }

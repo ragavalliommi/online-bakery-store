@@ -351,6 +351,12 @@ public class DbConnector {
 		private static final String GET_ORDER_NUMBER = 
 				"SELECT MAX(entryID) as entryID FROM `Orders`;";
 		
+		private static final String GET_ORDER_HISTORY = 
+				"SELECT orderid, sum(amount) AS totalprice, orderdate, deliverymode FROM `Orders`"
+				+ "where userid = ?"
+				+ "group by orderid, orderdate, deliverymode;";
+		
+		
 		public int getOrderNumber() throws SQLException{
 			int maxEntryID = 0;
 			
@@ -386,6 +392,28 @@ public class DbConnector {
 			return isOrderInserted;
 		}
 		
+		public List<Order> getOrderHistory(String userID) throws SQLException {
+			List<Order> ordersList = new ArrayList<Order>();
+			try(PreparedStatement ps = connection.prepareStatement(GET_ORDER_HISTORY);){
+				ps.setString(1, userID);
+				ResultSet rs = ps.executeQuery();
+				while(rs.next()) {
+					
+					int orderId = rs.getInt("orderid");
+					float totalPrice = rs.getFloat("totalprice");
+					String orderDate = rs.getString("orderdate");
+					String deliveryMode = rs.getString("deliverymode");
+					
+					
+					Order orderSummary = new Order(orderId, totalPrice, orderDate, deliveryMode);
+					ordersList.add(orderSummary);
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return ordersList;
+		}
 		
 		
 
