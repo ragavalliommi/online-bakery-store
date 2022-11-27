@@ -5,15 +5,15 @@ import org.junit.Test;
 import com.obs.model.*;
 
 public class CartTests {
-	Cart cart;
+	static Cart cart;
 	
 	@BeforeClass
-	public void setup() {
+	public static void setup() {
 		cart = new Cart();
 	}
 	
 	@AfterClass
-	public void cleanup() {
+	public static void cleanup() {
 		
 	}
 	
