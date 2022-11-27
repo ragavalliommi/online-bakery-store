@@ -1,4 +1,4 @@
-package com.obs.tests;
+package com.obs.model.test;
 
 public class BakeryItemTest {
 
