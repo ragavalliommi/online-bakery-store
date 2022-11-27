@@ -1,4 +1,4 @@
-package com.obs.tests;
+package com.obs.model.test;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
