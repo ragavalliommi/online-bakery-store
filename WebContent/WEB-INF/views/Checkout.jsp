@@ -44,58 +44,11 @@
 	<div class="site-section">
         <div class="container">
             <form class="row" method="post" action="http://localhost:8080/obs/order?userID=${userID}&userName=${userName}">
-                <div class="col-md-6 mb-5 mb-md-0">
-                    <h2 class="h3 mb-3 text-black">Billing Details</h2>
-
-                    <div class="p-2 p-lg-4 border">
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="name" class="text-black">
-                                    Name <span class="text-danger">*</span>
-                                </label>
-
-                                <input type="text" class="form-control" id="name" name="name"
-                                       value="${userName}" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label for="address" class="text-black">
-                                    Address <span class="text-danger">*</span>
-                                </label>
-
-                                <input type="text" class="form-control" id="address" name="address"
-                                       value="${user.getDeliveryAddress()}" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-5">
-                            <div class="col-md-6">
-                                <label for="email" class="text-black">
-                                    Email Address <span class="text-danger">*</span>
-                                </label>
-
-                                <input type="text" class="form-control" id="email" name="email"
-                                       value="${user.getEmail()}" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="phone" class="text-black">
-                                    Phone <span class="text-danger">*</span>
-                                </label>
-
-                                <input type="text" class="form-control" id="phone" name="phone"
-                                       value="${user.getPhone()}" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 
-               
                 <div class="col-md-6">
                     <div class="row mb-5">
                         <div class="col-md-12">
-                            <h2 class="h3 mb-3 text-black">Your Order</h2>
+                            <h2 class="h3 mb-3 text-black">Order Summary</h2>
 
                             <div class="p-2 p-lg-3 border">
                                 <table class="table site-block-order-table mb-6">
@@ -148,15 +101,129 @@
                                     </tbody>
                                 </table>
 
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-lg py-2 btn-block">
-                                        Place Order
-                                    </button>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <div class="col-md-6 mb-5 mb-md-0">
+                    <h2 class="h3 mb-3 text-black">Billing Details</h2>
+
+                    <div class="p-2 p-lg-4 border">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="name" class="text-black">
+                                    Name <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" class="form-control" id="name" name="name"
+                                       value="${userName}" required readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="address" class="text-black">
+                                    Delivery/ Billing Address <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" class="form-control" id="address" name="address"
+                                       value="${user.getDeliveryAddress()}" required readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-5">
+                            <div class="col-md-6">
+                                <label for="email" class="text-black">
+                                    Email Address <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" class="form-control" id="email" name="email"
+                                       value="${user.getEmail()}" required readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="text-black">
+                                    Phone <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" class="form-control" id="phone" name="phone"
+                                       value="${user.getPhone()}" required readonly>
+                            </div>
+                        </div>
+                        	<div class="form-check">
+							  <input class="form-check-input" type="radio" name="flexRadioDefault" id="pickup" value="pickup" onclick="ShowHideDiv()">
+							  <label class="form-check-label" for="pickup">
+							    Pick up
+							  </label>
+							</div>
+							<div id="dvtext" style="display: none">
+	    					<span class="text-info">Please pick up the order at Dallas</span>
+							</div>
+							<div class="form-check">
+							  <input class="form-check-input" type="radio" name="flexRadioDefault" id="delivery" value="delivery" checked onclick="ShowHideDiv()">
+							  <label class="form-check-label" for="delivery">
+							    Delivery
+							  </label>
+							</div>
+							<hr>
+							<h4 class="h4 mb-3 text-black">Payment info</h4>
+                         <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="card_name" class="text-black">
+                                    Name on Card
+                                </label>
+
+                                <input type="text" class="form-control" id="card_name" name="card_name"
+                                       placeholder="Name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="card_no" class="text-black">
+                                    Card Number
+                                </label>
+
+                                <input type="text" class="form-control" id="card_no" name="card_n0"
+                                       placeholder="Card Number" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="card_expiry" class="text-black">
+                                    Expiry
+                                </label>
+
+                                <input type="text" class="form-control" id="card_expiry" name="card_expiry"
+                                       placeholder="MM/YY" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="card_cvv" class="text-black">
+                                    CVV
+                                </label>
+
+                                <input type="text" class="form-control" id="card_cvv" name="card_cvv"
+                                       placeholder="CVV" required>
+                            </div>
+                        </div>
+                  
+					</div>
+                        
+                    </div>
+                    <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-lg py-2 btn-block">
+                                        Place Order
+                                    </button>
+                       	</div>
+                </div>
+                
+               
+                
             </form>
         </div>
     </div>
@@ -184,6 +251,12 @@
 				}
 			});
 		}
+		
+		function ShowHideDiv() {
+	        var chkYes = document.getElementById("pickup");
+	        var dvtext = document.getElementById("dvtext");
+	        dvtext.style.display = chkYes.checked ? "block" : "none";
+	    }
 	</script>
 </body>
 </html>
