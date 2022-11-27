@@ -70,7 +70,7 @@
                                     <td>${o.getDeliveryMode()}</td>
 
                                     <td>
-                                        <a href="http://localhost:8080/obs/orderDetail?userID=${userID}&userName=${userName}&orderid=${o.getOrderId()}" class="btn btn-primary btn-md"
+                                        <a href="http://localhost:8080/obs/orderDetail?userID=${userID}&userName=${userName}&orderID=${o.getOrderId()}" class="btn btn-primary btn-md"
                                            style="background-color: green ; border-color: green">
                                             <span class="icon icon-arrow-right"></span>
                                         </a>

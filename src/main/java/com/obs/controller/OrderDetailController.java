@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.obs.dao.DbConnector;
+import com.obs.model.Cart;
+
 /**
  * Servlet implementation class OrderDetailController
  */
@@ -16,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class OrderDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-  
+	private DbConnector orderDetailDao = DbConnector.getInstance();
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -38,6 +41,16 @@ public class OrderDetailController extends HttpServlet {
 			request.setAttribute("userName", null);
 			
 		}
+		String userID = request.getParameter("userID");
+		String orderID = request.getParameter("orderID");
+		Cart cart = null;
+		try {
+			cart = orderDetailDao.getCart(userID, orderID);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("cart_data", cart.getCartItems());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/OrderDetail.jsp");
 		requestDispatcher.forward(request, response);
 	}

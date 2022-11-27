@@ -416,6 +416,34 @@ public class DbConnector {
 		}
 		
 		
+		private static final String GET_ORDER_DETAIL =
+				"SELECT bakeryitemid, quantity FROM `Orders`"
+						+ "where orderid = ? AND userid = ?;";
+
+				
+		/* Get Cart */
+		public Cart getCart(String userID, String orderID) throws Exception {
+			Cart cart = new Cart();
+			try (PreparedStatement ps = connection.prepareStatement(GET_ORDER_DETAIL);) {
+	            ps.setInt(1, Integer.parseInt(orderID));
+	            ps.setInt(2, Integer.parseInt(userID));
+	            System.out.println(ps);
+	            ResultSet rs = ps.executeQuery();
+	            while(rs.next()) {
+	            	Integer itemId = rs.getInt("bakeryitemid");
+	            	Integer itemQuantity = rs.getInt("quantity");
+	            	BakeryItem bakeryItem = getItem(itemId);
+	            	CartItem cartItem = new CartItem(bakeryItem, itemQuantity);
+	            	cart.addItem(cartItem);
+	            }
+	        } catch(SQLException e) {
+	           e.printStackTrace();
+	           throw new SQLException(e);
+	        }
+			return cart;
+		}
+		
+		
 
 }
 
