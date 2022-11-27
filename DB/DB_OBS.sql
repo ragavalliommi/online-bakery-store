@@ -1,11 +1,10 @@
--- MySQL dump 10.13  Distrib 8.0.25, for macos11 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `obs` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `obs`;
+-- MySQL dump 10.13  Distrib 8.0.31, for macos12 (x86_64)
 --
 -- Host: 127.0.0.1    Database: obs
 -- ------------------------------------------------------
 -- Server version	8.0.25
-
-CREATE SCHEMA IF NOT EXISTS obs;
-USE obs; 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -64,7 +63,7 @@ CREATE TABLE `Carts` (
   KEY `FKCartsBakeryItem` (`BakeryItemID`),
   CONSTRAINT `FKCartsBakeryItem` FOREIGN KEY (`BakeryItemID`) REFERENCES `BakeryItems` (`BakeryItemID`),
   CONSTRAINT `FKCartsUser` FOREIGN KEY (`UserID`) REFERENCES `Users` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +72,7 @@ CREATE TABLE `Carts` (
 
 LOCK TABLES `Carts` WRITE;
 /*!40000 ALTER TABLE `Carts` DISABLE KEYS */;
-INSERT INTO `Carts` VALUES (4,2,12,1,16.000);
+INSERT INTO `Carts` VALUES (4,2,12,1,16.000),(15,3,10,1,25.000);
 /*!40000 ALTER TABLE `Carts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,22 +84,23 @@ DROP TABLE IF EXISTS `Orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Orders` (
-  `OrderID` int NOT NULL AUTO_INCREMENT,
+  `OrderID` int NOT NULL,
   `UserID` int NOT NULL,
   `BakeryItemID` int NOT NULL,
-  `PaymentID` int NOT NULL,
+  `PaymentID` int DEFAULT NULL,
   `Quantity` int NOT NULL,
   `Amount` decimal(10,3) NOT NULL,
   `OrderDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `DeliveryMode` char(5) NOT NULL,
-  PRIMARY KEY (`OrderID`),
+  `DeliveryMode` varchar(20) NOT NULL,
+  `entryID` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`entryID`),
   KEY `OrdersProduct` (`BakeryItemID`),
   KEY `OrdersPayment_idx` (`PaymentID`),
   KEY `OrdersUser` (`UserID`),
   CONSTRAINT `OrdersPayment` FOREIGN KEY (`PaymentID`) REFERENCES `Payments` (`PaymentID`),
   CONSTRAINT `OrdersProduct` FOREIGN KEY (`BakeryItemID`) REFERENCES `BakeryItems` (`BakeryItemID`),
   CONSTRAINT `OrdersUser` FOREIGN KEY (`UserID`) REFERENCES `Users` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,6 +109,7 @@ CREATE TABLE `Orders` (
 
 LOCK TABLES `Orders` WRITE;
 /*!40000 ALTER TABLE `Orders` DISABLE KEYS */;
+INSERT INTO `Orders` VALUES (1,3,10,NULL,1,25.000,'2022-11-27 09:48:08','delivery',1),(1,3,11,NULL,1,20.000,'2022-11-27 09:48:08','delivery',2);
 /*!40000 ALTER TABLE `Orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +154,7 @@ CREATE TABLE `Users` (
   `DeliveryAddress` varchar(100) NOT NULL,
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `UserName` (`UserName`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +163,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (2,'biswa','biswa@gmail.com','4987839050','viswadip','2022-11-23 17:01:44','2022-11-23 17:01:44','Dallas');
+INSERT INTO `Users` VALUES (2,'biswa','biswa@gmail.com','4987839050','viswadip','2022-11-23 17:01:44','2022-11-23 17:01:44','Dallas'),(3,'Ameya','ameyapotey619@gmail.com','08056206901','ameyapotey','2022-11-24 23:38:39','2022-11-24 23:38:39','No.55, Lakshmi flats, 1st floor');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -175,4 +176,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-24 19:42:12
+-- Dump completed on 2022-11-27 10:01:52
