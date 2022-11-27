@@ -32,14 +32,17 @@
 						<i class="bi bi-box-arrow-right"></i>
 					</button>
 				</div>
-
 			</c:if>
 		</nav>
 	</header>
 	
-	<div class = "container">
+	<div class = "container" align="center">
+	  <h3 class="text-center text-white">Cart</h3>
 		<div class = "row">
-			<div class= "row mt-3 mb-3">
+			<div class= "mt-3 mb-6 col-md-2 mb-md-0">
+			
+			</div>
+			<div class= "mt-3 mb-6 col-md-8 mb-md-0">
 				<div class="list-group">
 					<table class = "table table-light table-striped table-bordered table-hover">
 						<thead class="thead-dark">
@@ -47,8 +50,8 @@
 								<th> Name </th>
 								<th> Quantity </th>
 							 	<th> Price </th>
-								<th>Image</th>
-							 	
+								<th> Image </th>
+								<th></th>
 							 </tr>
 						</thead>
 						<tbody>
@@ -56,14 +59,15 @@
 								<tr style="border: 1px solid black;">
 									<td><c:out value="${item.getBakeryItem().getItemName()}" /></td>
 									<td><c:out value="${item.getItemQty()}" /></td>
-									<td>$ <c:out value="${item.getBakeryItem().getPrice() * item.getItemQty()}" /></td>
+									<td>$<c:out value="${item.getBakeryItem().getPrice() * item.getItemQty()}" /></td>
 									<td><img class="img-fluid img-thumbnail mb-3" style="max-height: 75px;" src="${item.getBakeryItem().getImageURL() }"></img></td>
+									<td><a class="btn btn-sm" href="http://localhost:8080/obs/cart?userID=${userID}&userName=${userName}&itemID=${item.getBakeryItem().getBakeryItemId()}"><i class="bi bi-trash text-danger text-bold"></i></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 					<a class="btn btn-primary mb-3" href="http://localhost:8080/obs/order?userID=${userID}&userName=${userName}&value=${cart_value}">
-					Checkout : $ ${cart_value} </a>
+					Checkout : $${cart_value} </a>
 					<a class="btn btn-success" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">
 					Keep Shopping </a>
 				</div>
