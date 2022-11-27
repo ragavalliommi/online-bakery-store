@@ -12,6 +12,7 @@ import com.obs.model.BakeryItem;
 import com.obs.model.User;
 import com.obs.model.Cart;
 import com.obs.model.CartItem;
+import com.obs.model.Order;
 
 public class DbConnector {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
@@ -294,10 +295,10 @@ public class DbConnector {
 	
 	
 	/* Clear User Cart */
-	public boolean clearUserCart(Integer userID) throws Exception{
+	public boolean clearUserCart(String userID) throws Exception{
 		boolean isDeleted = false;
 		try(PreparedStatement ps = connection.prepareStatement(DELETE_CART)){
-			ps.setInt(1, userID);
+			ps.setString(1, userID);
 			ps.executeUpdate();
 			isDeleted = true;	
 		}
@@ -345,74 +346,49 @@ public class DbConnector {
 		//incorporate payment into order table
 		
 		private static final String ADD_ORDER = 
-				"INSERT INTO `Orders` (userID, order_total) VALUES (?, ?);";
+				"INSERT INTO `Orders` (orderID, userID, bakeryItemID, quantity, amount, deliverymode) VALUES (?, ?, ?, ?, ?, ?);";
 		
-		private static final String ADD_ORDER_DETAIL = 
-				"INSERT INTO `order_detail` (orderID, bakeryItemID, quantity, price) VALUES (?, ?, ?, ?);";
+		private static final String GET_ORDER_NUMBER = 
+				"SELECT MAX(entryID) as entryID FROM `Orders`;";
 		
-		private static final String GET_ORDER = 
-				"SELECT order_id FROM `order` ORDER BY order_id DESC LIMIT 1";
-		//get/read all orders
-		
-		//get/read one order
-		
-		// Method to insert order information to database.
-	    public void createOrder(int userID, double totalPrice, List<CartItem> cartItems) {
+		public int getOrderNumber() throws SQLException{
+			int maxEntryID = 0;
+			
+			try(PreparedStatement ps = connection.prepareStatement(GET_ORDER_NUMBER);){
+				ResultSet rs = ps.executeQuery();
+				while(rs.next()) {
+					maxEntryID = rs.getInt("entryID");
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return maxEntryID;
+		}
 
-	   
-	        try(PreparedStatement preparedStatement = connection.prepareStatement(ADD_ORDER);) {
-	            
-	            
-	            preparedStatement.setInt(1, userID);
-	            preparedStatement.setDouble(2, totalPrice);
-	            preparedStatement.executeUpdate();
+		
+		public boolean insertOrder(Order order) throws SQLException{
+			boolean isOrderInserted = false;
+			
+			try(PreparedStatement ps = connection.prepareStatement(ADD_ORDER);){
+				ps.setInt(1, order.getOrderId());
+				ps.setString(2, order.getUserId());
+				ps.setInt(3, order.getBakeryItemId());
+				ps.setInt(4, order.getQuantity());
+				ps.setFloat(5, order.getAmount());
+				ps.setString(6, order.getDeliveryMode());
+				System.out.println(ps);
+				ps.executeUpdate();
+				isOrderInserted = true;	
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return isOrderInserted;
+		}
+		
+		
+		
 
-	        } catch (Exception e) {
-	            System.out.println("Create order catch:");
-	            System.out.println(e.getMessage());
-	        }
-
-	        // Call create order detail method.
-	        createOrderDetail(cartItems);
-	    }
-	    
-	 // Method to get last order id in database.
-	    public int getLastOrderId() {
-	       
-	        int orderId = 0;
-	        try(PreparedStatement preparedStatement = connection.prepareStatement(GET_ORDER);) {
-	            
-	            ResultSet resultSet = preparedStatement.executeQuery();
-	            if (resultSet.next()) {
-	                orderId = resultSet.getInt(1);
-	            }
-	        } catch (Exception e) {
-	            System.out.println(e.getMessage());
-	        }
-	        return orderId;
-	    }
-	    
-		// Method to insert order detail information.
-	    private void createOrderDetail(List<CartItem> cartItems) {
-	     
-	        // Get latest orderId to insert list of cartProduct to order.
-	        int orderId = getLastOrderId();
-	        
-	        for (CartItem cartItem : cartItems) {
-	           
-	            try (PreparedStatement preparedStatement = connection.prepareStatement(ADD_ORDER_DETAIL);){
-	                
-	                preparedStatement.setInt(1, orderId);
-	                preparedStatement.setInt(2, cartItem.getBakeryItem().getBakeryItemId());
-	                preparedStatement.setInt(3, cartItem.getItemQty());
-	                preparedStatement.setDouble(4, cartItem.getBakeryItem().getPrice());
-	                preparedStatement.executeUpdate();
-	            } catch (Exception e) {
-	                System.out.println("Create order_detail catch:");
-	                System.out.println(e.getMessage());
-	            }
-	        }
-	    }
 }
 
 	    

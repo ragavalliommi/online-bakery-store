@@ -1,39 +1,28 @@
 package com.obs.model;
 
-import java.sql.Date;
 
 public class Order {
 	
-	private String orderId = null;
-	private String userId = null;
-	private String bakeryItemId = null;
-	private String paymentId = null;
-	private int quantity = 0;
-	private float amount = 0.0f;
-	private Date orderDate = null;
-	private String deliveryMode = null;
+	private int orderId;
+	private String userId;
+	private int bakeryItemId;
+	//private String paymentId = null;
+	private int quantity;
+	private float amount;
+	private String deliveryMode;
 	
-	
-	public Order(String orderId, String userId, String bakeryItemId, String paymentId, int quantity, float amount,
-			Date orderDate, String deliveryMode) {
+
+	public Order() {
 		super();
-		this.orderId = orderId;
-		this.userId = userId;
-		this.bakeryItemId = bakeryItemId;
-		this.paymentId = paymentId;
-		this.quantity = quantity;
-		this.amount = amount;
-		this.orderDate = orderDate;
-		this.deliveryMode = deliveryMode;
 	}
+	
 
-
-	public String getOrderId() {
+	public int getOrderId() {
 		return orderId;
 	}
 
 
-	public void setOrderId(String orderId) {
+	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
 
@@ -48,24 +37,24 @@ public class Order {
 	}
 
 
-	public String getBakeryItemId() {
+	public int getBakeryItemId() {
 		return bakeryItemId;
 	}
 
 
-	public void setBakeryItemId(String bakeryItemId) {
+	public void setBakeryItemId(int bakeryItemId) {
 		this.bakeryItemId = bakeryItemId;
 	}
 
 
-	public String getPaymentId() {
-		return paymentId;
-	}
-
-
-	public void setPaymentId(String paymentId) {
-		this.paymentId = paymentId;
-	}
+//	public String getPaymentId() {
+//		return paymentId;
+//	}
+//
+//
+//	public void setPaymentId(String paymentId) {
+//		this.paymentId = paymentId;
+//	}
 
 
 	public int getQuantity() {
@@ -85,16 +74,6 @@ public class Order {
 
 	public void setAmount(float amount) {
 		this.amount = amount;
-	}
-
-
-	public Date getOrderDate() {
-		return orderDate;
-	}
-
-
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
 	}
 
 

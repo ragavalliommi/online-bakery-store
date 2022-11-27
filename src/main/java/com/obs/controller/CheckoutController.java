@@ -2,6 +2,7 @@ package com.obs.controller;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.obs.dao.DbConnector;
 import com.obs.model.Cart;
+import com.obs.model.CartItem;
+import com.obs.model.Order;
 import com.obs.model.User;
 
 /**
@@ -21,7 +24,8 @@ import com.obs.model.User;
 public class CheckoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    
+	private DbConnector orderDao = DbConnector.getInstance();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//checkout button - check out page render
 		
@@ -101,6 +105,32 @@ public class CheckoutController extends HttpServlet {
 			request.setAttribute("userName", null);
 			
 		}
+		
+		String userID = request.getParameter("userID");
+		
+		try {
+			Cart cart = getShoppingCart(userID);
+			ArrayList<CartItem> cartList = cart.getCartItems();
+			int id = orderDao.getOrderNumber() + 1;
+			for(CartItem c : cartList) {
+				Order order = new Order();
+				order.setOrderId(id);
+				order.setUserId(userID);
+				order.setBakeryItemId(c.getBakeryItem().getBakeryItemId());
+				order.setQuantity(c.getItemQty());
+				order.setAmount(c.getItemQty() * c.getBakeryItem().getPrice());
+				order.setDeliveryMode(request.getParameter("flexRadioDefault"));
+
+				boolean orderInserted = orderDao.insertOrder(order);
+				if(!orderInserted) break;
+			}
+			boolean cartCleared = orderDao.clearUserCart(userID);
+			if(!cartCleared) System.out.println("cart not cleared");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/ThankYou.jsp");
         requestDispatcher.forward(request, response);

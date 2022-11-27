@@ -152,8 +152,8 @@
                             </div>
                         </div>
                         	<div class="form-check">
-							  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onclick="ShowHideDiv()">
-							  <label class="form-check-label" for="flexRadioDefault1">
+							  <input class="form-check-input" type="radio" name="flexRadioDefault" id="pickup" value="pickup" onclick="ShowHideDiv()">
+							  <label class="form-check-label" for="pickup">
 							    Pick up
 							  </label>
 							</div>
@@ -161,8 +161,8 @@
 	    					<span class="text-info">Please pick up the order at Dallas</span>
 							</div>
 							<div class="form-check">
-							  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked onclick="ShowHideDiv()">
-							  <label class="form-check-label" for="flexRadioDefault2">
+							  <input class="form-check-input" type="radio" name="flexRadioDefault" id="delivery" value="delivery" checked onclick="ShowHideDiv()">
+							  <label class="form-check-label" for="delivery">
 							    Delivery
 							  </label>
 							</div>
@@ -253,7 +253,7 @@
 		}
 		
 		function ShowHideDiv() {
-	        var chkYes = document.getElementById("flexRadioDefault1");
+	        var chkYes = document.getElementById("pickup");
 	        var dvtext = document.getElementById("dvtext");
 	        dvtext.style.display = chkYes.checked ? "block" : "none";
 	    }
