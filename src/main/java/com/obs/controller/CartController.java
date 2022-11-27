@@ -18,26 +18,34 @@ public class CartController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String endpoint = request.getServletPath();
+		System.out.print(endpoint);
 		try {
+			if(request.getParameter("userID")!=null) {
+				request.setAttribute("userID", request.getParameter("userID"));
+			}
+			else {
+				request.setAttribute("userID", null);
+			}
+			if(request.getParameter("userName")!=null) {
+				request.setAttribute("userName", request.getParameter("userName"));
+			}
+			else {
+				request.setAttribute("userName", null);
+			}
+			String userID = request.getParameter("userID");
+			Cart cart = null;
+			RequestDispatcher dispatcher = null;
 			switch (endpoint) {
 			case "/cart":
-				if(request.getParameter("userID")!=null) {
-					request.setAttribute("userID", request.getParameter("userID"));
+				String itemID = request.getParameter("itemID");
+				if(itemID != null) 
+				{
+					deleteItem(userID,itemID);
 				}
-				else {
-					request.setAttribute("userID", null);
-				}
-				if(request.getParameter("userName")!=null) {
-					request.setAttribute("userName", request.getParameter("userName"));
-				}
-				else {
-					request.setAttribute("userName", null);
-				}
-				String userID = request.getParameter("userID");
-				Cart cart = getShoppingCart(userID);
+				cart = getShoppingCart(userID);
 				request.setAttribute("cart_data", cart.getCartItems());
 				request.setAttribute("cart_value", cart.getCartValue());
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/Cart.jsp");
+				dispatcher = request.getRequestDispatcher("/WEB-INF/views/Cart.jsp");
 				dispatcher.forward(request, response);
 				break;
 			}
@@ -57,6 +65,16 @@ public class CartController extends HttpServlet {
 			throw new Exception(e);
 		}
 		return cart;
+	}
+	
+	public void deleteItem(String userID, String itemID) throws Exception {
+		DbConnector dbManagerInstance = DbConnector.getInstance();
+		try {
+			dbManagerInstance.deleteItemFromCart(userID, itemID);
+		}
+		catch (Exception e) {
+			throw new Exception(e);
+		}
 	}
 
 

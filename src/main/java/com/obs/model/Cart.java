@@ -39,4 +39,10 @@ public class Cart {
 		this.cartValue += item.getBakeryItem().getPrice() * item.getItemQty();
 		return true;	
 	}
+	
+	public boolean removeItem(CartItem item) {
+		this.cartItems.remove(item);
+		this.cartValue -= item.getBakeryItem().getPrice() * item.getItemQty();
+		return true;	
+	}
 }

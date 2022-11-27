@@ -44,6 +44,8 @@ public class DbConnector {
 			"UPDATE `Carts` SET `ItemQuantity` =?, `ItemAmount`=? where `UserID`=? And `BakeryItemID`=?";
 	private static final String GET_BAKERYITEM_BY_USERID = 
 			"SELECT `ItemQuantity` FROM `Carts` WHERE `UserID`=? AND `BakeryItemID`=?";
+	private static final String DELETE_BAKERYITEM_BY_USERID = 
+			"DELETE FROM `Carts` WHERE `UserID`=? AND `BakeryItemID`=?";
 	private static final String DELETE_CART = 
 			"DELETE FROM `Carts` WHERE `UserID`=?";
 	
@@ -292,12 +294,28 @@ public class DbConnector {
 		return isAdded;
 	}
 	
+	/* Delete Item from User Cart */
+	public boolean deleteItemFromCart(String userID,String bakeryItemID) throws Exception{
+		boolean isDeleted = false;
+		try(PreparedStatement ps = connection.prepareStatement(DELETE_BAKERYITEM_BY_USERID)){
+			ps.setInt(1, Integer.parseInt(userID));
+			ps.setInt(2, Integer.parseInt(bakeryItemID));
+			ps.executeUpdate();
+			isDeleted = true;	
+		}
+		catch (SQLException e) {
+			isDeleted = false;
+			throw new SQLException(e);
+		}
+		return isDeleted;
+	}
+	
 	
 	/* Clear User Cart */
-	public boolean clearUserCart(Integer userID) throws Exception{
+	public boolean clearUserCart(String userID) throws Exception{
 		boolean isDeleted = false;
 		try(PreparedStatement ps = connection.prepareStatement(DELETE_CART)){
-			ps.setInt(1, userID);
+			ps.setInt(1, Integer.parseInt(userID));
 			ps.executeUpdate();
 			isDeleted = true;	
 		}
