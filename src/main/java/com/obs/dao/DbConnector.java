@@ -298,7 +298,7 @@ public class DbConnector {
 	public boolean clearUserCart(String userID) throws Exception{
 		boolean isDeleted = false;
 		try(PreparedStatement ps = connection.prepareStatement(DELETE_CART)){
-			ps.setString(1, userID);
+			ps.setInt(1, Integer.parseInt(userID));
 			ps.executeUpdate();
 			isDeleted = true;	
 		}
