@@ -43,14 +43,14 @@
 		</nav>
 	</header>
 
-	<div class="row">
+ 	<div class="row">
 		<div class="container">
-			<div class="card mt-3 mb-3">
+			<div class="row row-cols-3 g-3">
 				<div class="card-body bg-light">
 					<h3 class="text-center">Available Bakery Items</h3>
 						<c:forEach var="item" items="${_items_data}">
 						
-						<div class="card-deck">
+						<div class="col">
 						  <div class="card">
 						  <a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />">
 						    <img class="card-img-top" src="${item.getImageURL()}" alt="Card image cap" style="width: 18rem; height: 20rem;"> 
@@ -69,7 +69,7 @@
 					</div>
 			</div>
 		</div>
-	</div>
+	</div> 
 
 	<div id="userID" hidden=true data-userID="${userID}"></div>
 

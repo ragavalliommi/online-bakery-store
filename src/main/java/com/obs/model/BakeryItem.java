@@ -21,20 +21,19 @@ public class BakeryItem {
 	}
 
 	
-	public BakeryItem(int bakeryItemId, String imageURL, String itemName, String itemSize, float price) {
+	public BakeryItem(int bakeryItemId, String imageURL, String itemName, float price) {
 		super();
 		this.bakeryItemId = bakeryItemId;
 		this.imageURL = imageURL;
 		this.itemName = itemName;
-		this.itemSize = itemSize;
 		this.price = price;
 	}
 	
-	public BakeryItem(int bakeryItemId, float price) {
-		super();
-		this.bakeryItemId = bakeryItemId;
-		this.price = price;
-	}
+//	public BakeryItem(int bakeryItemId, float price) {
+//		super();
+//		this.bakeryItemId = bakeryItemId;
+//		this.price = price;
+//	}
 	
 	public BakeryItem(int bakeryItemId) {
 		super();

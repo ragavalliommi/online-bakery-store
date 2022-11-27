@@ -26,8 +26,6 @@ public class DbConnector {
 			"SELECT `UserID`,`UserName`,`Password` FROM `Users` WHERE `Email`=? AND `Password` =? LIMIT 1";
 	private static final String SEARCH_ITEMS = 
 			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
-	private static final String GET_ALL_ITEMS = 
-			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	private static final String VIEW_ITEM = 
 			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
 	private static final String SELECT_ALL_ITEMS =
@@ -159,11 +157,10 @@ public class DbConnector {
 				int itemId = Integer.parseInt(rs.getString("BakeryItemID"));
 				String imageURL = rs.getString("ImageURL");
 				String itemName = rs.getString("ItemName");
-				String itemSize = rs.getString("ItemSize");
 				float price = Float.parseFloat(rs.getString("Price"));
 
 				
-				items.add(new BakeryItem(itemId, imageURL,itemName, itemSize, price));
+				items.add(new BakeryItem(itemId, imageURL,itemName, price));
 			}
 			
 		}catch(Exception E) {
@@ -172,30 +169,7 @@ public class DbConnector {
 		}
 		return items;
 	}
-	
-	public List<BakeryItem> getAllItems() throws Exception{
-		List<BakeryItem> items = new ArrayList<>();
-		
-		try(PreparedStatement ps = connection.prepareStatement(GET_ALL_ITEMS)){
-			ResultSet rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				int itemId = Integer.parseInt(rs.getString("BakeryItemID"));
-				String imageURL = rs.getString("ImageURL");
-				String itemName = rs.getString("ItemName");
-				String itemSize = rs.getString("ItemSize");
-				float price = Float.parseFloat(rs.getString("Price"));
 
-				
-				items.add(new BakeryItem(itemId, imageURL,itemName, itemSize, price));
-			}
-			
-		}catch(Exception E) {
-			E.printStackTrace();
-			throw new Exception(E);
-		}
-		return items;
-	}
 	
 	public BakeryItem getItem(int bakeryItemID) throws Exception{
 		BakeryItem bakeryItem = new BakeryItem(bakeryItemID);
@@ -337,14 +311,11 @@ public class DbConnector {
 			
 			while(executeQuery.next()) {
 				int bakeryItemId = executeQuery.getInt("BakeryItemID");
-				String description = executeQuery.getString("Description");
 				String imageURL = executeQuery.getString("ImageURL");
 				String itemName = executeQuery.getString("ItemName");
-				String itemSize = executeQuery.getString("ItemSize");
-				
-				
 				float price = executeQuery.getFloat("Price");
-				BakeryItem bakeryItem = new BakeryItem(bakeryItemId, description, imageURL, itemName, itemSize, price);
+				
+				BakeryItem bakeryItem = new BakeryItem(bakeryItemId, imageURL, itemName, price);
 				itemsData.add(bakeryItem);
 			}
 			
