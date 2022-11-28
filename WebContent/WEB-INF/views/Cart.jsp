@@ -66,8 +66,10 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<c:if test="${cart_value!=0.0}">
 					<a class="btn btn-primary mb-3" href="http://localhost:8080/obs/order?userID=${userID}&userName=${userName}&value=${cart_value}">
 					Checkout : $${cart_value} </a>
+					</c:if>
 					<a class="btn btn-success" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">
 					Keep Shopping </a>
 				</div>
@@ -98,6 +100,12 @@
 			});
 		}
 	</script>
+	
+   <script>
+   
+   
+   
+   </script>
 
 </body>
 </html>
