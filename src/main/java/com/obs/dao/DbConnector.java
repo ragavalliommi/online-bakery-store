@@ -147,7 +147,6 @@ public class DbConnector {
 		return user;
 	}
 
-	
 	public List<BakeryItem> getItems(String searchString) throws Exception{
 		List<BakeryItem> items = new ArrayList<>();
 		

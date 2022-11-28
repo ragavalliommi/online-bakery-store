@@ -7,12 +7,6 @@ public class Cart {
 	private float cartValue;
 	private ArrayList<CartItem> cartItems;
 	
-	public Cart(float cartValue, ArrayList<CartItem> cartItems) {
-		super();
-		this.cartValue = cartValue;
-		this.cartItems = cartItems;
-	}
-	
 	public Cart() {
 		this.cartValue = 0;
 		this.cartItems = new ArrayList<CartItem>();
@@ -41,8 +35,12 @@ public class Cart {
 	}
 	
 	public boolean removeItem(CartItem item) {
-		this.cartItems.remove(item);
-		this.cartValue -= item.getBakeryItem().getPrice() * item.getItemQty();
-		return true;	
+		if(this.cartItems.contains(item))
+		{
+			this.cartItems.remove(item);
+			this.cartValue -= item.getBakeryItem().getPrice() * item.getItemQty();
+			return true;
+		}
+		return false;
 	}
 }
