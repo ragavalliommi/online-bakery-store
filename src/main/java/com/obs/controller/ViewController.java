@@ -1,5 +1,8 @@
 package com.obs.controller;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,18 +20,38 @@ public class ViewController extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 4917965091904591241L;
+	private static final String VIEW_ITEM = 
+			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
 	
 	private BakeryItem getItemDetails(int bakeryItemID) throws Exception {
 		DbConnector db = DbConnector.getInstance();
-		BakeryItem item;
-		try {
-			 item = db.getItem(bakeryItemID);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new Exception(e);
+		BakeryItem bakeryItem = new BakeryItem(bakeryItemID);
+		
+		try(PreparedStatement ps = db.getConnection().prepareStatement(VIEW_ITEM)){
+			ps.setInt(1, bakeryItemID);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String imageURL = rs.getString("ImageURL");
+				String description = rs.getString("Description");
+				String itemName = rs.getString("ItemName");
+				String itemSize = rs.getString("ItemSize");
+				float price = Float.parseFloat(rs.getString("Price"));
+
+				
+				bakeryItem.setDescription(description);
+				bakeryItem.setImageURL(imageURL);
+				bakeryItem.setItemName(itemName);
+				bakeryItem.setItemSize(itemSize);
+				bakeryItem.setPrice(price);
+			}
+			
+		}catch(Exception E) {
+			E.printStackTrace();
+			throw new Exception(E);
 		}
-		return item;
+		
+		return bakeryItem;
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
