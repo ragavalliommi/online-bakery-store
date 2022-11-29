@@ -12,6 +12,9 @@
 	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+	
+
+
 </head>
 <body class="bg-secondary">
 	<header>
@@ -42,34 +45,44 @@
 			</c:if>
 		</nav>
 	</header>
-
+	
+    <h4 class="mt-4 mb-5" style='color: #F2E0F7'><center><strong>Available Bakery Item</strong></center></h4>
+	
 	<div class="row">
-		<div class="container">
-			<div class="card mt-3 mb-3">
-				<div class="card-body bg-light">
-					<h3 class="text-center">Available Bakery Items</h3>
-						<c:forEach var="item" items="${_items_data}">
-						
-						<div class="card-deck">
-						  <div class="card">
-						  <a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />">
-						    <img class="card-img-top" src="${item.getImageURL()}" alt="Card image cap" style="width: 18rem; height: 20rem;"> 
-						    </a>
-						    <div class="card-body">
-    							<p class="price">$ ${item.getPrice()}</p>							  
-						     	 <h5 class="card-title">
-     	 						  <a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />" class="card-link">						     	 
-						     	 	${item.getItemName()}  
-						     	 </a>
-						     	 </h5>
-						    </div>
-						  </div>
-						  </div>
-						</c:forEach>
-					</div>
+	
+	<c:forEach var="item" items="${_items_data}">
+	
+		<div class="col-lg-4 col-md-12 mb-4">
+			<div class="card card-cascade card-ecommerce wider shadow mb-5 ">
+	
+				<div class="view view-cascade overlay text-center">
+					<a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />">
+						    <img class="card-img-top" src="${item.getImageURL()}" alt="Card image cap" style="width: 20rem; height: 20rem;"> 
+					</a>
+					<a>
+						<div class="mask rgba-white-slight"></div>
+					</a>
+				</div>
+	
+				<div class="card-body card-body-cascade text-center">
+	
+					<!--Card Title-->
+					<h4 class="card-title"><strong><a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />">${item.getItemName()}</a></strong></h4>
+	
+					<!-- Card Description-->
+<!-- 					<p class="card-text">This is a Mobile phone with all the advance features and at best price.
+					</p> -->
+	
+	
+					<p class="price">$ ${item.getPrice()}</p>
+	
+	
+				</div>
 			</div>
 		</div>
-	</div>
+	</c:forEach>
+    </div>
+	
 
 	<div id="userID" hidden=true data-userID="${userID}"></div>
 
