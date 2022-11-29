@@ -12,6 +12,7 @@
 	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<header>
@@ -40,74 +41,13 @@
 	<div class="container">
 	<p></p>
 	</div>
+	
+	
 
 	<div class="site-section">
-        <div class="container">
+        <div class="container-fluid" style="padding: 100px; padding-top: 0px">
             <form class="row" method="post" action="http://localhost:8080/obs/order?userID=${userID}&userName=${userName}">
-                
-                <div class="col-md-6">
-                    <div class="row mb-5">
-                        <div class="col-md-12">
-                            <h2 class="h3 mb-3 text-black">Order Summary</h2>
-
-                            <div class="p-2 p-lg-3 border">
-                                <table class="table site-block-order-table mb-6">
-                                    <thead>
-                                    <tr>
-                                        <th style="text-align: center">Name</th>
-                                        <th style="text-align: center">Quantity</th>
-                                        <th style="text-align: center">Price</th>
-                                        <th style="text-align: center">Image</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    <c:forEach items="${cart_data}" var="item">
-                                        <tr>
-                                            <td>
-                                                <input name="product-name" class="form-control-plaintext h6 text-black"
-                                                       value="${item.getBakeryItem().getItemName()}" style="text-align: center" readonly>
-                                            </td>
-
-
-                                            <td>
-                                                <input name="product-quantity"
-                                                       class="form-control-plaintext h6 text-black"
-                                                       value="${item.getItemQty()}" style="text-align: center" readonly>
-                                            </td>
-                                           
-
-                                            <td>
-                                                <input name="product-total" class="form-control-plaintext h6 text-black"
-                                                       value=$${item.getBakeryItem().getPrice() * item.getItemQty()} style="text-align: center"
-                                                       readonly>
-                                            </td>
-                                            
-                                             <td>
-                                                <img class="img-fluid mx-auto img-thumbnail mb-2" style="max-height: 75px;" src="${item.getBakeryItem().getImageURL() }"></img>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                                        <td class="text-black font-weight-bold">
-                                            <input name="order-total-price" class="form-control-plaintext h5 text-black"
-                                                   value=$${cart_value} style="text-align: center" readonly>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 mb-5 mb-md-0">
+                <div class="col-md-7 mb-5 mb-md-0">
                     <h2 class="h3 mb-3 text-black">Billing Details</h2>
 
                     <div class="p-2 p-lg-4 border">
@@ -151,23 +91,46 @@
                                        value="${user.getPhone()}" required readonly>
                             </div>
                         </div>
-                        	<div class="form-check">
+                        	<div class="form-check form-check-inline">
 							  <input class="form-check-input" type="radio" name="flexRadioDefault" id="pickup" value="pickup" onclick="ShowHideDiv()">
 							  <label class="form-check-label" for="pickup">
 							    Pick up
 							  </label>
 							</div>
-							<div id="dvtext" style="display: none">
-	    					<span class="text-info">Please pick up the order at Dallas</span>
-							</div>
-							<div class="form-check">
+							<div class="form-check form-check-inline">
 							  <input class="form-check-input" type="radio" name="flexRadioDefault" id="delivery" value="delivery" checked onclick="ShowHideDiv()">
 							  <label class="form-check-label" for="delivery">
 							    Delivery
 							  </label>
 							</div>
+							<div id="dvtext" style="display: none">
+		    					<span class="text-info">Please pick up the order at 
+		    					<br />9020 Garland Rd, 
+		    					<br />Dallas, TX 75218</span>
+							</div>
 							<hr>
 							<h4 class="h4 mb-3 text-black">Payment info</h4>
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="flexRadioDefault2" id="credit" value="credit">
+							  <label class="form-check-label" for="credit">
+							    Credit
+							  </label>
+							</div>
+							<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="flexRadioDefault2" id="debit" value="debit" checked>
+							  <label class="form-check-label" for="debit">
+							    Debit
+							  </label>
+							</div>
+							<p></p>
+							<label for="fname">Accepted Cards</label>
+						        <div class="icon-container">
+						          <i class="fa fa-cc-visa" style="color:navy;font-size:36px"></i>
+						          <i class="fa fa-cc-amex" style="color:blue;font-size:36px"></i>
+						          <i class="fa fa-cc-mastercard" style="color:red;font-size:36px"></i>
+						          <i class="fa fa-cc-discover" style="color:orange;font-size:36px"></i>
+						       </div>
+						    <p></p>
                          <div class="form-group row">
                             <div class="col-md-12">
                                 <label for="card_name" class="text-black">
@@ -186,7 +149,7 @@
                                 </label>
 
                                 <input type="text" class="form-control" id="card_no" name="card_n0"
-                                       placeholder="Card Number" required>
+                                       placeholder="1111-2222-3333-4444" required>
                             </div>
                         </div>
                         
@@ -208,21 +171,79 @@
                                 </label>
 
                                 <input type="text" class="form-control" id="card_cvv" name="card_cvv"
-                                       placeholder="CVV" required>
+                                       placeholder="123" required>
                             </div>
                         </div>
                   
 					</div>
                         
                     </div>
+                    
+                   <div class="col-md-5">
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h2 class="h3 mb-3 text-black">Order Summary</h2>
+
+                            <div class="p-2 p-lg-3 border">
+                                <table class="table site-block-order-table mb-6">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align: center">Name</th>
+                                        <th style="text-align: center">Quantity</th>
+                                        <th style="text-align: center">Price</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <c:forEach items="${cart_data}" var="item">
+                                        <tr>
+                                            <td>
+                                                <input name="product-name" class="form-control-plaintext h6 text-black"
+                                                       value="${item.getBakeryItem().getItemName()}" style="text-align: left" readonly>
+                                            </td>
+
+
+                                            <td>
+                                                <input name="product-quantity"
+                                                       class="form-control-plaintext h6 text-black"
+                                                       value="${item.getItemQty()}" style="text-align: center" readonly>
+                                            </td>
+                                           
+
+                                            <td>
+                                                <input name="product-total" class="form-control-plaintext h6 text-black"
+                                                       value=$${item.getBakeryItem().getPrice() * item.getItemQty()} style="text-align: center"
+                                                       readonly>
+                                            </td>
+                                          
+                                        </tr>
+                                    </c:forEach>
+
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-black font-weight-bold"><strong >Order Total</strong></td>
+                                        <td class="text-black font-weight-bold">
+                                            <input name="order-total-price" class="form-control-plaintext h5 text-black"
+                                                   value=$${cart_value} style="text-align: center" readonly>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-lg py-2 btn-block">
-                                        Place Order
-                                    </button>
-                       	</div>
+                   <button type="submit" class="btn btn-primary btn-lg py-2 btn-block">
+                       Place Order
+                   </button>
+               </div>
                 </div>
                 
-               
+                </div>
+                
+             
                 
             </form>
         </div>
