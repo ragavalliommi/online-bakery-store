@@ -18,8 +18,12 @@ public class DbConnector {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
 	private String jdbcUsername = "root";
 	private String jdbcPassword = "onlineBakeryStore";
+	
+	
 	private Connection connection = null; // single instance of Connection
+	
 	private static DbConnector userDao = new DbConnector();
+	
 	private static final String INSERT_USER =
 			"INSERT INTO `Users`(`UserName`, `Email`,`Phone`, `Password`,`DeliveryAddress`) VALUES (? ,? ,?, ?, ?);";
 	private static final String GET_USER = 
@@ -60,6 +64,15 @@ public class DbConnector {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// DB connection getter and setter
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
 	}
 	
 	public boolean registerUser(User user) throws Exception{
@@ -278,13 +291,7 @@ public class DbConnector {
 		//fix DB for order
 		//incorporate payment into order table
 		
-		public Connection getConnection() {
-		return connection;
-	}
 
-	public void setConnection(Connection connection) {
-		this.connection = connection;
-	}
 
 
 

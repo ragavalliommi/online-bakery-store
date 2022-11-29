@@ -37,9 +37,15 @@
 		</nav>
 	</header>
 	
-	<div class = "container">
+
+	
+	<div class = "container" align="center">
+	  <h3 class="text-center text-white">Order Details</h3>
 		<div class = "row">
-			<div class= "row mt-3 mb-3">
+			<div class= "mt-3 mb-6 col-md-2 mb-md-0">
+			
+			</div>
+			<div class= "mt-3 mb-6 col-md-8 mb-md-0">
 				<div class="list-group">
 					<table class = "table table-light table-striped table-bordered table-hover">
 						<thead class="thead-dark">
@@ -47,8 +53,7 @@
 								<th> Name </th>
 								<th> Quantity </th>
 							 	<th> Price </th>
-								<th>Image</th>
-							 	
+								<th> Image </th>
 							 </tr>
 						</thead>
 						<tbody>
@@ -56,7 +61,7 @@
 								<tr style="border: 1px solid black;">
 									<td><c:out value="${item.getBakeryItem().getItemName()}" /></td>
 									<td><c:out value="${item.getItemQty()}" /></td>
-									<td>$ <c:out value="${item.getBakeryItem().getPrice() * item.getItemQty()}" /></td>
+									<td>$<c:out value="${item.getBakeryItem().getPrice() * item.getItemQty()}" /></td>
 									<td><img class="img-fluid img-thumbnail mb-3" style="max-height: 75px;" src="${item.getBakeryItem().getImageURL() }"></img></td>
 								</tr>
 							</c:forEach>
