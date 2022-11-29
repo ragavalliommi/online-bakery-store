@@ -62,6 +62,8 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<a class="btn btn-success" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}">
+					Go Back </a>
 				</div>
 			</div>
 		</div>
