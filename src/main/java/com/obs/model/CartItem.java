@@ -12,14 +12,8 @@ public class CartItem {
 	public int getItemQty() {
 		return itemQty;
 	}
-	public void setItemQty(int itemQty) {
-		this.itemQty = itemQty;
-	}
+	
 	public BakeryItem getBakeryItem() {
 		return bakeryItem;
 	}
-	public void setBakeryItem(BakeryItem bakeryItem) {
-		this.bakeryItem = bakeryItem;
-	}
-
 }
