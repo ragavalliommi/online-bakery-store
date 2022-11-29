@@ -1,7 +1,10 @@
 package com.obs.controller;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,8 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.internal.JUnitSystem;
-
 import com.obs.dao.DbConnector;
 import com.obs.model.BakeryItem;
 
@@ -21,6 +22,8 @@ import com.obs.model.BakeryItem;
 public class HomePageController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private static final String SELECT_ALL_ITEMS =
+			"SELECT `BakeryItemId`,`Description`,`ImageURL`,`ItemName`, `ItemSize`, `Price` FROM BakeryItems";
 
 	
 	@Override
@@ -61,8 +64,29 @@ public class HomePageController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		DbConnector userDao = DbConnector.getInstance();
-		List<BakeryItem> bakeryItems =  userDao.getAllBakeryData();
-		request.setAttribute("_items_data", bakeryItems);	
+		List<BakeryItem> itemsData = new ArrayList<BakeryItem>();
+		
+		try (PreparedStatement preparedStatement = userDao.getConnection().prepareStatement(SELECT_ALL_ITEMS); ) {
+			
+			ResultSet executeQuery = preparedStatement.executeQuery();
+			
+			while(executeQuery.next()) {
+				int bakeryItemId = executeQuery.getInt("BakeryItemID");
+				String imageURL = executeQuery.getString("ImageURL");
+				String itemName = executeQuery.getString("ItemName");
+				float price = executeQuery.getFloat("Price");
+				
+				BakeryItem bakeryItem = new BakeryItem(bakeryItemId, imageURL, itemName, price);
+				itemsData.add(bakeryItem);
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+				
+		
+		request.setAttribute("_items_data", itemsData);	
 	}
 	
 	

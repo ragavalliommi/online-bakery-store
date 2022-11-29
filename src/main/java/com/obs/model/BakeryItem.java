@@ -29,11 +29,6 @@ public class BakeryItem {
 		this.price = price;
 	}
 	
-//	public BakeryItem(int bakeryItemId, float price) {
-//		super();
-//		this.bakeryItemId = bakeryItemId;
-//		this.price = price;
-//	}
 	
 	public BakeryItem(int bakeryItemId) {
 		super();

@@ -28,8 +28,7 @@ public class DbConnector {
 			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	private static final String VIEW_ITEM = 
 			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
-	private static final String SELECT_ALL_ITEMS =
-			"SELECT `BakeryItemId`,`Description`,`ImageURL`,`ItemName`, `ItemSize`, `Price` FROM BakeryItems";
+	
 	
 	private static final String GET_USER_BY_ID = 
 			"SELECT * FROM `Users` WHERE `UserID`=? LIMIT 1";
@@ -300,32 +299,6 @@ public class DbConnector {
 		return isDeleted;
 	}
 	
-	public List<BakeryItem> getAllBakeryData() throws SQLException {
-		
-		List<BakeryItem> itemsData = new ArrayList<BakeryItem>();
-		
-		try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ITEMS); ) {
-			
-			ResultSet executeQuery = preparedStatement.executeQuery();
-			
-			while(executeQuery.next()) {
-				int bakeryItemId = executeQuery.getInt("BakeryItemID");
-				String imageURL = executeQuery.getString("ImageURL");
-				String itemName = executeQuery.getString("ItemName");
-				float price = executeQuery.getFloat("Price");
-				
-				BakeryItem bakeryItem = new BakeryItem(bakeryItemId, imageURL, itemName, price);
-				itemsData.add(bakeryItem);
-			}
-			
-			
-		} catch (SQLException e) {
-			System.out.println(e);
-		}
-				
-		return itemsData;
-	}
-	
 	
 	
 	//order queries
@@ -333,6 +306,16 @@ public class DbConnector {
 		//fix DB for order
 		//incorporate payment into order table
 		
+		public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+
+
 		private static final String ADD_ORDER = 
 				"INSERT INTO `Orders` (orderID, userID, bakeryItemID, quantity, amount, deliverymode) VALUES (?, ?, ?, ?, ?, ?);";
 		
