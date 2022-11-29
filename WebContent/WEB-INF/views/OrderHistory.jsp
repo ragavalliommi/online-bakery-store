@@ -101,8 +101,30 @@
         </div>
     </div>
 </div>
-<div id="userid" hidden=true data-userid="${userID}"></div>
 
+<div id="userID" hidden=true data-userID="${userID}"></div>
+
+	<script>
+		var userID = document.getElementById("userID").getAttribute(
+				"data-userID");
+		//console.log(userID);
+
+		if (userID) {
+			localStorage.setItem("userID", userID);
+
+			var _logoutBtn = document.getElementById("logout");
+
+			_logoutBtn.addEventListener('click', function(event) {
+				if (localStorage.getItem("userID")) {
+					console.log("User was logged in");
+					localStorage.removeItem("userID");
+					window.location.replace("/obs/");
+				} else {
+					window.location.replace("/obs/");
+				}
+			});
+		}
+	</script>
 	
 </body>
 </html>
