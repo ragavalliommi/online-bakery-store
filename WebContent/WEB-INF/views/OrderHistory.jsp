@@ -44,41 +44,56 @@
 	<div class="site-wrap">
     <div class="site-section" data-aos="fade-in">
         <div class="container">
-            <div class="row mb-5">
-                <div class="col-md-12">
+            <div class="row justify-content-md-center">
+            
+                <div class="col-md-10">
                 <h2 class="h3 mb-3 text-black">Order History</h2>
                     <div class="site-blocks-table">
                         <table class="table table-bordered">
+                        
                             <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Total</th>
-                                <th>Date</th>
-                                <th>Delivery Mode</th>
-                                <th style="min-width: 195px">Detail</th>
+                                <th style="text-align: center">ID</th>
+                                <th style="text-align: center">Total</th>
+                                <th style="text-align: center">Date</th>
+                                <th style="text-align: center">Delivery Mode</th>
+                                <th style="min-width: 100px; text-align: center">Detail</th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach items="${order_history}" var="o">
                                 <tr>
-                                    <td>${o.getOrderId()}</td>
+                                    <td style="text-align: center">${o.getOrderId()}</td>
 
-                                    <td>$${o.getAmount()}</td>
+                                    <td style="text-align: center">$${o.getAmount()}</td>
 
-                                    <td>${o.getOrderDate()}</td>
+                                    <td style="text-align: center">${o.getOrderDate()}</td>
                                     
-                                    <td>${o.getDeliveryMode()}</td>
-
-                                    <td>
-                                        <a href="http://localhost:8080/obs/orderDetail?userID=${userID}&userName=${userName}&orderID=${o.getOrderId()}" class="btn btn-primary btn-md"
-                                           style="background-color: green ; border-color: green">
-                                            <span class="icon icon-arrow-right"></span>
-                                        </a>
+                                    <td style="text-align: center">${o.getDeliveryMode()}</td>
+								
+                                    <td style="text-align: center">
+                                    
+                                    <div class="row justify-content-md-center">
+                                    <form id="form" class="form-inline" action="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}&orderID=${o.getOrderId()}" method="POST" >
+	                                    <table ><tr style="border: none"><td style="border: none">
+	                                    
+						                   <button type="submit" class="btn btn-primary btn-md" style="background-color: green ; border-color: green">
+						                       <span id="boot-icon" class="bi bi-arrow-right" style="font-size:1rem"></span>
+						                   </button>
+              						 
+	                                    </td></tr></table>
+	                                    </form>
+                                     </div>
+                                     
                                     </td>
+                                    
                                 </tr>
                             </c:forEach>
                             </tbody>
+                            
                         </table>
+                        <a class="btn btn-success" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">
+						Go Home </a>
                     </div>
                 </div>
             
@@ -86,5 +101,8 @@
         </div>
     </div>
 </div>
+<div id="userid" hidden=true data-userid="${userID}"></div>
+
+	
 </body>
 </html>
