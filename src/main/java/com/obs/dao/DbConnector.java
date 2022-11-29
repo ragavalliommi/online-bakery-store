@@ -28,15 +28,10 @@ public class DbConnector {
 			"INSERT INTO `Users`(`UserName`, `Email`,`Phone`, `Password`,`DeliveryAddress`) VALUES (? ,? ,?, ?, ?);";
 	private static final String GET_USER = 
 			"SELECT `UserID`,`UserName`,`Password` FROM `Users` WHERE `Email`=? AND `Password` =? LIMIT 1";
-	private static final String SEARCH_ITEMS = 
-			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	private static final String VIEW_ITEM = 
-			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
-	
-	
+			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";	
 	private static final String GET_USER_BY_ID = 
 			"SELECT * FROM `Users` WHERE `UserID`=? LIMIT 1";
-	
 	// cart queries
 	private static final String GET_CART = 
 			"SELECT `BakeryItemID`,`ItemQuantity` FROM `Carts` WHERE `UserID`=?";
@@ -157,29 +152,6 @@ public class DbConnector {
 		return user;
 	}
 
-	public List<BakeryItem> getItems(String searchString) throws Exception{
-		List<BakeryItem> items = new ArrayList<>();
-		
-		try(PreparedStatement ps = connection.prepareStatement(SEARCH_ITEMS)){
-			ps.setString(1, "%"+searchString+"%");
-			ResultSet rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				int itemId = Integer.parseInt(rs.getString("BakeryItemID"));
-				String imageURL = rs.getString("ImageURL");
-				String itemName = rs.getString("ItemName");
-				float price = Float.parseFloat(rs.getString("Price"));
-
-				
-				items.add(new BakeryItem(itemId, imageURL,itemName, price));
-			}
-			
-		}catch(Exception E) {
-			E.printStackTrace();
-			throw new Exception(E);
-		}
-		return items;
-	}
 
 	
 	public BakeryItem getItem(int bakeryItemID) throws Exception{

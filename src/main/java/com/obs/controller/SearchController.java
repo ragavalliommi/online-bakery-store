@@ -1,6 +1,8 @@
 package com.obs.controller;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,10 @@ public class SearchController extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static final String SEARCH_ITEMS = 
+			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
 		try {
 			if (request.getParameter("userID") != null) {
@@ -56,14 +62,25 @@ public class SearchController extends HttpServlet{
 	}
 	private List<BakeryItem> searchItems(String searchString) throws Exception{
 		DbConnector db = DbConnector.getInstance();
+		
 		List<BakeryItem> items = new ArrayList<>();
 		
-		try {
+		try(PreparedStatement ps = db.getConnection().prepareStatement(SEARCH_ITEMS)){
+			ps.setString(1, "%"+searchString+"%");
+			ResultSet rs = ps.executeQuery();
 			
-			items = db.getItems(searchString);
+			while(rs.next()) {
+				int itemId = Integer.parseInt(rs.getString("BakeryItemID"));
+				String imageURL = rs.getString("ImageURL");
+				String itemName = rs.getString("ItemName");
+				float price = Float.parseFloat(rs.getString("Price"));
+
+				
+				items.add(new BakeryItem(itemId, imageURL,itemName, price));
+			}
 			
 		}catch(Exception E) {
-			
+			E.printStackTrace();
 			throw new Exception(E);
 		}
 		
