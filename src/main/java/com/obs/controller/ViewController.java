@@ -20,8 +20,6 @@ public class ViewController extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 4917965091904591241L;
-	private static final String VIEW_ITEM = 
-			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
 	
 	public BakeryItem getItemDetails(int bakeryItemID) throws Exception {
 		DbConnector db = DbConnector.getInstance();
