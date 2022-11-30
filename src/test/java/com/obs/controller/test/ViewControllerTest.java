@@ -31,9 +31,6 @@ public class ViewControllerTest {
 	@Mock
 	RequestDispatcher rd;
 	
-	@Mock
-	BakeryItem item;
-	
 	
 	ViewController view = new ViewController();
 	
