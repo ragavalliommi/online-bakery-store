@@ -1,12 +1,25 @@
 package com.obs.controller.test;
 
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import com.obs.controller.ViewController;
+import com.obs.model.BakeryItem;
+
+
 
 public class ViewControllerTest {
 	
@@ -18,8 +31,39 @@ public class ViewControllerTest {
 	@Mock
 	RequestDispatcher rd;
 	
+	@Mock
+	BakeryItem item;
+	
+	
+	ViewController view = new ViewController();
+	
+	
 	@Before
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 	}
+	
+	@Test
+	public void viewControllerTest() throws Exception {
+//		ViewController view = new ViewController();
+		when(request.getParameter("userID")).thenReturn("1");
+		when(request.getParameter("userName")).thenReturn("sneha");
+		when(request.getParameter("bakeryItemID")).thenReturn("1");
+		when(request.getRequestDispatcher("/WEB-INF/views/ViewItemDetails.jsp")).thenReturn(rd);
+		
+//		when(view.getItemDetails(1)).thenReturn(item);
+
+		
+
+		
+
+		view.doGet(request, response);
+
+		
+
+		verify(rd).forward(request, response);
+
+		
+	}
+	
 }

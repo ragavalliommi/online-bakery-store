@@ -18,7 +18,7 @@ public class ViewController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 4917965091904591241L;
 	
-	private BakeryItem getItemDetails(int bakeryItemID) throws Exception {
+	public BakeryItem getItemDetails(int bakeryItemID) throws Exception {
 		DbConnector db = DbConnector.getInstance();
 		BakeryItem item;
 		try {
@@ -31,7 +31,7 @@ public class ViewController extends HttpServlet{
 		return item;
 	}
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		
 		try {
 			if(request.getParameter("userID")!=null) {
