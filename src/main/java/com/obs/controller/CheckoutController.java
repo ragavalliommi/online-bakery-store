@@ -2,6 +2,9 @@ package com.obs.controller;
 
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -22,8 +25,18 @@ import com.obs.model.User;
  */
 @WebServlet("/order")
 public class CheckoutController extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-       
+    
+	private static final String GET_ORDER_NUMBER = 
+			"SELECT MAX(entryID) as entryID FROM `Orders`;";
+	
+	private static final String ADD_ORDER = 
+			"INSERT INTO `Orders` (orderID, userID, bakeryItemID, quantity, amount, deliverymode) VALUES (?, ?, ?, ?, ?, ?);";
+	
+	private static final String DELETE_CART = 
+			"DELETE FROM `Carts` WHERE `UserID`=?";
+	
 	private DbConnector orderDao = DbConnector.getInstance();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -111,7 +124,7 @@ public class CheckoutController extends HttpServlet {
 		try {
 			Cart cart = getShoppingCart(userID);
 			ArrayList<CartItem> cartList = cart.getCartItems();
-			int id = orderDao.getOrderNumber() + 1;
+			int id = getOrderNumber() + 1;
 			for(CartItem c : cartList) {
 				Order order = new Order();
 				order.setOrderId(id);
@@ -121,10 +134,10 @@ public class CheckoutController extends HttpServlet {
 				order.setAmount(c.getItemQty() * c.getBakeryItem().getPrice());
 				order.setDeliveryMode(request.getParameter("flexRadioDefault"));
 
-				boolean orderInserted = orderDao.insertOrder(order);
+				boolean orderInserted = insertOrder(order);
 				if(!orderInserted) break;
 			}
-			boolean cartCleared = orderDao.clearUserCart(userID);
+			boolean cartCleared = clearUserCart(userID);
 			if(!cartCleared) System.out.println("cart not cleared");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -135,6 +148,56 @@ public class CheckoutController extends HttpServlet {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/ThankYou.jsp");
         requestDispatcher.forward(request, response);
 		
+	}
+	
+	private int getOrderNumber() throws SQLException{
+		int maxEntryID = 0;
+		
+		try(PreparedStatement ps = orderDao.getConnection().prepareStatement(GET_ORDER_NUMBER);){
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				maxEntryID = rs.getInt("entryID");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return maxEntryID;
+	}
+	
+	private boolean insertOrder(Order order) throws SQLException{
+		boolean isOrderInserted = false;
+		
+		try(PreparedStatement ps = orderDao.getConnection().prepareStatement(ADD_ORDER);){
+			ps.setInt(1, order.getOrderId());
+			ps.setString(2, order.getUserId());
+			ps.setInt(3, order.getBakeryItemId());
+			ps.setInt(4, order.getQuantity());
+			ps.setFloat(5, order.getAmount());
+			ps.setString(6, order.getDeliveryMode());
+			System.out.println(ps);
+			ps.executeUpdate();
+			isOrderInserted = true;	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return isOrderInserted;
+	}
+	
+	
+	private boolean clearUserCart(String userID) throws Exception{
+		boolean isDeleted = false;
+		try(PreparedStatement ps = orderDao.getConnection().prepareStatement(DELETE_CART)){
+			ps.setInt(1, Integer.parseInt(userID));
+			ps.executeUpdate();
+			isDeleted = true;	
+		}
+		catch (SQLException e) {
+			isDeleted = false;
+			throw new SQLException(e);
+		}
+		return isDeleted;
 	}
 
 }
