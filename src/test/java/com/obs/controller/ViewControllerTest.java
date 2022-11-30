@@ -1,4 +1,4 @@
-package com.obs.controller.test;
+package com.obs.controller;
 
 
 import static org.mockito.Mockito.verify;
@@ -16,8 +16,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.obs.controller.ViewController;
-import com.obs.model.BakeryItem;
+
 
 
 

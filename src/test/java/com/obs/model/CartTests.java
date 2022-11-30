@@ -1,4 +1,4 @@
-package com.obs.model.test;
+package com.obs.model;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;

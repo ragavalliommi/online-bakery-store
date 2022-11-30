@@ -32,7 +32,7 @@ public class ViewController extends HttpServlet{
 		return bakeryItem;
 	}
 	
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		
 		try {
 			if(request.getParameter("userID")!=null) {
