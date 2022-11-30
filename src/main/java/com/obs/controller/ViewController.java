@@ -27,28 +27,11 @@ public class ViewController extends HttpServlet{
 		DbConnector db = DbConnector.getInstance();
 		BakeryItem bakeryItem = new BakeryItem(bakeryItemID);
 		
-		try(PreparedStatement ps = db.getConnection().prepareStatement(VIEW_ITEM)){
-			ps.setInt(1, bakeryItemID);
-			ResultSet rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				String imageURL = rs.getString("ImageURL");
-				String description = rs.getString("Description");
-				String itemName = rs.getString("ItemName");
-				String itemSize = rs.getString("ItemSize");
-				float price = Float.parseFloat(rs.getString("Price"));
-
-				
-				bakeryItem.setDescription(description);
-				bakeryItem.setImageURL(imageURL);
-				bakeryItem.setItemName(itemName);
-				bakeryItem.setItemSize(itemSize);
-				bakeryItem.setPrice(price);
-			}
-			
-		}catch(Exception E) {
-			E.printStackTrace();
-			throw new Exception(E);
+		try {
+			bakeryItem = db.getItem(bakeryItemID);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new Exception();
 		}
 		
 		return bakeryItem;
