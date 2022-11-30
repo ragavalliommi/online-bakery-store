@@ -23,7 +23,7 @@ public class ViewController extends HttpServlet{
 	private static final String VIEW_ITEM = 
 			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
 	
-	private BakeryItem getItemDetails(int bakeryItemID) throws Exception {
+	public BakeryItem getItemDetails(int bakeryItemID) throws Exception {
 		DbConnector db = DbConnector.getInstance();
 		BakeryItem bakeryItem = new BakeryItem(bakeryItemID);
 		
@@ -54,7 +54,7 @@ public class ViewController extends HttpServlet{
 		return bakeryItem;
 	}
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		
 		try {
 			if(request.getParameter("userID")!=null) {
