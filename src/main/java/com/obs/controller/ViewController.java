@@ -1,8 +1,5 @@
 package com.obs.controller;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +17,6 @@ public class ViewController extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 4917965091904591241L;
-	private static final String VIEW_ITEM = 
-			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
 	
 	public BakeryItem getItemDetails(int bakeryItemID) throws Exception {
 		DbConnector db = DbConnector.getInstance();
@@ -37,7 +32,7 @@ public class ViewController extends HttpServlet{
 		return bakeryItem;
 	}
 	
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		
 		try {
 			if(request.getParameter("userID")!=null) {
