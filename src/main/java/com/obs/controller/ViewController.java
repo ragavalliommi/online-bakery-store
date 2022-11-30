@@ -1,5 +1,8 @@
 package com.obs.controller;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,18 +20,21 @@ public class ViewController extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 4917965091904591241L;
+	private static final String VIEW_ITEM = 
+			"SELECT * FROM `BakeryItems` WHERE  `BakeryItemID` = ? ";
 	
 	public BakeryItem getItemDetails(int bakeryItemID) throws Exception {
 		DbConnector db = DbConnector.getInstance();
-		BakeryItem item;
+		BakeryItem bakeryItem = new BakeryItem(bakeryItemID);
+		
 		try {
-			 item = db.getItem(bakeryItemID);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			bakeryItem = db.getItem(bakeryItemID);
+		}catch(Exception e){
 			e.printStackTrace();
-			throw new Exception(e);
+			throw new Exception();
 		}
-		return item;
+		
+		return bakeryItem;
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
