@@ -47,6 +47,8 @@ public class DbConnector {
 			"DELETE FROM `Carts` WHERE `UserID`=? AND `BakeryItemID`=?";
 	private static final String DELETE_CART = 
 			"DELETE FROM `Carts` WHERE `UserID`=?";
+	private static final String SEARCH_ITEMS = 
+			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	
 	
 	public DbConnector() {
@@ -131,6 +133,29 @@ public class DbConnector {
         }
 		
 		return existingUser;
+	}
+	
+	public List<BakeryItem> serachItems(String searchString) throws Exception{
+		List<BakeryItem> items = new ArrayList<>();
+		try(PreparedStatement ps = connection.prepareStatement(SEARCH_ITEMS)){
+			ps.setString(1, "%"+searchString+"%");
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int itemId = Integer.parseInt(rs.getString("BakeryItemID"));
+				String imageURL = rs.getString("ImageURL");
+				String itemName = rs.getString("ItemName");
+				float price = Float.parseFloat(rs.getString("Price"));
+
+				
+				items.add(new BakeryItem(itemId, imageURL,itemName, price));
+			}
+			
+		}catch(Exception E) {
+			E.printStackTrace();
+			throw new Exception(E);
+		}
+		return items;
 	}
 	
 	public User getUserByID(String userID) throws SQLException {

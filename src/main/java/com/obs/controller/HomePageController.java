@@ -19,6 +19,7 @@ import com.obs.model.BakeryItem;
 public class HomePageController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private DbConnector homePageDao = DbConnector.getInstance();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,8 +56,8 @@ public class HomePageController extends HttpServlet {
 	private void retrieveAllItems(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		// TODO Auto-generated method stub
 		
-		DbConnector userDao = DbConnector.getInstance();
-		List<BakeryItem> bakeryItems =  userDao.getAllBakeryData();
+		
+		List<BakeryItem> bakeryItems =  homePageDao.getAllBakeryData();
 		request.setAttribute("_items_data", bakeryItems);	
 	}
 	

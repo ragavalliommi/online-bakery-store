@@ -18,13 +18,14 @@ public class ViewController extends HttpServlet{
 	/**
 	 * 
 	 */
+	private DbConnector viewDao = DbConnector.getInstance();
 	private static final long serialVersionUID = 4917965091904591241L;
 	
 	public BakeryItem getItemDetails(Integer bakeryItemID) throws Exception {
-		DbConnector db = DbConnector.getInstance();
+		
 		BakeryItem bakeryItem = new BakeryItem(bakeryItemID);
 		
-		bakeryItem = db.getItem(bakeryItemID);
+		bakeryItem = viewDao.getItem(bakeryItemID);
 		
 		return bakeryItem;
 	}

@@ -24,8 +24,9 @@ public class SearchController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static final String SEARCH_ITEMS = 
-			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
+	private DbConnector searchDao = DbConnector.getInstance();
+	
+	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
 		try {
@@ -61,29 +62,10 @@ public class SearchController extends HttpServlet{
 		
 	}
 	private List<BakeryItem> searchItems(String searchString) throws Exception{
-		DbConnector db = DbConnector.getInstance();
+		
 		
 		List<BakeryItem> items = new ArrayList<>();
-		
-		try(PreparedStatement ps = db.getConnection().prepareStatement(SEARCH_ITEMS)){
-			ps.setString(1, "%"+searchString+"%");
-			ResultSet rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				int itemId = Integer.parseInt(rs.getString("BakeryItemID"));
-				String imageURL = rs.getString("ImageURL");
-				String itemName = rs.getString("ItemName");
-				float price = Float.parseFloat(rs.getString("Price"));
-
-				
-				items.add(new BakeryItem(itemId, imageURL,itemName, price));
-			}
-			
-		}catch(Exception E) {
-			E.printStackTrace();
-			throw new Exception(E);
-		}
-		
+		items = searchDao.serachItems(searchString);
 		return items;
 	}
 
