@@ -20,83 +20,95 @@ import com.obs.model.Order;
  */
 @WebServlet("/orderHistory")
 public class OrderHistoryController extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-       
-	private DbManager orderHistoryDao = DbManager.getInstance();
+    private DbManager orderHistoryDao = DbManager.getInstance();
     
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		// set credentials
-				if (request.getParameter("userID") != null) {
-					request.setAttribute("userID", request.getParameter("userID"));
-				}else {
-					request.setAttribute("userID", null);
-					
-				}
+		if (request.getParameter("userID") != null) {
+			request.setAttribute("userID", request.getParameter("userID"));
+		}else {
+			request.setAttribute("userID", null);
+			
+		}
+		
+		if (request.getParameter("userName") != null) {
+			
+			request.setAttribute("userName", request.getParameter("userName"));
+		}else {
+			request.setAttribute("userName", null);
+			
+		}
 				
-				if (request.getParameter("userName") != null) {
-					
-					request.setAttribute("userName", request.getParameter("userName"));
-				}else {
-					request.setAttribute("userName", null);
-					
-				}
-				
-				String userID = request.getParameter("userID");
-				
-				try {
-					List<Order> ordersList =  orderHistoryDao.getOrderHistory(userID);
-					request.setAttribute("order_history", ordersList);	
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+		String userID = request.getParameter("userID");
+		List<Order> ordersList = null;
+		
+		try {
+			ordersList =  getOrderHistoryDetails(userID);
+			request.setAttribute("order_history", ordersList);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/OrderHistory.jsp");
 		requestDispatcher.forward(request, response);
+	}
+	
+	
+	private List<Order> getOrderHistoryDetails(String userID) throws Exception {
+		List<Order> listOfOrders = orderHistoryDao.getOrderHistory(userID);
+		return listOfOrders;
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-				response.getWriter().append("Served at: ").append(request.getContextPath());
-				// set credentials
-				if (request.getParameter("userID") != null) {
-					request.setAttribute("userID", request.getParameter("userID"));
-				}else {
-					request.setAttribute("userID", null);
-					
-				}
-				
-				if (request.getParameter("userName") != null) {
-					
-					request.setAttribute("userName", request.getParameter("userName"));
-				}else {
-					request.setAttribute("userName", null);
-					
-				}
-				String userID = request.getParameter("userID");
-				String orderID = request.getParameter("orderID");
-				Cart cart = null;
-				try {
-					cart = orderHistoryDao.getCart(userID, orderID);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				request.setAttribute("cart_data", cart.getCartItems());
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/OrderDetail.jsp");
-				requestDispatcher.forward(request, response);
+		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		// set credentials
+		if (request.getParameter("userID") != null) {
+			request.setAttribute("userID", request.getParameter("userID"));
+		}else {
+			request.setAttribute("userID", null);
+			
+		}
+		
+		if (request.getParameter("userName") != null) {
+			
+			request.setAttribute("userName", request.getParameter("userName"));
+		}else {
+			request.setAttribute("userName", null);
+			
+		}
+		
+		String userID = request.getParameter("userID");
+		String orderID = request.getParameter("orderID");
+		Cart cart = null;
+		
+		try {
+			cart = getOrderDetails(userID, orderID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("cart_data", cart.getCartItems());
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/OrderDetail.jsp");
+		requestDispatcher.forward(request, response);
 
 	}
 	
+	private Cart getOrderDetails(String userID, String orderID) throws Exception {
+		Cart cart = orderHistoryDao.getOrder(userID, orderID);
+		return cart;
+	}
 
 }
