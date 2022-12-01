@@ -1,5 +1,7 @@
 package com.obs.controller;
 
+import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,21 +20,16 @@ public class ViewController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 4917965091904591241L;
 	
-	public BakeryItem getItemDetails(int bakeryItemID) throws Exception {
+	public BakeryItem getItemDetails(Integer bakeryItemID) throws Exception {
 		DbConnector db = DbConnector.getInstance();
 		BakeryItem bakeryItem = new BakeryItem(bakeryItemID);
 		
-		try {
-			bakeryItem = db.getItem(bakeryItemID);
-		}catch(Exception e){
-			e.printStackTrace();
-			throw new Exception();
-		}
+		bakeryItem = db.getItem(bakeryItemID);
 		
 		return bakeryItem;
 	}
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException , IOException{
 		
 		try {
 			if(request.getParameter("userID")!=null) {
@@ -49,13 +46,13 @@ public class ViewController extends HttpServlet{
 			}
 			if(request.getParameter("bakeryItemID")!=null) {
 				request.setAttribute("bakeryItemID", request.getParameter("bakeryItemID"));
+				String bakeryItemID = request.getParameter("bakeryItemID");
+				BakeryItem item = getItemDetails(Integer.parseInt(bakeryItemID));
+				request.setAttribute("item", item);
 			}
 			else {
 				request.setAttribute("bakeryItemID", null);
 			}
-			String bakeryItemID = request.getParameter("bakeryItemID");
-			BakeryItem item = getItemDetails(Integer.parseInt(bakeryItemID));
-			request.setAttribute("item", item);
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/ViewItemDetails.jsp");
 			requestDispatcher.forward(request,response);
