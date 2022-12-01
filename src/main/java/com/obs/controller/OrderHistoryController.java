@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.obs.dao.DbConnector;
+import com.obs.dao.DbManager;
 import com.obs.model.Cart;
 import com.obs.model.Order;
 
@@ -22,7 +22,7 @@ import com.obs.model.Order;
 public class OrderHistoryController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private DbConnector orderHistoryDao = DbConnector.getInstance();
+	private DbManager orderHistoryDao = DbManager.getInstance();
     
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

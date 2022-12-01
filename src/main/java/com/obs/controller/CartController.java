@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.obs.dao.DbConnector;
+import com.obs.dao.DbManager;
 import com.obs.model.BakeryItem;
 import com.obs.model.Cart;
 import com.obs.model.CartItem;
@@ -62,7 +62,7 @@ public class CartController extends HttpServlet {
 	// Get User Cart
 	private Cart getShoppingCart(String userID) throws Exception {
 		Cart cart = null;
-		DbConnector dbManagerInstance = DbConnector.getInstance();
+		DbManager dbManagerInstance = DbManager.getInstance();
 		try {
 			cart = dbManagerInstance.getCart(userID);
 		}
@@ -74,7 +74,7 @@ public class CartController extends HttpServlet {
 	
 	// Delete Item from User Cart 
 	public void deleteItem(String userID, String itemID) throws Exception {
-		DbConnector dbManagerInstance = DbConnector.getInstance();
+		DbManager dbManagerInstance = DbManager.getInstance();
 		try {
 			dbManagerInstance.deleteItemFromCart(userID, itemID);
 		}
@@ -122,7 +122,7 @@ public class CartController extends HttpServlet {
 	
 	// Add To Cart
 	private boolean addToCart(String userID, String bakeryItemID, String quantity) throws Exception {
-		DbConnector dbManagerInstance = DbConnector.getInstance();
+		DbManager dbManagerInstance = DbManager.getInstance();
 		try {
 			 return dbManagerInstance.addToCart(userID, bakeryItemID, quantity);
 		}
