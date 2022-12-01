@@ -18,7 +18,8 @@ import com.obs.model.User;
 public class LoginController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-
+	DbConnector loginDao = DbConnector.getInstance();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String endpoint = request.getServletPath();
@@ -79,10 +80,10 @@ public class LoginController extends HttpServlet {
 	}
 
 	private User validateUser(String email, String password) throws Exception {
-		DbConnector db = DbConnector.getInstance();
+		
 		User user;
 		try {
-			user = db.getUser(email, password);
+			user = loginDao.getUser(email, password);
 		} catch (Exception e) {
 			throw new Exception(e);
 		}

@@ -19,7 +19,7 @@ import com.obs.model.User;
 public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private DbConnector userDao = DbConnector.getInstance();
+	private DbConnector registerDao = DbConnector.getInstance();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -58,7 +58,7 @@ public class RegisterController extends HttpServlet {
 		user.setDeliveryAddress(deliveryAddress);
 		
 		try {
-			userDao.registerUser(user);
+			registerDao.registerUser(user);
 			
 		}
 		catch(Exception e) {
