@@ -65,7 +65,7 @@ public class SearchController extends HttpServlet{
 		
 		
 		List<BakeryItem> items = new ArrayList<>();
-		items = searchDao.serachItems(searchString);
+		items = searchDao.searchItems(searchString);
 		return items;
 	}
 

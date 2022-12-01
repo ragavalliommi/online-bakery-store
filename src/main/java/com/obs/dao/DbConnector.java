@@ -135,7 +135,7 @@ public class DbConnector {
 		return existingUser;
 	}
 	
-	public List<BakeryItem> serachItems(String searchString) throws Exception{
+	public List<BakeryItem> searchItems(String searchString) throws Exception{
 		List<BakeryItem> items = new ArrayList<>();
 		try(PreparedStatement ps = connection.prepareStatement(SEARCH_ITEMS)){
 			ps.setString(1, "%"+searchString+"%");
