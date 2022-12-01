@@ -21,10 +21,12 @@ import com.obs.model.CartItem;
 public class CartController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	private DbManager cartDao = DbManager.getInstance();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String endpoint = request.getServletPath();
-		System.out.print(endpoint);
 		try {
+			String endpoint = request.getServletPath();
+			System.out.print(endpoint);
 			if(request.getParameter("userID")!=null) {
 				request.setAttribute("userID", request.getParameter("userID"));
 			}
@@ -47,46 +49,39 @@ public class CartController extends HttpServlet {
 				{
 					deleteItem(userID,itemID);
 				}
-				cart = getShoppingCart(userID);
-				request.setAttribute("cart_data", cart.getCartItems());
-				request.setAttribute("cart_value", cart.getCartValue());
+				if(userID != null) {
+					cart = getShoppingCart(userID);
+					request.setAttribute("cart_data", cart.getCartItems());
+					request.setAttribute("cart_value", cart.getCartValue());
+				}
+				if(userID == null) {
+					cart = null;
+				}
 				dispatcher = request.getRequestDispatcher("/WEB-INF/views/Cart.jsp");
 				dispatcher.forward(request, response);
 				break;
 			}
 		} catch (Exception e) {
-			throw new ServletException(e);
+			throw new ServletException();
 		}
 	}
 	
 	// Get User Cart
 	private Cart getShoppingCart(String userID) throws Exception {
 		Cart cart = null;
-		DbManager dbManagerInstance = DbManager.getInstance();
-		try {
-			cart = dbManagerInstance.getCart(userID);
-		}
-		catch (Exception e) {
-			throw new Exception(e);
-		}
+		cart = cartDao.getCart(userID);
 		return cart;
 	}
 	
 	// Delete Item from User Cart 
-	public void deleteItem(String userID, String itemID) throws Exception {
-		DbManager dbManagerInstance = DbManager.getInstance();
-		try {
-			dbManagerInstance.deleteItemFromCart(userID, itemID);
-		}
-		catch (Exception e) {
-			throw new Exception(e);
-		}
+	private void deleteItem(String userID, String itemID) throws Exception {
+		cartDao.deleteItemFromCart(userID, itemID);
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String endpoint = request.getServletPath();
 		System.out.println(endpoint);
+		boolean isAddedToCart = false;
 		try {
 			switch (endpoint) {
 			case "/cart":
@@ -106,14 +101,19 @@ public class CartController extends HttpServlet {
 				String bakeryItemID = request.getParameter("bakeryItemID");
 				String quantity = request.getParameter("quantity");
 				
-				boolean isAddedToCart = addToCart(userID, bakeryItemID, quantity);
+				if(userID!=null && bakeryItemID!=null && quantity!= null) {
+					isAddedToCart = addToCart(userID, bakeryItemID, quantity);
+				}
+				else {
+					 isAddedToCart = false;
+				}
 				if (isAddedToCart) {
 					Cart cart = getShoppingCart(userID);
 					request.setAttribute("cart_data", cart.getCartItems());
 					request.setAttribute("cart_value", cart.getCartValue());
-					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/Cart.jsp");
-					requestDispatcher.forward(request, response);
 				}
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/Cart.jsp");
+				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
 			throw new ServletException(e);
@@ -122,13 +122,7 @@ public class CartController extends HttpServlet {
 	
 	// Add To Cart
 	private boolean addToCart(String userID, String bakeryItemID, String quantity) throws Exception {
-		DbManager dbManagerInstance = DbManager.getInstance();
-		try {
-			 return dbManagerInstance.addToCart(userID, bakeryItemID, quantity);
-		}
-		catch (Exception e) {
-			throw new Exception(e);
-		}
+		return cartDao.addToCart(userID, bakeryItemID, quantity);
 	}	
 	
 }
