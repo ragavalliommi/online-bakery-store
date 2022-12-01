@@ -36,6 +36,14 @@ public class User {
 		this.email = email;
 		this.deliveryAddress = deliveryAddress;
 	}
+	
+	public User() {
+		this.userID = null;
+		this.userName = null;
+		this.phone = null;
+		this.email = null;
+		this.password = null;
+	}
 
 	public String getUserID() {
 		return userID;
