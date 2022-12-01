@@ -373,6 +373,22 @@ public class DbManager {
 			return isOrderInserted;
 		}
 		
+		public void insertAllItemsInOrder(ArrayList<CartItem> cartList, int id, String userID, int paymentID, String deliveryMode) throws SQLException {
+			for(CartItem c : cartList) {
+				Order order = new Order();
+				order.setOrderId(id);
+				order.setUserId(userID);
+				order.setBakeryItemId(c.getBakeryItem().getBakeryItemId());
+				order.setPaymentId(paymentID);
+				order.setQuantity(c.getItemQty());
+				order.setAmount(c.getItemQty() * c.getBakeryItem().getPrice());
+				order.setDeliveryMode(deliveryMode);
+
+				boolean orderInserted = insertOrder(order);
+				if(!orderInserted) break;
+			}
+		}
+		
 		public List<Order> getOrderHistory(String userID) throws SQLException {
 			List<Order> ordersList = new ArrayList<Order>();
 			try(PreparedStatement ps = connection.prepareStatement(GET_ORDER_HISTORY);){
@@ -433,7 +449,7 @@ public class DbManager {
 
 				
 		/* Get Cart */
-		public Cart getCart(String userID, String orderID) throws Exception {
+		public Cart getOrder(String userID, String orderID) throws Exception {
 			Cart cart = new Cart();
 			try (PreparedStatement ps = connection.prepareStatement(GET_ORDER_DETAIL);) {
 	            ps.setInt(1, Integer.parseInt(orderID));
