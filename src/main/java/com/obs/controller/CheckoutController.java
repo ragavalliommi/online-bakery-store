@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.obs.dao.DbConnector;
+import com.obs.dao.DbManager;
 import com.obs.model.Cart;
 import com.obs.model.CartItem;
 import com.obs.model.Order;
@@ -24,7 +24,7 @@ import com.obs.model.User;
 public class CheckoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private DbConnector orderDao = DbConnector.getInstance();
+	private DbManager orderDao = DbManager.getInstance();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//checkout button - check out page render
@@ -64,7 +64,7 @@ public class CheckoutController extends HttpServlet {
 	
 	private User getUserDetails(String userID) throws Exception {
 		User user = null;
-		DbConnector dbManagerInstance = DbConnector.getInstance();
+		DbManager dbManagerInstance = DbManager.getInstance();
 		try {
 			user = dbManagerInstance.getUserByID(userID);
 		}
@@ -76,7 +76,7 @@ public class CheckoutController extends HttpServlet {
 	
 	private Cart getShoppingCart(String userID) throws Exception {
 		Cart cart = null;
-		DbConnector dbManagerInstance = DbConnector.getInstance();
+		DbManager dbManagerInstance = DbManager.getInstance();
 		try {
 			cart = dbManagerInstance.getCart(userID);
 		}

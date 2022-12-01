@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.obs.dao.DbConnector;
+import com.obs.dao.DbManager;
 import com.obs.model.BakeryItem;
 
 @WebServlet("/search")
@@ -24,7 +24,7 @@ public class SearchController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private DbConnector searchDao = DbConnector.getInstance();
+	private DbManager searchDao = DbManager.getInstance();
 	
 	
 	

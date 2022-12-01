@@ -14,7 +14,7 @@ import com.obs.model.Cart;
 import com.obs.model.CartItem;
 import com.obs.model.Order;
 
-public class DbConnector {
+public class DbManager {
 	private String jdbcURl = "jdbc:mysql://localhost:3306/obs?serverTimezone=UTC";
 	private String jdbcUsername = "root";
 	private String jdbcPassword = "onlineBakeryStore";
@@ -22,7 +22,7 @@ public class DbConnector {
 	
 	private Connection connection = null; // single instance of Connection
 	
-	private static DbConnector userDao = new DbConnector();
+	private static DbManager dbMgr = new DbManager();
 	
 	private static final String INSERT_USER =
 			"INSERT INTO `Users`(`UserName`, `Email`,`Phone`, `Password`,`DeliveryAddress`) VALUES (? ,? ,?, ?, ?);";
@@ -51,12 +51,12 @@ public class DbConnector {
 			"SELECT `BakeryItemID`, `ItemName`, `ItemSize`, `Price`, `ImageURL` FROM `BakeryItems` WHERE  `ItemName` LIKE ? ";
 	
 	
-	public DbConnector() {
+	public DbManager() {
 		establishDatabaseConnection();
     }
 	
-	public static DbConnector getInstance() {
-		return userDao;
+	public static DbManager getInstance() {
+		return dbMgr;
 	}
 
 	private void establishDatabaseConnection() {
