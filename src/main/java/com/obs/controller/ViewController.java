@@ -22,11 +22,7 @@ public class ViewController extends HttpServlet{
 	private static final long serialVersionUID = 4917965091904591241L;
 	
 	private BakeryItem getItemDetails(Integer bakeryItemID) throws Exception {
-		
-		BakeryItem bakeryItem = new BakeryItem(bakeryItemID);
-		
-		bakeryItem = viewDao.getItem(bakeryItemID);
-		
+		BakeryItem bakeryItem  = viewDao.getItem(bakeryItemID);
 		return bakeryItem;
 	}
 	
