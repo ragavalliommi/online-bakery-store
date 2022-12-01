@@ -6,7 +6,7 @@ public class Order {
 	private int orderId;
 	private String userId;
 	private int bakeryItemId;
-	//private String paymentId = null;
+	private int paymentId;
 	private int quantity;
 	private float amount;
 	private String deliveryMode;
@@ -15,8 +15,6 @@ public class Order {
 	public Order() {
 		super();
 	}
-	
-	
 
 	public Order(int orderId, float amount, String orderDate, String deliveryMode) {
 		super();
@@ -25,8 +23,6 @@ public class Order {
 		this.orderDate = orderDate;
 		this.deliveryMode = deliveryMode;
 	}
-
-
 
 
 	public int getOrderId() {
@@ -59,14 +55,14 @@ public class Order {
 	}
 
 
-//	public String getPaymentId() {
-//		return paymentId;
-//	}
-//
-//
-//	public void setPaymentId(String paymentId) {
-//		this.paymentId = paymentId;
-//	}
+	public int getPaymentId() {
+		return paymentId;
+	}
+
+
+	public void setPaymentId(int paymentId) {
+		this.paymentId = paymentId;
+	}
 
 
 	public int getQuantity() {

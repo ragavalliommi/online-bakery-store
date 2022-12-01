@@ -240,14 +240,10 @@
                    </button>
                </div>
                 </div>
-                
-                </div>
-                
-             
-                
-            </form>
+                </form>
+                </div>   
         </div>
-    </div>
+
     
         
 	<div id="userid" hidden=true data-userid="${_userid}"></div>

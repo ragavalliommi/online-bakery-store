@@ -296,7 +296,7 @@ public class DbConnector {
 
 
 		private static final String ADD_ORDER = 
-				"INSERT INTO `Orders` (orderID, userID, bakeryItemID, quantity, amount, deliverymode) VALUES (?, ?, ?, ?, ?, ?);";
+				"INSERT INTO `Orders` (orderID, userID, bakeryItemID, paymentID, quantity, amount, deliverymode) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		
 		private static final String GET_ORDER_NUMBER = 
 				"SELECT MAX(entryID) as entryID FROM `Orders`;";
@@ -305,6 +305,9 @@ public class DbConnector {
 				"SELECT orderid, sum(amount) AS totalprice, orderdate, deliverymode FROM `Orders`"
 				+ "where userid = ?"
 				+ "group by orderid, orderdate, deliverymode;";
+		
+		private static final String GET_PAYMENT_ID = 
+				"SELECT paymentID FROM `Payments` WHERE paymentmode = ?";
 		
 		
 		public int getOrderNumber() throws SQLException{
@@ -330,9 +333,10 @@ public class DbConnector {
 				ps.setInt(1, order.getOrderId());
 				ps.setString(2, order.getUserId());
 				ps.setInt(3, order.getBakeryItemId());
-				ps.setInt(4, order.getQuantity());
-				ps.setFloat(5, order.getAmount());
-				ps.setString(6, order.getDeliveryMode());
+				ps.setInt(4, order.getPaymentId());
+				ps.setInt(5, order.getQuantity());
+				ps.setFloat(6, order.getAmount());
+				ps.setString(7, order.getDeliveryMode());
 				System.out.println(ps);
 				ps.executeUpdate();
 				isOrderInserted = true;	
@@ -393,6 +397,21 @@ public class DbConnector {
 			return cart;
 		}
 		
+		public int getPaymentID(String paymentMode) throws SQLException{
+			int paymentID = 0;
+			
+			try(PreparedStatement ps = connection.prepareStatement(GET_PAYMENT_ID);){
+				ps.setString(1, paymentMode);
+				ResultSet rs = ps.executeQuery();
+				while(rs.next()) {
+					paymentID = rs.getInt("paymentID");
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return paymentID;
+		}
 		
 
 }
