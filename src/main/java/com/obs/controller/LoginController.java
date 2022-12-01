@@ -66,7 +66,7 @@ public class LoginController extends HttpServlet {
 
 	}
 
-	private User validateUser(String email, String password) throws Exception {
+	protected User validateUser(String email, String password) throws Exception {
 		
 		User user;
 		try {
