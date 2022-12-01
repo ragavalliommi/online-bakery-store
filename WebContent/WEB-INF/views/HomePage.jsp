@@ -57,7 +57,7 @@
 	
 				<div class="view view-cascade overlay text-center">
 					<a href="http://localhost:8080/obs/viewItem?bakeryItemID=<c:out value="${item.getBakeryItemId()}" />&userID=<c:out value="${userID}" />&userName=<c:out value="${userName}" />">
-						    <img class="card-img-top" src="${item.getImageURL()}" alt="Card image cap" style="width: 20rem; height: 20rem;"> 
+						    <img class="card-img-top" src="${item.getImageURL()}" alt="Card image cap" style="width: 28.5rem; height: 24rem;"> 
 					</a>
 					<a>
 						<div class="mask rgba-white-slight"></div>
