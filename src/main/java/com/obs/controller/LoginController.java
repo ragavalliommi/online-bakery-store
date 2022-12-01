@@ -27,8 +27,8 @@ public class LoginController extends HttpServlet {
 		try {
 			switch (endpoint) {
 			case "/":
-				renderLoginGUI(request, response);
-				break;
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/LoginGUI.jsp");
+				requestDispatcher.forward(request, response);
 			}
 			System.out.println("Rendered the page successfully!");
 		} catch (Exception e) {
@@ -64,19 +64,6 @@ public class LoginController extends HttpServlet {
 			throw new ServletException(e);
 		}
 
-	}
-
-	private void renderLoginGUI(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		try {
-			System.out.println("Reached LoginUI");
-			String loginPath = "/WEB-INF/views/LoginGUI.jsp";
-			RequestDispatcher loginDispatcher = request.getRequestDispatcher(loginPath);
-			System.out.println("Dispatch login UI");
-			loginDispatcher.forward(request, response);
-		} catch (Exception e) {
-			System.out.println("Exception:" +e);
-			throw new Exception(e);
-		}
 	}
 
 	private User validateUser(String email, String password) throws Exception {
