@@ -48,8 +48,8 @@ public class CheckoutControllerTest {
 
 		when(request.getParameter("userID")).thenReturn(null);
 		when(request.getParameter("userName")).thenReturn(null);
-		when(request.getParameter("flexRadioDefault")).thenReturn("delivery");
-		when(request.getParameter("flexRadioDefault2")).thenReturn("credit");
+		when(request.getParameter("flexRadioDefault")).thenReturn(null);
+		when(request.getParameter("flexRadioDefault2")).thenReturn(null);
 		when(request.getRequestDispatcher("/WEB-INF/views/ThankYou.jsp")).thenReturn(rd);
 		
 		checkout.doPost(request, response);
@@ -77,8 +77,8 @@ public class CheckoutControllerTest {
 
 		when(request.getParameter("userID")).thenReturn(null);
 		when(request.getParameter("userName")).thenReturn(null);
-		when(request.getParameter("flexRadioDefault")).thenReturn("delivery");
-		when(request.getParameter("flexRadioDefault2")).thenReturn("credit");
+		when(request.getParameter("flexRadioDefault")).thenReturn(null);
+		when(request.getParameter("flexRadioDefault2")).thenReturn(null);
 		when(request.getRequestDispatcher("/WEB-INF/views/Checkout.jsp")).thenReturn(rd);
 		
 		checkout.doGet(request, response);
