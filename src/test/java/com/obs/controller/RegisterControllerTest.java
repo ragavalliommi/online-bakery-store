@@ -53,7 +53,7 @@ public class RegisterControllerTest {
 		when(request.getServletPath()).thenReturn("/register");
 		when(request.getParameter("email")).thenReturn("biswa@gmail.com");
 		when(request.getParameter("phone")).thenReturn("4987839050");
-		when(request.getParameter("userName")).thenReturn("biswa");
+		when(request.getParameter("userName")).thenReturn("biswal");
 		when(request.getParameter("password")).thenReturn("viswadip");
 		when(request.getParameter("deliveryAddress")).thenReturn("Dallas");
 		
@@ -66,10 +66,10 @@ public class RegisterControllerTest {
 	public void postLoginControllerTestNullValues() throws Exception {
 		when(request.getServletPath()).thenReturn("/register");
 		when(request.getParameter("email")).thenReturn("biswa@gmail.com");
-		when(request.getParameter("phone")).thenReturn("4987839050");
+		when(request.getParameter("phone")).thenReturn(null);
 		when(request.getParameter("userName")).thenReturn(null);
-		when(request.getParameter("password")).thenReturn("viswadip");
-		when(request.getParameter("deliveryAddress")).thenReturn("Dallas");
+		when(request.getParameter("password")).thenReturn(null);
+		when(request.getParameter("deliveryAddress")).thenReturn(null);
 		
 		when(request.getRequestDispatcher("/WEB-INF/views/SuccessMessage.jsp")).thenReturn(requestDispatcher);
 		registerController.doPost(request, response);
