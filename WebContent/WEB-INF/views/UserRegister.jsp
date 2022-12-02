@@ -24,23 +24,23 @@
 					<form action="<%= request.getContextPath() %>/register" method="POST">
 						<div class="form-group">
 							<label for="name">User Name:</label> <input type="text"
-								class="form-control" name="userName">
+								class="form-control" name="userName" required>
 						</div>
 						<div class="form-group">
 							<label for="name">Phone Number:</label> <input type="text"
-								class="form-control" name="phone">
+								class="form-control" name="phone" required>
 						</div>
 						<div class="form-group">
 							<label for="email">Email address:</label> <input type="email"
-								class="form-control" name="email">
+								class="form-control" name="email" required>
 						</div>
 						<div class="form-group">
 							<label for="password">Password:</label> <input type="password"
-								class="form-control" name="password">
+								class="form-control" name="password" required>
 						</div>
 						<div class="form-group">
 							<label for="deliveryAddress">Delivery Address:</label> <input type="text"
-								class="form-control" name="deliveryAddress">
+								class="form-control" name="deliveryAddress" required>
 						</div>
 						<button type="submit" class="btn btn-primary">Register</button>
 					</form>

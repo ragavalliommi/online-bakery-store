@@ -63,7 +63,7 @@ public class LoginController extends HttpServlet {
 
 	}
 
-	protected boolean validateUser(String email, String password) throws Exception {
+	private boolean validateUser(String email, String password) throws Exception {
 		User user = loginDao.getUser(email, password);
 		if(user.getUserID() != null) {
 			return true;

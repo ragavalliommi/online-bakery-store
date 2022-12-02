@@ -24,11 +24,11 @@
 					<form action="<%= request.getContextPath() %>/" method="POST">
 						<div class="form-group">
 							<label for="email">Email address:</label> <input type="email"
-								class="form-control" name="email" id="email">
+								class="form-control" name="email" id="email" required>
 						</div>
 						<div class="form-group">
 							<label for="password">Password:</label> <input type="password"
-								class="form-control" name="password" id="password">
+								class="form-control" name="password" id="password" required>
 						</div>
 						<button type="submit" class="btn btn-primary">Login</button>
 					</form>
