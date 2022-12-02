@@ -79,9 +79,14 @@ public class DbManager {
 		this.connection = connection;
 	}
 	
-	public boolean registerUser(User user) throws Exception{
+	public boolean registerUser(String userName,String phone, String email, String password , String deliveryAddress) throws Exception{
 		Class.forName("com.mysql.jdbc.Driver");
-
+			User user = new User(email);
+			user.setUserName(userName);
+			user.setPhone(phone);
+			user.setPassword(password);
+			user.setDeliveryAddress(deliveryAddress);
+			
 			Connection connection = DriverManager
 		
 				.getConnection(jdbcURl, jdbcUsername, jdbcPassword);
@@ -126,6 +131,7 @@ public class DbManager {
                 		existingUser.setUserName(userName);
                 	}
                 }
+                
             }
         } catch(SQLException e) {
            e.printStackTrace();
