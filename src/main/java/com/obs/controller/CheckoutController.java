@@ -75,7 +75,6 @@ public class CheckoutController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		// set credentials
 		if (request.getParameter("userID") != null) {
