@@ -74,7 +74,7 @@
                                     <td style="text-align: center">
                                     
                                     <div class="row justify-content-md-center">
-                                    <form id="form" class="form-inline" action="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}&orderID=${o.getOrderId()}" method="POST" >
+                                    <form id="form" class="form-inline" action="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}&value=${cart_value}&orderID=${o.getOrderId()}" method="POST" >
 	                                    <table ><tr style="border: none"><td style="border: none">
 	                                    
 						                   <button type="submit" class="btn btn-primary btn-md" style="background-color: green ; border-color: green">

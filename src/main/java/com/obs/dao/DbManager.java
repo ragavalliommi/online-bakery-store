@@ -214,16 +214,18 @@ public class DbManager {
 	public Cart getCart(String userID) throws Exception {
 		Cart cart = new Cart();
 		try (PreparedStatement ps = connection.prepareStatement(GET_CART);) {
-            ps.setInt(1, Integer.parseInt(userID));
-            System.out.println(ps);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-            	Integer itemId = rs.getInt("BakeryItemID");
-            	Integer itemQuantity = rs.getInt("ItemQuantity");
-            	BakeryItem bakeryItem = getItem(itemId);
-            	CartItem cartItem = new CartItem(bakeryItem, itemQuantity);
-            	cart.addItem(cartItem);
-            }
+			if(userID != null) {
+				ps.setInt(1, Integer.parseInt(userID));
+	            System.out.println(ps);
+	            ResultSet rs = ps.executeQuery();
+	            while(rs.next()) {
+	            	Integer itemId = rs.getInt("BakeryItemID");
+	            	Integer itemQuantity = rs.getInt("ItemQuantity");
+	            	BakeryItem bakeryItem = getItem(itemId);
+	            	CartItem cartItem = new CartItem(bakeryItem, itemQuantity);
+	            	cart.addItem(cartItem);
+	            }
+			}  
         } catch(SQLException e) {
            e.printStackTrace();
            throw new SQLException(e);

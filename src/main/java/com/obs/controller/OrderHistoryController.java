@@ -101,6 +101,7 @@ public class OrderHistoryController extends HttpServlet {
 		}
 		
 		request.setAttribute("cart_data", cart.getCartItems());
+		request.setAttribute("cart_value", cart.getCartValue());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/OrderDetail.jsp");
 		requestDispatcher.forward(request, response);
 
