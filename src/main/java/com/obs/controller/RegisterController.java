@@ -60,29 +60,35 @@ public class RegisterController extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String deliveryAddress = request.getParameter("deliveryAddress");
-		User user = new User(email);
-		user.setUserName(userName);
-		user.setPhone(phone);
-		user.setPassword(password);
-		user.setDeliveryAddress(deliveryAddress);
+		
 		try {
-			registerUser(user);
+			if(registerUser(userName, phone, email, password, deliveryAddress)) {
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/SuccessMessage.jsp");
+				requestDispatcher.forward(request, response);
+			}
+			else {
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/RegisterFailed.jsp");
+				requestDispatcher.forward(request, response);
+			}
 		}
 		catch (Exception e) {
 			System.out.println("Exception is: "+ e);
 		}
 		//registerDao.registerUser(user);
 			
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/SuccessMessage.jsp");
-		requestDispatcher.forward(request, response);
+		
 	}
 	
-	private void registerUser(User user) throws Exception{
-		if (user.getUserName()!= null) {
-			registerDao.registerUser(user);
+	private boolean registerUser(String userName,String phone, String email, String password , String deliveryAddress) throws Exception{
+		if (userName!= "" && email != "" && phone !="" && password !="" && deliveryAddress!=null ) {
+			if(registerDao.registerUser(userName, phone, email, password, deliveryAddress))
+				return true;
+			else
+				return false;
 		}
 		else {
 			System.out.println("User Name is null");
+			return false;
 		}
 	}
 

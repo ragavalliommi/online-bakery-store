@@ -45,30 +45,31 @@ public class LoginController extends HttpServlet {
 		        String password = request.getParameter("password");
 		        User user = new User();
 		        try {
-		        	user = validateUser(email, password);
+		        	if(validateUser(email, password)) {
+		        		response.sendRedirect(request.getContextPath() + "/home?userID="+user.getUserID()+"&userName="+user.getUserName());
+		        	}
+		        	else {
+		        		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/LoginFailed.jsp");
+						requestDispatcher.forward(request, response);
+		        	}
 		        }
 		        catch(Exception exception) {
 		        	System.out.println("Error in validateUser method: " + exception);
 		        	
 		        }
-				if(user.getUserID() != null) {
-					System.out.println("No error!");
-					response.sendRedirect(request.getContextPath() + "/home?userID="+user.getUserID()+"&userName="+user.getUserName());
-					System.out.println("Completed doGet");
-				} else {
-					System.out.println("error in doPost!");
-					response.sendRedirect(request.getContextPath() + "/");	
-				}
+				
 				break;
 			}
 
 	}
 
-	protected User validateUser(String email, String password) throws Exception {
-		
-		User user;
-		user = loginDao.getUser(email, password);
-		return user;
+	protected boolean validateUser(String email, String password) throws Exception {
+		User user = loginDao.getUser(email, password);
+		if(user.getUserID() != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
