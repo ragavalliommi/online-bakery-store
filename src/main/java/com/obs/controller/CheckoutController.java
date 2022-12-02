@@ -2,7 +2,6 @@ package com.obs.controller;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.obs.dao.DbManager;
 import com.obs.model.Cart;
-import com.obs.model.CartItem;
 import com.obs.model.User;
 
 /**
@@ -75,36 +73,26 @@ public class CheckoutController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
 		// set credentials
 		if (request.getParameter("userID") != null) {
 			request.setAttribute("userID", request.getParameter("userID"));
 		}else {
 			request.setAttribute("userID", null);
-			
 		}
 		
 		if (request.getParameter("userName") != null) {
-			
 			request.setAttribute("userName", request.getParameter("userName"));
 		}else {
 			request.setAttribute("userName", null);
-			
 		}
 		
 		String userID = request.getParameter("userID");
-		
+		String deliveryMode = request.getParameter("flexRadioDefault");
+		String paymentMode = request.getParameter("flexRadioDefault2");
 		try {
-			Cart cart = getShoppingCart(userID);
-			ArrayList<CartItem> cartList = cart.getCartItems();
-			int id = getOrderID(userID) + 1;
-			String deliveryMode = request.getParameter("flexRadioDefault");
-			String paymentMode = request.getParameter("flexRadioDefault2");
-			int paymentID = getPayID(paymentMode);
-			insertAll(cartList, id, userID, paymentID, deliveryMode);
-			boolean cartCleared = clearCart(userID);
-			if(!cartCleared) System.out.println("cart not cleared");
+			
+			placeOrderMain(userID, paymentMode, deliveryMode); 
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,23 +103,9 @@ public class CheckoutController extends HttpServlet {
 		
 	}
 	
-	private int getOrderID(String userID) throws Exception{
-		int orderID = orderDao.getOrderNumber();
-		return orderID;
-	}
 	
-	private int getPayID(String paymentMode) throws Exception {
-		int paymentID = orderDao.getPaymentID(paymentMode);
-		return paymentID;
-	}
-	
-	private boolean clearCart(String userID) throws Exception {
-		boolean cartCleared = orderDao.clearUserCart(userID);
-		return cartCleared;
-	}
-	
-	private void insertAll(ArrayList<CartItem> cartList, int id, String userID, int paymentID, String deliveryMode) throws Exception {
-		orderDao.insertAllItemsInOrder(cartList, id, userID, paymentID, deliveryMode);
+	private void placeOrderMain(String userID, String paymentMode, String deliveryMode) throws Exception {
+		orderDao.placeOrder(userID, paymentMode, deliveryMode);
 	}
 
 }
