@@ -101,7 +101,9 @@ public class DbManager {
 			preparedStatement.setString(5, user.getDeliveryAddress());
 			
 			System.out.println(preparedStatement);
-			preparedStatement.executeUpdate();
+			if(preparedStatement.executeUpdate()<=0) {
+				return false;
+			}
 			
 			
 		} catch (SQLException e) {
