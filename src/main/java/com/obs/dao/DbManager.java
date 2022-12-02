@@ -303,9 +303,11 @@ public class DbManager {
 	public boolean clearUserCart(String userID) throws Exception{
 		boolean isDeleted = false;
 		try(PreparedStatement ps = connection.prepareStatement(DELETE_CART)){
-			ps.setInt(1, Integer.parseInt(userID));
-			ps.executeUpdate();
-			isDeleted = true;	
+			if(userID != null) {
+				ps.setInt(1, Integer.parseInt(userID));
+				ps.executeUpdate();
+				isDeleted = true;	
+			}
 		}
 		catch (SQLException e) {
 			isDeleted = false;
@@ -340,6 +342,18 @@ public class DbManager {
 				"SELECT paymentID FROM `Payments` WHERE paymentmode = ?";
 		
 		
+		public void placeOrder(String userID, String paymentMode, String deliveryMode) throws Exception {
+			
+			Cart cart = getCart(userID);
+			ArrayList<CartItem> cartList = cart.getCartItems();
+			int id = getOrderNumber() + 1;
+			int paymentID = getPaymentID(paymentMode);
+			insertAllItemsInOrder(cartList, id, userID, paymentID, deliveryMode);
+			boolean cartCleared = clearUserCart(userID);
+			if(!cartCleared) System.out.println("cart not cleared");
+			
+		}
+		
 		public int getOrderNumber() throws SQLException{
 			int maxEntryID = 0;
 			
@@ -370,13 +384,12 @@ public class DbManager {
 				System.out.println(ps);
 				ps.executeUpdate();
 				isOrderInserted = true;	
-			}catch(Exception e) {
-				e.printStackTrace();
 			}
 			return isOrderInserted;
 		}
 		
 		public void insertAllItemsInOrder(ArrayList<CartItem> cartList, int id, String userID, int paymentID, String deliveryMode) throws SQLException {
+			boolean orderInserted = false;
 			for(CartItem c : cartList) {
 				Order order = new Order();
 				order.setOrderId(id);
@@ -387,26 +400,29 @@ public class DbManager {
 				order.setAmount(c.getItemQty() * c.getBakeryItem().getPrice());
 				order.setDeliveryMode(deliveryMode);
 
-				boolean orderInserted = insertOrder(order);
+				orderInserted = insertOrder(order);
 				if(!orderInserted) break;
+				
 			}
 		}
 		
 		public List<Order> getOrderHistory(String userID) throws SQLException {
 			List<Order> ordersList = new ArrayList<Order>();
 			try(PreparedStatement ps = connection.prepareStatement(GET_ORDER_HISTORY);){
-				ps.setString(1, userID);
-				ResultSet rs = ps.executeQuery();
-				while(rs.next()) {
-					
-					int orderId = rs.getInt("orderid");
-					float totalPrice = rs.getFloat("totalprice");
-					String orderDate = rs.getString("orderdate");
-					String deliveryMode = rs.getString("deliverymode");
-					
-					
-					Order orderSummary = new Order(orderId, totalPrice, orderDate, deliveryMode);
-					ordersList.add(orderSummary);
+				if(userID != null) {
+					ps.setString(1, userID);
+					ResultSet rs = ps.executeQuery();
+					while(rs.next()) {
+						
+						int orderId = rs.getInt("orderid");
+						float totalPrice = rs.getFloat("totalprice");
+						String orderDate = rs.getString("orderdate");
+						String deliveryMode = rs.getString("deliverymode");
+						
+						
+						Order orderSummary = new Order(orderId, totalPrice, orderDate, deliveryMode);
+						ordersList.add(orderSummary);
+					}
 				}
 				
 			}catch(Exception e) {
@@ -488,6 +504,9 @@ public class DbManager {
 			}
 			return paymentID;
 		}
+		
+		
+		
 		
 
 }
