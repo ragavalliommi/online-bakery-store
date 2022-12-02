@@ -234,7 +234,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                   <button type="submit" class="btn btn-primary btn-lg py-2 btn-block">
+                   <button type="submit" class="btn btn-success btn-lg py-2 btn-block">
                        Place Order
                    </button>
                </div>
