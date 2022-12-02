@@ -12,18 +12,18 @@
 	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
 </head>
 <body class="bg-secondary">
 	<header>
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
-			<a class="navbar-brand text-white" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">OBS</a>
+			<a class="navbar-brand text-white font-italic font-weight-bold" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">Online Bakery Store</a>
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
 					<a id="name" data-name="${userName}"
-						class="navbar-brand text-white rounded p-2"> <i
-						class="bi bi-person-circle"></i> <c:out value="${userName}" />
-					</a> <a id="collection" class="btn btn-dark" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}"> <i
-						class="bi bi-collection-fill"></i>
+						class="navbar-brand text-white rounded p-2"> Welcome, <c:out value="${userName}" /> !
+					</a> <a id="collection" class="btn btn-dark" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}"> <i class="fa fa-history" aria-hidden="true"></i>
 					</a> <a id="cart" class="btn btn-dark"
 						href="http://localhost:8080/obs/cart?userID=${userID}&userName=${userName}">
 						<i class="bi bi-cart4"></i>

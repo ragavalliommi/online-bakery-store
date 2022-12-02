@@ -12,18 +12,17 @@
 	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
+<body class="bg-secondary">
 <header>
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
-			<a class="navbar-brand text-white" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">OBS</a>
+			<a class="navbar-brand text-white font-italic font-weight-bold" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">Online Bakery Store</a>
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
 					<a id="name" data-name="${userName}"
-						class="navbar-brand text-white rounded p-2"> <i
-						class="bi bi-person-circle"></i> <c:out value="${userName}" />
-					</a> <a id="collection" class="btn btn-dark" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}"> <i
-						class="bi bi-collection-fill"></i>
+						class="navbar-brand text-white rounded p-2"> Welcome, <c:out value="${userName}" /> !
+					</a> <a id="collection" class="btn btn-dark" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}"> <i class="fa fa-history" aria-hidden="true"></i>
 					</a> <a id="cart" class="btn btn-dark"
 						href="http://localhost:8080/obs/cart?userID=${userID}&userName=${userName}">
 						<i class="bi bi-cart4"></i>
@@ -43,9 +42,9 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <span class="icon-check_circle display-3 text-success"></span>
-                    <h2 class="display-3 text-black">Thank you!</h2>
-                    <p class="lead mb-5">You order is successfully placed.</p>
-                    <p><a href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}" class="btn btn-sm btn-primary">Continue shopping</a></p>
+                    <h2 class="display-3 text-light">Thank you!</h2>
+                    <p class="lead mb-5 text-light">You order is successfully placed.</p>
+                    <p><a href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}" class="btn btn-sm btn-success">Continue shopping</a></p>
                 </div>
             </div>
         </div>
