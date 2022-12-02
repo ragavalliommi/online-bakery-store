@@ -30,7 +30,7 @@
                     <span class="icon-check_circle display-3 text-success"></span>
                     <h2 class="display-3 text-light">Registration Successful!!</h2>
                     
-                    <p><a href="http://localhost:8080/obs/register" class="btn btn-sm btn-success">Login</a></p>
+                    <p><a href="http://localhost:8080/obs/" class="btn btn-sm btn-success">Login</a></p>
                 </div>
             </div>
         </div>
