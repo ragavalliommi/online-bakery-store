@@ -26,8 +26,10 @@ public class HomePageController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		try {
+			
+			List<BakeryItem> bakeryItems =  retrieveAllBakeryItems();
+			request.setAttribute("_items_data", bakeryItems);	
 
-			retrieveAllItems(request, response);			
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
@@ -53,16 +55,15 @@ public class HomePageController extends HttpServlet {
 	}
 	
 	
-	private void retrieveAllItems(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+	
+	
+	private List<BakeryItem> retrieveAllBakeryItems() throws SQLException {
 		// TODO Auto-generated method stub
 		
-		
 		List<BakeryItem> bakeryItems =  homePageDao.getAllBakeryData();
-		request.setAttribute("_items_data", bakeryItems);	
+		return bakeryItems;
 	}
 	
-
-
 	
 
 }

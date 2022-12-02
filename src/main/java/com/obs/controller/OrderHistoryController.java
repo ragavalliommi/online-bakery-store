@@ -29,7 +29,7 @@ public class OrderHistoryController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 		
 		// set credentials
 		if (request.getParameter("userID") != null) {
@@ -72,7 +72,7 @@ public class OrderHistoryController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 		
 		// set credentials
 		if (request.getParameter("userID") != null) {
@@ -92,13 +92,16 @@ public class OrderHistoryController extends HttpServlet {
 		
 		String userID = request.getParameter("userID");
 		String orderID = request.getParameter("orderID");
-		Cart cart = null;
+		Cart cart = new Cart();
 		
-		try {
-			cart = getOrderDetails(userID, orderID);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (request.getParameter("userName") != null) {
+			try {
+				cart = getOrderDetails(userID, orderID);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
 		
 		request.setAttribute("cart_data", cart.getCartItems());
 		request.setAttribute("cart_value", cart.getCartValue());

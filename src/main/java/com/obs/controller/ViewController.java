@@ -19,7 +19,7 @@ public class ViewController extends HttpServlet{
 	 * 
 	 */
 	private DbManager viewDao = DbManager.getInstance();
-	private static final long serialVersionUID = 4917965091904591241L;
+	private static final long serialVersionUID = 1L;
 	
 	private BakeryItem getItemDetails(Integer bakeryItemID) throws Exception {
 		BakeryItem bakeryItem  = viewDao.getItem(bakeryItemID);
