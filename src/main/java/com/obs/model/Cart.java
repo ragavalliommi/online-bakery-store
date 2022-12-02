@@ -12,6 +12,11 @@ public class Cart {
 		this.cartItems = new ArrayList<CartItem>();
 	}
 	
+	public Cart(float cartValue, ArrayList<CartItem> cartItems) {
+		this.cartValue = cartValue;
+		this.cartItems = cartItems;
+	}
+	
 	public float getCartValue() {
 		return cartValue;
 	}

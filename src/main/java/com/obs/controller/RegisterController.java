@@ -35,9 +35,18 @@ public class RegisterController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/UserRegister.jsp");
-		requestDispatcher.forward(request, response);
+//		System.out.println(response.getWriter().append("Served at: ").append(request.getContextPath()));
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/UserRegister.jsp");
+//		requestDispatcher.forward(request, response);
+		String endpoint = request.getServletPath();
+		System.out.println("API endpoint is:" + endpoint);
+		switch (endpoint) {
+		case "/register":
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/UserRegister.jsp");
+			requestDispatcher.forward(request, response);			
+		}
+		System.out.println("Rendered the page successfully!");
 	}
 
 	/**
@@ -56,16 +65,25 @@ public class RegisterController extends HttpServlet {
 		user.setPhone(phone);
 		user.setPassword(password);
 		user.setDeliveryAddress(deliveryAddress);
-		
 		try {
-			registerDao.registerUser(user);
+			registerUser(user);
+		}
+		catch (Exception e) {
+			System.out.println("Exception is: "+ e);
+		}
+		//registerDao.registerUser(user);
 			
-		}
-		catch(Exception e) {
-			System.out.println(e);
-		}
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/SuccessMessage.jsp");
 		requestDispatcher.forward(request, response);
+	}
+	
+	private void registerUser(User user) throws Exception{
+		if (user.getUserName()!= null) {
+			registerDao.registerUser(user);
+		}
+		else {
+			System.out.println("User Name is null");
+		}
 	}
 
 }

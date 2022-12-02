@@ -10,16 +10,18 @@ import com.obs.model.*;
 
 public class CartTests {
 	static Cart cart;
+	static CartItem cartItem;
 	
 	@BeforeClass
 	public static void setup() {
 		cart = new Cart();
-		
+		cartItem = new CartItem();
 	}
 	
 	@AfterClass
 	public static void cleanup() {
 		cart = new Cart();
+		cartItem = new CartItem();
 	}
 	
 	@Test
@@ -27,6 +29,18 @@ public class CartTests {
 		Cart cart = new Cart();
 		assert(cart.getCartValue() == 0);
 		assert(cart.getCartItems().isEmpty() == true);
+	}
+	
+	@Test
+	public void getCartValueAndItemsTest_NonDefaultValues() {
+		ArrayList<CartItem> listOfItems = new ArrayList<CartItem>();
+		CartItem cartItem = new CartItem();
+		cartItem.setItemQty(3);
+		cartItem.setBakeryItem(new BakeryItem(2));
+		listOfItems.add(cartItem);
+		Cart cart = new Cart(2.0f,listOfItems);
+		assert(cart.getCartValue() == 2.0f);
+		assert(cart.getCartItems().isEmpty()==false);
 	}
 	
 	@Test
