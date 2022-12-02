@@ -43,9 +43,9 @@ public class LoginController extends HttpServlet {
 				String email = request.getParameter("email");
 				System.out.println("In doPost, value of email is: " + email);
 		        String password = request.getParameter("password");
-		        User user = new User();
 		        try {
 		        	if(validateUser(email, password)) {
+		        		User user = loginDao.getUser(email, password);
 		        		response.sendRedirect(request.getContextPath() + "/home?userID="+user.getUserID()+"&userName="+user.getUserName());
 		        	}
 		        	else {
