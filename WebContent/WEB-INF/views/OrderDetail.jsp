@@ -67,6 +67,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<div class="bg-primary text-white mb-3"> Order Total : $${cart_value} </div>
 					<a class="btn btn-success" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}">
 					Go Back </a>
 				</div>
