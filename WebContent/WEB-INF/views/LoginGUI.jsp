@@ -13,7 +13,7 @@
 <body class=bg-secondary>
 <header>
 <nav class="navbar navbar-dark bg-dark justify-content-between">
-			<a href="http://localhost:8080/obs" class="navbar-brand text-white">OBS</a>
+			<a href="http://localhost:8080/obs" class="navbar-brand text-white font-italic font-weight-bold">Online Bakery Store</a>
 		</nav>
 </header>
 	<div class="row w-100 bg-secondary">

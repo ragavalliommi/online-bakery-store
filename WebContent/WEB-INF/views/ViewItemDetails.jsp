@@ -7,21 +7,20 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<title>Online Bakery Store: View Item"</title>
+<title>OBS: View Item</title>
 </head>
 <body class="bg-secondary">
 <header>
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
-			<a class="navbar-brand text-white" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">OBS</a>
+			<a class="navbar-brand text-white font-italic font-weight-bold" href="http://localhost:8080/obs/home?userID=${userID}&userName=${userName}">Online Bakery Store</a>
 			
 			<c:if test="${userID!=null&&userName!=null}">
 				<div>
 					<a id="name" data-name="${userName}"
-						class="navbar-brand text-white rounded p-2"> <i
-						class="bi bi-person-circle"></i> <c:out value="${userName}" />
-					</a> <a id="collection" class="btn btn-dark" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}"> <i
-						class="bi bi-collection-fill"></i>
+						class="navbar-brand text-white rounded p-2"> Welcome, <c:out value="${userName}" /> !
+					</a> <a id="collection" class="btn btn-dark" href="http://localhost:8080/obs/orderHistory?userID=${userID}&userName=${userName}"> <i class="fa fa-history" aria-hidden="true"></i>
 					</a> <a id="cart" class="btn btn-dark"
 						href="http://localhost:8080/obs/cart?userID=${userID}&userName=${userName}">
 						<i class="bi bi-cart4"></i>
@@ -38,7 +37,7 @@
 	<div class="row mt-3 mb-3 bg-secondary">
 		<div class="container">
 			<div class="card">
-				<div class="card-header bg-warning text-black">
+				<div class="card-header bg-dark text-light ">
 					<span>Product Details</span>
 				</div>
 				<div class="card-body bg-white">

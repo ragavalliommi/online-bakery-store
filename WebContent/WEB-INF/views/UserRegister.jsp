@@ -12,8 +12,8 @@
 </head>
 <body class="bg-secondary">
 	<header>
-	<nav class="navbar navbar-dark bg-dark justify-content-between">
-				<a href="http://localhost:8080/obs" class="navbar-brand text-white">OBS</a>
+	<nav class="navbar navbar-dark bg-dark justify-content-between font-italic font-weight-bold">
+				<a href="http://localhost:8080/obs" class="navbar-brand text-white">Online Bakery Store</a>
 			</nav>
 	</header>
 	<div class="row w-100">
