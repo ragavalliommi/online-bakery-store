@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.obs.dao.DbManager;
+import com.obs.dao.DbManagerImpl;
 import com.obs.model.Cart;
 import com.obs.model.User;
 
@@ -21,7 +21,7 @@ import com.obs.model.User;
 public class CheckoutController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;   
-	private DbManager orderDao = DbManager.getInstance();
+	private DbManagerImpl orderDao = DbManagerImpl.getInstance();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
