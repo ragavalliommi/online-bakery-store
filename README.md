@@ -37,7 +37,7 @@
 [__Issue Tracking page__](https://github.com/UTDClassroomOrg/courseproject-cs6359-f22-group3/issues)
 
 
-[__Wiki Page__](https://github.com/UTDClassroomOrg/courseproject-cs6359-f22-group3/wiki/Final-iteration)
+[__Wiki Page__](https://github.com/UTDClassroomOrg/courseproject-cs6359-f22-group3/wiki)
 
 
 [__Project Organisation__](https://github.com/orgs/UTDClassroomOrg/projects/17/views/1)
