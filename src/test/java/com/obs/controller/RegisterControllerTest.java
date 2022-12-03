@@ -51,7 +51,7 @@ public class RegisterControllerTest {
 	@Test
 	public void postRegisterControllerTest() throws Exception {
 		when(request.getServletPath()).thenReturn("/register");
-		when(request.getParameter("email")).thenReturn("biswa@gmail.com");
+		when(request.getParameter("email")).thenReturn("biswa2@gmail.com");
 		when(request.getParameter("phone")).thenReturn("4987839050");
 		when(request.getParameter("userName")).thenReturn("biswal");
 		when(request.getParameter("password")).thenReturn("viswadip");
@@ -65,7 +65,7 @@ public class RegisterControllerTest {
 	@Test
 	public void postLoginControllerTestNullValues() throws Exception {
 		when(request.getServletPath()).thenReturn("/register");
-		when(request.getParameter("email")).thenReturn("biswa@gmail.com");
+		when(request.getParameter("email")).thenReturn("biswa1@gmail.com");
 		when(request.getParameter("phone")).thenReturn(null);
 		when(request.getParameter("userName")).thenReturn(null);
 		when(request.getParameter("password")).thenReturn(null);
