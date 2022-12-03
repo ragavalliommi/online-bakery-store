@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.obs.dao.DbManager;
+import com.obs.dao.DbManagerImpl;
 import com.obs.model.BakeryItem;
 import com.obs.model.Cart;
 import com.obs.model.CartItem;
@@ -21,7 +21,7 @@ import com.obs.model.CartItem;
 public class CartController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private DbManager cartDao = DbManager.getInstance();
+	private DbManagerImpl cartDao = DbManagerImpl.getInstance();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -68,8 +68,8 @@ public class CartController extends HttpServlet {
 	
 	// Get User Cart
 	private Cart getShoppingCart(String userID) throws Exception {
-		Cart cart = null;
-		cart = cartDao.getCart(userID);
+		
+		Cart cart = cartDao.getCart(userID);
 		return cart;
 	}
 	
