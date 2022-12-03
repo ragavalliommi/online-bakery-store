@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.obs.dao.DbManager;
+import com.obs.dao.DbManagerImpl;
 import com.obs.model.BakeryItem;
 
 
@@ -19,7 +19,7 @@ import com.obs.model.BakeryItem;
 public class HomePageController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private DbManager homePageDao = DbManager.getInstance();
+	private DbManagerImpl homePageDao = DbManagerImpl.getInstance();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

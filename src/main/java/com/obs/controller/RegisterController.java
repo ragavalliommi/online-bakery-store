@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.obs.dao.DbManager;
+import com.obs.dao.DbManagerImpl;
 import com.obs.model.User;
 
 /**
@@ -19,7 +19,7 @@ import com.obs.model.User;
 public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private DbManager registerDao = DbManager.getInstance();
+	private DbManagerImpl registerDao = DbManagerImpl.getInstance();
        
     /**
      * @see HttpServlet#HttpServlet()

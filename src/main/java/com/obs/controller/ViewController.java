@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.obs.dao.DbManager;
+import com.obs.dao.DbManagerImpl;
 import com.obs.model.BakeryItem;
 
 @WebServlet("/viewItem")
@@ -18,7 +18,7 @@ public class ViewController extends HttpServlet{
 	/**
 	 * 
 	 */
-	private DbManager viewDao = DbManager.getInstance();
+	private DbManagerImpl viewDao = DbManagerImpl.getInstance();
 	private static final long serialVersionUID = 1L;
 	
 	private BakeryItem getItemDetails(Integer bakeryItemID) throws Exception {
