@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="src/main/resources/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/jsp-api-2.2.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/jstl-1.2.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/mysql-connector-java-8.0.13.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/hamcrest-all-1.3.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/mockito-all-1.10.19.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
