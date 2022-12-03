@@ -81,11 +81,18 @@ public class DbManagerImpl implements DbManager {
 	
 	public boolean registerUser(String userName,String phone, String email, String password , String deliveryAddress) throws Exception{
 		Class.forName("com.mysql.jdbc.Driver");
-			User user = new User(email);
-			user.setUserName(userName);
-			user.setPhone(phone);
-			user.setPassword(password);
-			user.setDeliveryAddress(deliveryAddress);
+		User user;
+		user = new User()
+				.setEmail(email)
+				.setUserName(userName)
+				.setPhone(phone)
+				.setPassword(password)
+				.setDeliveryAddress(deliveryAddress);
+//			User user = new User(email);
+//			user.setUserName(userName);
+//			user.setPhone(phone);
+//			user.setPassword(password);
+//			user.setDeliveryAddress(deliveryAddress);
 			
 			Connection connection = DriverManager
 		

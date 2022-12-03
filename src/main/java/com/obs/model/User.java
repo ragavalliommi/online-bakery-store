@@ -1,7 +1,7 @@
 package com.obs.model;
 import java.util.UUID;
 
-public class User {
+final public class User {
 	
 	private String userID;
 	private String userName;
@@ -46,51 +46,57 @@ public class User {
 	}
 
 	public String getUserID() {
-		return userID;
+		return this.userID;
 	}
 
-	public void setUserID(String userID) {
+	public User setUserID(String userID) {
 		this.userID = userID;
+		return this;
 	}
 
 	public String getUserName() {
-		return userName;
+		return this.userName;
 	}
 
-	public void setUserName(String userName) {
+	public User setUserName(String userName) {
 		this.userName = userName;
+		return this;
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
-	public void setEmail(String email) {
+	public User setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
-	public void setPassword(String password) {
+	public User setPassword(String password) {
 		this.password = password;
+		return this;
 	}
 
 	public String getDeliveryAddress() {
-		return deliveryAddress;
+		return this.deliveryAddress;
 	}
 
-	public void setDeliveryAddress(String deliveryAddress) {
+	public User setDeliveryAddress(String deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
+		return this;
 	}
 
 	public String getPhone() {
-		return phone;
+		return this.phone;
 	}
 
-	public void setPhone(String phone) {
+	public User setPhone(String phone) {
 		this.phone = phone;
+		return this;
 	}
 	
 	public boolean verify(String password) {
