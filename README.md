@@ -1,5 +1,3 @@
-# CS 6359 Project - Group 3
-
 ### Running the project
 
   - Start your local MySQL cluster.
