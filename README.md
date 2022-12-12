@@ -3,7 +3,7 @@
 ### Running the project
 
   - Start your local MySQL cluster.
-  - Run the SQL script present in "DB_OBS.sql" inside the "/DB" folder inside the project directory.
+  - Run the SQL script present in "DB_final.sql" inside the "/DB" folder inside the project directory.
   - Clone the repository
   - Open the project in Eclipse editor.
   - Download Apache Tomcat 9.x
@@ -31,17 +31,3 @@
     next to "Server runtime environment" and then click "Browse" and select the folder of your downloaded Tomcat. 
   - Click "Finish" and then "Next" and then "Finish". If everything was set up properly, the server will start in the console and redirect you to the Login page.
   - You have successfully run the project
-
-### Relevant Documentation Github
-
-[__Issue Tracking page__](https://github.com/UTDClassroomOrg/courseproject-cs6359-f22-group3/issues)
-
-
-[__Wiki Page__](https://github.com/UTDClassroomOrg/courseproject-cs6359-f22-group3/wiki)
-
-
-[__Project Organisation__](https://github.com/orgs/UTDClassroomOrg/projects/17/views/1)
-
-
-
-[__GitHub Link__](https://github.com/UTDClassroomOrg/courseproject-cs6359-f22-group3)
